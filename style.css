@@ -9,3 +9,37 @@ h1 {
   color: #0066cc;
   text-align: center;
 }
+
+/* ボタンを画面の中央に配置する設定 */
+.btn-container {
+    text-align: center;
+    margin: 40px 0;
+}
+
+/* お問い合わせボタンの本体 */
+.contact-btn {
+    display: inline-block;
+    padding: 16px 40px;          /* ボタンの中の余白（上下、左右） */
+    font-size: 20px;             /* 文字の大きさ */
+    font-weight: bold;           /* 文字を太字にする */
+    color: #ffffff;              /* 文字の色（白） */
+    background-color: #ff9900;    /* ボタンの背景色（元気なオレンジ） */
+    text-decoration: none;       /* リンクの下線を消す */
+    border-radius: 50px;         /* 角を丸くしてカプセル型にする */
+    box-shadow: 0 6px 0 #cc7a00; /* ボタンの下に立体的な影をつける */
+    transition: all 0.2s;        /* 動きをなめらかにする */
+}
+
+/* マウスをのせたとき（ホバー時）の動き */
+.contact-btn:hover {
+    background-color: #ffa624;   /* 少し明るいオレンジになる */
+    transform: translateY(2px);  /* 少し下に沈む */
+    box-shadow: 0 4px 0 #cc7a00; /* 影を短くする（押された感を出す） */
+}
+
+/* クリックした瞬間の動き */
+.contact-btn:active {
+    transform: translateY(6px);  /* 完全に押し込まれる */
+    box-shadow: none;            /* 影をなくす */
+}
+
