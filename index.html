@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+ <html class="scroll-smooth" lang="ja">
+
+ <head>
+  <!-- base meta tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+</head>
+
+<style type="text/css">
+    counter-style {
+    color: #ff0000;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+}
+</style>
+<style>
+  equal-table {
+    width: 100%;           /* テーブル全体の幅 */
+    table-layout: fixed;    /* セルの幅を強制的に均等にする魔法のプロパティ */
+    border-collapse: collapse;
+  }
+
+  equal-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    /* 4枠なので 100% ÷ 4 = 25% */
+    width: 25%;
+    
+    /* 文字が溢れた場合の処理（任意） */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; /* 入りきらない文字を「...」にする */
+  }
+</style>
+
+
+
+ <?php
+$file = 'count.txt';
+$count = file_get_contents($file);
+$count++;
+file_put_contents($file, $count);
+echo $count;
+?>
+
+<body>
+
+<!---- 削除中
+<img src="http://www5.kannet.ne.jp/~counter/count.cgi?name=kannet01&type=1&width=6">
+<p>あなたは <?php include('count.php'); ?> 人目の訪問者です。</p>
+ <title>わくわくプログラミング工房　平兵道</title>
+-->
+
+<!-- メインコンテンツ用 slot -->
+  <header class="relative w-full overflow-hidden"> <a href="#">
+  <a href="#"></a><div class="container"><a href="#"></a>
+
+<div class="flex flex-col items-center flex-1 mb-8">
+  <div class="flex-1 pb-6 lg:pb-0">
+    <h1>わくわくプログラミング工房　平兵道</h1>
+     <b>つくるって　楽しい</b>を大切にします
+    <br>
+     ２４時間３６５日いつでも教室は開いています
+  </div>
+  <img src="#" alt="わくわくプログラミング工房　平兵道　の俯瞰図" loading="lazy" fetchpriority="low" decoding="async" width="486" height="281" class="w-full">
+  </div> 
+ <div class="flex-1"> </div>
+</div>
+<BR>
+
+■一般会員専用のページはこちら<BR>
+<table class="equal-table">
+<tr>
+<td　class="equal-table td"><a class="text-sm hidden hover:underline lg:inline" href="#01">■世代別教室</a></td>
+<td　class="equal-table td"><a class="text-sm hidden hover:underline lg:inline" href="#02">■セミナ教材</a></td>
+<td　class="equal-table td"><a class="text-sm hidden hover:underline lg:inline" href="#03">■セミナ料金</a></td>
+<td　class="equal-table td"><a class="text-sm hidden hover:underline lg:inline" href="#faq">■問合と質問</a></td>
+</tr>
+</table>
+<BR>
+■特別会員専用のページはこちら<BR>
+<a class="text-sm hidden hover:underline lg:inline" href="#01">■特別会員のページ</a>
+
+<li class="text-xs text-gray-500 ">
+<B>※1  今だけ　特別会員の募集キャンペーン中！</B>
+  <BR>　＜＜キャンベーン期間：2026年6月1日～9月30日＞＞
+</li>
+<B>
+ <li class="text-xs text-gray-500">※2 2026年5月末時点の情報です</li>
+ <li class="text-xs text-gray-500">※3 2026年10月からは［一般会員］の募集のみとなります</li>
+</B>
+
+</body>
+</html>
