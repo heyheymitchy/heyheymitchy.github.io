@@ -1,0 +1,11 @@
+/* 全体の背景色を薄いグレーにする */
+body {
+  background-color: #f0f0f0;
+  font-family: sans-serif;
+}
+
+/* 見出し（h1）の色を青にして、真ん中に寄せる */
+h1 {
+  color: #0066cc;
+  text-align: center;
+}
