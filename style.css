@@ -1,4 +1,14 @@
 /* ‘S‘Ì */
+/* RESET */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+
+/* ‚±‚±‚©‚ç’ÊíCSS */
 
 body{
   margin:0;
