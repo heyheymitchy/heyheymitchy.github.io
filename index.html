@@ -1,18 +1,139 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>マイホームページ</title>
-    <!-- ここでCSSファイルを読み込みます -->
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>わくわくプログラミング工房</title>
+
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <h1>こんにちは！</h1>
-    <p>CSSが正しく読み込まれると、このページのデザインが変わります。</p>
+  <!-- ヘッダー -->
+  <header>
 
-<!-- お問い合わせボタンの配置 -->
-<div class="btn-container">
-    <a href="contact.html" class="contact-btn">? お問い合わせはこちら</a>
-</div>
+    <div class="logo">
+      わくわくプログラミング工房
+    </div>
+
+    <nav>
+      <ul>
+        <li><a href="#">ホーム</a></li>
+        <li><a href="#">教室について</a></li>
+        <li><a href="#">コース紹介</a></li>
+        <li><a href="#">よくある質問</a></li>
+        <li><a href="#">お問い合わせ</a></li>
+      </ul>
+    </nav>
+
+  </header>
+
+  <!-- メイン -->
+  <section class="hero">
+
+    <div class="hero-text">
+
+      <h1>
+        つくるって楽しい！<br>
+        考えるっておもしろい！
+      </h1>
+
+      <p>
+        ゲーム・イラスト・音楽制作を通して、
+        子供たちの「好き！」を伸ばす
+        プログラミング教室です。
+      </p>
+
+      <a href="#form" class="btn">
+        無料体験に申し込む
+      </a>
+
+    </div>
+
+  </section>
+
+  <!-- カード -->
+  <section class="cards">
+
+    <div class="card">
+      <img src="images/game.jpg" alt="ゲーム">
+      <h3>ゲームをつくる</h3>
+      <p>Scratchでゲーム制作！</p>
+    </div>
+
+    <div class="card">
+      <img src="images/art.jpg" alt="イラスト">
+      <h3>絵をかく</h3>
+      <p>キャラクターを描こう！</p>
+    </div>
+
+    <div class="card">
+      <img src="images/music.jpg" alt="音楽">
+      <h3>音楽をつくる</h3>
+      <p>BGMや効果音も作れる！</p>
+    </div>
+
+    <div class="card">
+      <img src="images/trophy.jpg" alt="大会">
+      <h3>大会に出る</h3>
+      <p>作品を発表して挑戦！</p>
+    </div>
+
+  </section>
+
+  <!-- 理由 -->
+  <section class="reason">
+
+    <h2>この教室が選ばれる理由</h2>
+
+    <div class="reason-grid">
+
+      <div class="reason-box">
+        <h3>夢中になるカリキュラム</h3>
+      </div>
+
+      <div class="reason-box">
+        <h3>一人一人に寄り添うサポート</h3>
+      </div>
+
+      <div class="reason-box">
+        <h3>安心の少人数制</h3>
+      </div>
+
+      <div class="reason-box">
+        <h3>大会や資格に挑戦する</h3>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- フォーム -->
+  <section id="form" class="contact">
+
+    <h2>無料体験お申し込み</h2>
+
+    <form>
+
+      <input type="text" placeholder="お名前">
+
+      <input type="email" placeholder="メールアドレス">
+
+      <textarea placeholder="お問い合わせ内容"></textarea>
+
+      <button type="submit">
+        送信する
+      </button>
+
+    </form>
+
+  </section>
+
+  <!-- フッター -->
+  <footer>
+    c 2026 わくわくプログラミング工房
+  </footer>
+
 </body>
+</html>
