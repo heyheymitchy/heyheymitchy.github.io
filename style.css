@@ -1,14 +1,12 @@
 /* 全体 */
 /* RESET */
-
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
 }
-
-
 /* ここから通常CSS */
+
 
 body{
   margin:0;
@@ -16,9 +14,6 @@ body{
   background:#fffdf8;
   color:#333;
 }
-
-
-
 /* ヘッダー */
 
 header{
@@ -39,7 +34,9 @@ header{
 .logo{
   font-size:28px;
   font-weight:bold;
-  color:#ff9800;
+  background-color:#FDDF5C;
+  background-size:cover;
+  background-position:center;
 }
 
 nav ul{
@@ -54,6 +51,9 @@ nav ul{
 
 nav a{
   text-decoration:none;
+  background-color:#ffb300;
+  background-size:cover;
+  background-position:center;
   color:#333;
   font-weight:bold;
 }
@@ -62,30 +62,62 @@ nav a:hover{
   color:#ff9800;
 }
 
-
-
 /* メイン画像 */
 
-.hero{
-  height:700px;
-
+.main{
+  height:100vh;
   background-image:url("images/main.jpg");
-
   background-size:cover;
   background-position:center;
-
   display:flex;
   align-items:center;
+  position:relative;
+}
 
+.main::before{
+  content:"";
+  position:absolute;
+  inset:0;
+
+  background:rgba(255,255,255,0.55);
+}
+
+.main-text{
+  position:relative;
+  z-index:1;
+
+  max-width:800px;
+
+  margin-left:80px;
+}
+
+.main h1{
+  font-size:60px;
+  line-height:1.3;
+
+  color:#2196f3;
+}
+
+.main p{
+  font-size:22px;
+  line-height:1.8;
+}
+
+/* ヒーロー画像 */
+.hero{
+  height:700px;
+  background-color:#ffb300;
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  align-items:center;
   position:relative;
 }
 
 .hero::before{
   content:"";
-
   position:absolute;
   inset:0;
-
   background:rgba(255,255,255,0.55);
 }
 
@@ -93,15 +125,13 @@ nav a:hover{
   position:relative;
   z-index:1;
 
-  max-width:600px;
-
+  max-width:800px;
   margin-left:80px;
 }
 
 .hero h1{
   font-size:60px;
   line-height:1.3;
-
   color:#2196f3;
 }
 
@@ -109,8 +139,6 @@ nav a:hover{
   font-size:22px;
   line-height:1.8;
 }
-
-
 
 /* ボタン */
 
@@ -282,6 +310,44 @@ button:hover{
   background:#ff9800;
 }
 
+.bottom-end{
+  height:100vh;
+  background-image:url("images/bottom.jpg");
+  background-size:auto;
+  background-position:center;
+  display:flex;
+  align-items:center;
+  position:relative;
+}
+
+.bottom-end::before{
+  content:"";
+  position:absolute;
+  inset:0;
+
+  background:rgba(255,255,255,0.55);
+}
+
+.bottom-end-text{
+  position:relative;
+  z-index:1;
+
+  max-width:800px;
+
+  margin-left:80px;
+}
+
+.bottom-end h1{
+  font-size:60px;
+  line-height:1.3;
+
+  color:#2196f3;
+}
+
+.bottom-end p{
+  font-size:22px;
+  line-height:1.8;
+}
 
 
 /* フッター */
