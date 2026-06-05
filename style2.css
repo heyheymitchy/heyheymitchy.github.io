@@ -1,0 +1,185 @@
+/*****************************************************/
+/* CSS全体設定 */
+
+/* 全体イメージは以下の通り　*/
+/*
+サンプルイメージ図（Plain text）
++----------------------+
+| body　               |
+| 背景と文字の設定     |
++----------------------+
+
++----------------------+
+| header               |
+| ロゴ・タイトル       |
++----------------------+
+
++----------------------+
+| nav(ナビゲーション)  |
+| ホーム 教室紹介 .... |
++----------------------+
+
++----------------------+
+| main                 |
+|   +--------------+   |
+|   | section      |   |
+|   | 教室紹介     |   |
+|   +--------------+   |
+|                      |
+|   +--------------+   |
+|   | section      |   |
+|   | コース紹介   |   |
+|   +--------------+   |
++----------------------+
++----------------------+
+| footer               |
+| コピーライト         |
++----------------------+
+［body］ページ全体の背景
+［header］一番上（タイトルを記載）
+［nav］メニュー
+［main］メインの内容を記載する
+［section］内容毎に区切る
+［footer］一番下(コピーライトを記載)
+*/
+
+/* ここからＣＳＳです　*/
+/*****************************************************/
+/*　style.css　*/
+/* リセット */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* 全体 */
+body{
+    font-family:"Yu Gothic",sans-serif;
+    background:linear-gradient(#9ddcff,#eaf8ff);
+    color:#333;
+    line-height:1.8;
+}
+
+/* ヘッダー */
+header{
+    text-align:center;
+    padding:50px 20px;
+}
+
+header h1{
+    font-size:2.5rem;
+    color:#ff8800;
+}
+
+header p{
+    margin-top:10px;
+    font-size:1.1rem;
+}
+
+/* フォーム */
+.form-area{
+    max-width:800px;
+    margin:30px auto;
+    background:#fff;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.1);
+}
+
+.form-area h2{
+    text-align:center;
+    margin-bottom:30px;
+    color:#ff8800;
+}
+
+label{
+    display:block;
+    margin-top:20px;
+    font-weight:bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="post"],
+select,
+textarea{
+    width:100%;
+    padding:12px;
+    margin-top:5px;
+    border:2px solid #d9e7f0;
+    border-radius:10px;
+    font-size:16px;
+}
+
+/* ラジオボタン */
+.radio-group{
+    margin-top:10px;
+    display: flex;
+    gap: 20px; /* 間隔 */
+}
+
+.radio-group label{
+    display:block;
+    font-weight:normal;
+}
+
+/* チェックボックス */
+.check-group{
+    margin-top:10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px 30px; /* 縦 横の間隔 */
+}
+
+
+.check-group label{
+    display:block;
+    font-weight:normal;
+    
+}
+
+/* ボタン */
+button{
+    width:100%;
+    margin-top:30px;
+    padding:15px;
+    border:none;
+    border-radius:50px;
+
+    background:#ffb100;
+    color:#fff;
+
+    font-size:20px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+button:hover{
+    background:#ff8800;
+    transform:scale(1.03);
+}
+
+/* フッター */
+footer{
+    text-align:center;
+    padding:30px;
+    color:#666;
+}
+
+/* スマホ対応 */
+@media(max-width:768px){
+
+    .form-area{
+        margin:15px;
+        padding:20px;
+    }
+
+    header h1{
+        font-size:1.8rem;
+    }
+
+}

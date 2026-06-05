@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>わくわくプログラミング工房無料体験申込用</title>
+
+<link rel="stylesheet" href="style2.css">
+
+</head>
+<body>
+
+<header>
+    <h1>わくわくプログラミング工房　平兵道</h1>
+    <p>Scratchでゲーム作り！イラスト制作！音楽制作！</p>
+</header>
+
+<main>
+
+<section class="form-area">
+
+    <h2>無料体験教室 お申込み</h2>
+
+    <form id="contactForm">
+
+        <label>お名前（体験教室に参加される方）</label>
+        <input type="text" name="child_name" required placeholder="ニックネームでもいいよ">
+
+        <label>年齢</label>
+        <select name="grade">
+            <option>５歳～12歳</option>
+            <option>13歳～15歳</option>
+            <option>16歳～22歳</option>
+            <option>23歳～59歳</option>
+            <option>60歳～99歳</option>
+        </select>
+
+        <label>Scratch経験</label>
+        <div class="radio-group">
+            <label><input type="radio" name="experience" value="初めて"> 初めて</label>
+            <label><input type="radio" name="experience" value="少し経験あり"> 少し経験あり</label>
+            <label><input type="radio" name="experience" value="経験あり"> 経験あり</label>
+　　　　</div>
+　　　　
+　　　　<label>興味のあるコース</label>
+        <div class="check-group">
+            <label><input type="checkbox" name="course" value="Scratch"> Scratchのお勉強</label>
+            <label><input type="checkbox" name="course" value="ゲーム"> ゲーム制作</label>
+            <label><input type="checkbox" name="course" value="イラスト"> デジタルイラスト</label>
+            <label><input type="checkbox" name="course" value="音楽"> 音楽・効果音制作</label>
+            <label><input type="checkbox" name="course" value="HTML">ＨＴＭＬ</label>
+            <label><input type="checkbox" name="course" value="CSS">ＣＳＳ</label>
+            <label><input type="checkbox" name="course" value="VSC">Visuai-Studio-Code</label>
+            <label><input type="checkbox" name="course" value="Git">GitHub</label>
+            <label><input type="checkbox" name="course" value="STEAM">ＳＴＥＡＭ教育</label>
+            <label><input type="checkbox" name="course" value="SDGs">ＳＤＧｓ</label>
+            <label><input type="checkbox" name="course" value="Life">生きるチカラ</label>
+        </div>
+
+        <label>申込者（親御様の場合）</label>
+        <input type="text" name="parent_name" required placeholder="日本　太郎">
+
+        <label>メールアドレス</label>
+        <input type="email" name="email" required placeholder="sample.gmail.com">
+
+        <label>郵便番号（７桁の数字(－ハイフン不要)）</label>
+        <input type="post" name="post"　required placeholder="1234567">
+
+        <label>ご質問・ご要望</label>
+        <textarea name="message" rows="5"　required placeholder="内容をご記入ください"></textarea>
+
+        <button type="submit">
+            無料体験に申し込む
+        </button>
+
+    </form>
+
+    <p id="result"></p>
+
+</section>
+
+</main>
+
+<footer>
+    <p>c わくわくプログラミング工房</p>
+</footer>
+
+</body>
+</html>
