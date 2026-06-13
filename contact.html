@@ -26,7 +26,7 @@
         <label>お名前（体験教室に参加される方）</label>
         <input type="text" name="child_name" required placeholder="ニックネームでもいいよ">
 
-        <label>年齢</label>
+        <label>年齢(右の［下矢印から選んでね）</label>
         <select name="grade">
             <option>５歳～12歳</option>
             <option>13歳～15歳</option>
@@ -35,7 +35,24 @@
             <option>60歳～99歳</option>
         </select>
 
-        <label>Scratch経験</label>
+        <label>申込者（親御様の場合）</label>
+        <input type="text" name="parent_name" required placeholder="日本　太郎">
+        
+        <label>ふりがな（全角ひらがなでお願いします）</label>
+        <input type="text" name="hiragana" required placeholder="にほん　たろう">
+
+        <label>電話番号（１１桁の数字(－ハイフン不要)）</label>
+        <input type="tel" name="tel" required placeholder="08012345678">
+        
+        <label>メールアドレス</label>
+        <input type="email" name="email" required placeholder="sample.gmail.com">
+
+        <label>郵便番号（７桁の数字(－ハイフン不要)）</label>
+        <input type="post" name="post"　required placeholder="1234567">
+　
+
+
+        <label>Scratch経験（わからないときは［初めて］を選んでね）</label>
         <div class="radio-group">
             <label><input type="radio" name="experience" value="初めて"> 初めて</label>
             <label><input type="radio" name="experience" value="少し経験あり"> 少し経験あり</label>
@@ -44,36 +61,53 @@
 　　　　
 　　　　<label>興味のあるコース</label>
         <div class="check-group">
-            <label><input type="checkbox" name="course" value="Scratch"> Scratchのお勉強</label>
-            <label><input type="checkbox" name="course" value="ゲーム"> ゲーム制作</label>
-            <label><input type="checkbox" name="course" value="イラスト"> デジタルイラスト</label>
-            <label><input type="checkbox" name="course" value="音楽"> 音楽・効果音制作</label>
+            <label><input type="checkbox" name="course" value="SCRATCH"> Scratch学習</label>
+            <label><input type="checkbox" name="course" value="GAME"> ゲーム作成</label>
+            <label><input type="checkbox" name="course" value="ART"> ＣＧイラスト</label>
+            <label><input type="checkbox" name="course" value="MUSIC"> 音楽制作</label>
             <label><input type="checkbox" name="course" value="HTML">ＨＴＭＬ</label>
             <label><input type="checkbox" name="course" value="CSS">ＣＳＳ</label>
+            <label><input type="checkbox" name="course" value="PHP">ＰＨＰ</label>
             <label><input type="checkbox" name="course" value="VSC">Visuai-Studio-Code</label>
             <label><input type="checkbox" name="course" value="Git">GitHub</label>
-            <label><input type="checkbox" name="course" value="STEAM">ＳＴＥＡＭ教育</label>
-            <label><input type="checkbox" name="course" value="SDGs">ＳＤＧｓ</label>
-            <label><input type="checkbox" name="course" value="Life">生きるチカラ</label>
-        </div>
-
-        <label>申込者（親御様の場合）</label>
-        <input type="text" name="parent_name" required placeholder="日本　太郎">
-
-        <label>メールアドレス</label>
-        <input type="email" name="email" required placeholder="sample.gmail.com">
-
-        <label>郵便番号（７桁の数字(－ハイフン不要)）</label>
-        <input type="post" name="post"　required placeholder="1234567">
-
+            <label><input type="checkbox" name="course" value="GDR">GoogleDrive</label>
+            <label><input type="checkbox" name="course" value="GAS">GoogleAppsScript</label>
+            <label><input type="checkbox" name="course" value="Unity">Unity</label>
+            <label><input type="checkbox" name="course" value="AviUtl">AviUtl</label>
+            <label><input type="checkbox" name="course" value="STEAM">ＳＴＥＡＭ</label>
+            <label><input type="checkbox" name="course" value="SDGS">ＳＤＧｓ</label>
+            <label><input type="checkbox" name="course" value="COACH">コーチング</label>
+            <label><input type="checkbox" name="course" value="LIFE">生きるチカラ</label>
+            <label><input type="checkbox" name="course" value="AIPRO">ＡＩプロンプト</label>
+            <label><input type="checkbox" name="course" value="ONLY">個人事業主</label>
+          </div>
         <label>ご質問・ご要望</label>
-        <textarea name="message" rows="5"　required placeholder="内容をご記入ください"></textarea>
+        <textarea name="message" rows="5" required placeholder="内容をご記入ください"></textarea>
+        <button type="submit">無料体験に申し込む</button>
+    
+</form>
 
-        <button type="submit">
-            無料体験に申し込む
-        </button>
+<script>
+document.getElementById("form")
+.addEventListener("submit", async(e)=>{
 
-    </form>
+  e.preventDefault();
+
+  await fetch(
+    "GASのURL",
+    {
+      method:"POST",
+      body:JSON.stringify({
+        name:
+        document.getElementById("name").value
+      })
+    }
+  );
+
+  alert("送信しました");
+
+});
+</script>
 
     <p id="result"></p>
 
