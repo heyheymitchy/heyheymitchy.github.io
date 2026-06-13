@@ -41,7 +41,7 @@
         <label>ふりがな（全角ひらがなでお願いします）</label>
         <input type="text" name="hiragana" required placeholder="にほん　たろう">
 
-        <label>電話番号（１１桁の数字(－ハイフン不要)）</label>
+        <label>電話番号（１１桁までの数字(－ハイフン不要)）</label>
         <input type="tel" name="tel" required placeholder="08012345678">
         
         <label>メールアドレス</label>
@@ -88,27 +88,36 @@
 </form>
 
 <script>
-document.getElementById("form")
+<!-- GASに発行されたURLを貼る -->
+const GAS_URL =
+"https://script.google.com/macros/s/AKfycbxKvAc4EZavtziQVnBronJiNqpriwdQC_8G3dHiy__5b9UtqD94mcmqVgSKsjuQifTR/exec"
+
+document
+.getElementById("contactForm")
 .addEventListener("submit", async(e)=>{
 
   e.preventDefault();
 
-  await fetch(
-    "GASのURL",
-    {
-      method:"POST",
-      body:JSON.stringify({
-        name:
-        document.getElementById("name").value
-      })
-    }
-  );
+  const formData =
+    new FormData(e.target);
 
-  alert("送信しました");
+  const data =
+    Object.fromEntries(formData);
+
+  await fetch(GAS_URL,{
+    method:"POST",
+    body:JSON.stringify(data)
+  });
+
+  document.getElementById("result")
+    .innerHTML =
+    "送信ありがとうございました。";
+
+  e.target.reset();
 
 });
-</script>
 
+</script>
     <p id="result"></p>
 
 </section>
