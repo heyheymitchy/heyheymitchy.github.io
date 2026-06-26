@@ -104,15 +104,14 @@ header p{
 /* HTML(header div class="logo" ) */
 
 .logo{
-flex:  0 0 20%;        /* 写真の横幅を全体の40%に設定 */
-width: 50%;      /* 親の幅（45%）いっぱいに広げる */
+flex:  0 0 20%;        /* 写真の横幅を全体の20%に設定 */
 height: auto;  /* 要素の高さを中身に合わせて自動調整する指定 */
 border-radius: 8px;   /* 角を少し丸くしておしゃれに */
 box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* うっすら影をつける */
 font-size:28px;
 font-weight:bold;
 background-color:#fff;
-background-size:50% auto;/*cover*/
+background-size:50% auto;
 background-position:center;
 color:#000;
 }
@@ -148,10 +147,10 @@ color:#000;
 /*****************************************************/
 /* MAIN　(メインのイメージ) */
 .main{
-  height:100vh; /* 要素の高さをブラウザの表示領域ピッタリにする設定 */
+  height:100dvh; /* 要素の高さをブラウザの表示領域ピッタリにする設定 */
   background:linear-gradient(#9ddcff,#dff4ff); /* 空色 */
   background-image:url("images/main.png");
-  background-size:cover; /* 背景画像をすき間なく画面やボックス全体にピッタリ敷き詰める設定 */
+  background-size:contain; /* 画像全体が収まるように縮小（余白が出る） */
   background-position:center;
   display:flex; /*横,真ん中,均等に並べる　*/
   align-items:center;
@@ -176,7 +175,7 @@ color:#000;
 .main-text{
   position:relative;
   z-index:1;
-  max-width:800px;
+  max-width:999px;
   margin-left:80px;
 }
 
@@ -409,7 +408,8 @@ button:hover{
 .bottom-end{
   
   background-image:url("images/bottom.png");
-  background-size:contain;
+  /*　background-size:contain;　*/
+  background-size:100%;
   background-position:center;
   display:flex;
   align-items:center;
