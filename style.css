@@ -1,4 +1,4 @@
-/*****************************************************/
+﻿/*****************************************************/
 /* CSS全体設定 */
 
 /* 全体イメージは以下の通り　*/
@@ -63,7 +63,7 @@ body{
 
   margin:0; /* 外側余白を消す */
   font-family:"Yu Gothic",sans-serif; /* フォント指定 */
-  background:#fff; /* 背景色 */
+  background:#5CE1E6; /* 背景色  #5CE1E6 #FFFFFF*/
   color:#000;      /* 文字色 */
 }
 
@@ -73,7 +73,7 @@ header{
   top:0;
   justify-content:space-between; /* 横方向の配置を調整する指定 */
   align-items:center; /* Flexboxで縦方向（交差軸）の位置を中央に揃える指定 */
-  background:#fff; /* 背景色 */
+  background:#fff; /* 背景色 #fff  */
   position:sticky; /* スクロールしても張り付く　*/
   display: flex;  /* 横並び */
   gap: 40px;            /* 写真と右側アイテム全体の間のすき間 */
@@ -147,14 +147,14 @@ color:#000;
 /*****************************************************/
 /* MAIN　(メインのイメージ) */
 .main{
-  height:100dvh; /* 要素の高さをブラウザの表示領域ピッタリにする設定 */
-  background:linear-gradient(#9ddcff,#dff4ff); /* 空色 */
-  background-image:url("images/main.png");
-  background-size:contain; /* 画像全体が収まるように縮小（余白が出る） */
-  background-position:center;
-  display:flex; /*横,真ん中,均等に並べる　*/
-  align-items:center;
-  position:relative; /*absolute（絶対配置)ではなく自由に動けます */
+
+height: 120dvh;
+aspect-ratio: 16 / 9;
+background-size: contain;
+background-position: center;
+background-repeat: no-repeat;
+background-image: url("images/main76.png");
+
 
 }
 
@@ -197,8 +197,8 @@ color:#000;
 /* ＨＥＲＯ　(ヒーローエリアのイメージ) */
 
 .hero{
-  height:300px;
-  background-color:#ffb300;
+  height:100px;
+  background-color:#fff; /* #ffb300;　*/
   background-size:cover;
   background-position:center;
   display:flex;
@@ -266,7 +266,7 @@ color:#000;
 /* カード */
 .card{
     flex:1;                           /* 均等配置 */
-    background:white;                 /* 背景色 */
+    background:#FFF;               /* 背景色 */
     padding:20px;                     /* 内側余白 */
     border-radius:15px;               /* 角丸 */
     box-shadow:0 4px 10px rgba(0,0,0,0.1); /* 影 */
@@ -276,7 +276,7 @@ color:#000;
 /* reason（［理由］設定） */
 
 .reason{
-  background:#FDDF5C;;
+  background:#5CE1E6;
   padding:1px 1px;
   text-align:left;
 }
@@ -287,6 +287,7 @@ color:#000;
 .reason h2{
   font-size:42px;
   color:#ff9800;
+  background:#FFF;
   margin-bottom:1px;
 }
 
@@ -302,7 +303,7 @@ color:#000;
 /* reason-box（理由のボックス設定）*/
 
 .reason-box{
-  background:#FDDF5C;;
+  background:#FFF;
   
   color:#2196f3;
   padding:10px;
@@ -332,7 +333,7 @@ color:#000;
 
 
 /*****************************************************/
-/* contact（［問い合わせ］設定） */
+/* contact（［無料体験講座］申し込みへ） */
 
 .contact{
   padding:80px 20px;
@@ -343,7 +344,7 @@ color:#000;
 }
 
 /**********************************/
-/* contact h2（問い合わせのＨ２設定）*/
+/* contact h2（［無料体験講座］申し込みＨ２設定）*/
 
 .contact h2{
   font-size:42px;
@@ -406,17 +407,16 @@ button:hover{
 /* bottom-end（最終ページの画像設定） */
 
 .bottom-end{
-  
-  background-image:url("images/bottom.png");
-  /*　background-size:contain;　*/
-  background-size:100%;
-  background-position:center;
-  display:flex;
+
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image:url("images/bottom78.png");
+  display:flex; /* 横,真ん中,均等に並べる　*/
   align-items:center;
-  position:relative;
-  
-  justify-content: center; /* 子要素を水平方向に中央揃えにする */
-  align-items: center; /* 子要素を垂直方向に中央揃えにする */
+/* position:relative; absolute（絶対配置)ではなく自由に動けます */
+justify-content: center;  /*子要素を水平方向に中央揃えにする */
+align-items: center;     /*子要素を垂直方向に中央揃えにする */
 }
 
 
@@ -437,6 +437,43 @@ button:hover{
   font-size:22px;
   line-height:1.8;
 }
+
+/**********************************/
+/* contact:hover（特別キャンペーンの確認ボタン）*/
+
+.contact {
+  text-align: center;  /* 中央寄せ */
+  margin-top: 20px;
+  font-size: 24px;
+  color:red;
+}
+
+.btn-primary, .btn-secondary {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  text-decoration: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn-primary {
+  background: #ffb347;
+  color: #222;
+  text-align: center;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  text-align: center;
+}
+.btn-contact:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
 
 /*****************************************************/
 /* footer（ページの最後にコピーライトを記載します） */

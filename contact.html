@@ -1,133 +1,72 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>わくわくプログラミング工房無料体験申込用</title>
-
-<link rel="stylesheet" href="style2.css">
-
+  <meta charset="UTF-8">
+  <title>無料体験講座お申込みのページ</title>
+  <link rel="stylesheet" href="style2.css">
 </head>
-<body>
+<body class="bg-gradient">
+  <div class="container">
+    <h1>無料体験講座　お申込みのページ</h1>
+　　　<p>今回、［無料体験講座］を申込される皆様には<span style="color:red; font-size:18px; font-weight:bold;">［わくわく無料キャンペーン］特典</span>として<br>
+　　　<span style="color:red; background: yellow; font-size:18px; font-weight:bold; padding:0px;">［入会費用］［年会費］が無料となる［特別会員］</span>と、させていただきます<br><br>
+　　　なお、趣旨にご賛同頂けない場合には<br>お手数をお掛けしますが［前の画面に戻る］（右下ボタン）よりお戻りください<br></p>
+    <div class="center-box">
+      <a href="campaign.html" class="btn-campaign">特別会員わくわくキャンペーンの内容確認へ</a>
+    </div>
+<br>
+ <form id="entryForm" class="card">
+      <label>お名前</label>
+      <input type="text" name="name" required>
 
-<header>
-    <h1>わくわくプログラミング工房　平兵道</h1>
-    <p>Scratchでゲーム作り！イラスト制作！音楽制作！</p>
-</header>
+      <label>メールアドレス</label>
+      <input type="email" name="email" required>
 
-<main>
+      <label>郵便番号</label>
+      <input type="post" name="post">
 
-<section class="form-area">
+      <label>電話番号</label>
+      <input type="tel" name="tel">
 
-    <h2>無料体験教室 お申込み</h2>
+      <label>アンケート（興味のある講座）</label>
+      <select name="course">
+        <option value="scratch">Scratch入門</option>
+        <option value="web">Web制作入門</option>
+        <option value="python">Python入門</option>
+      </select>
 
-    <form id="contactForm">
+      <label>パスワード（任意）</label>
+      <input type="password" name="password">
+<BR>
+      <button type="submit" class="btn-primary">
+        <b>無料体験講座</b>に申し込みます（兼特別会員登録）
+      </button>
+　　　<button class="btn-back" onclick="history.back()">前の画面に戻る</button>
+    </form>
 
-        <label>お名前（体験教室に参加される方）</label>
-        <input type="text" name="child_name" required placeholder="ニックネームでもいいよ">
+    <p id="result" class="message"></p>
+  </div>
 
-        <label>年齢(右の［下矢印から選んでね）</label>
-        <select name="grade">
-            <option>５歳～12歳</option>
-            <option>13歳～15歳</option>
-            <option>16歳～22歳</option>
-            <option>23歳～59歳</option>
-            <option>60歳～99歳</option>
-        </select>
+  <script>
+    document.getElementById('entryForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form);
 
-        <label>申込者（親御様の場合）</label>
-        <input type="text" name="parent_name" required placeholder="日本　太郎">
-        
-        <label>ふりがな（全角ひらがなでお願いします）</label>
-        <input type="text" name="hiragana" required placeholder="にほん　たろう">
-
-        <label>電話番号（１１桁までの数字(－ハイフン不要)）</label>
-        <input type="tel" name="tel" required placeholder="08012345678">
-        
-        <label>メールアドレス</label>
-        <input type="email" name="email" required placeholder="sample.gmail.com">
-
-        <label>郵便番号（７桁の数字(－ハイフン不要)）</label>
-        <input type="post" name="post"　required placeholder="1234567">
-　
-
-
-        <label>Scratch経験（わからないときは［初めて］を選んでね）</label>
-        <div class="radio-group">
-            <label><input type="radio" name="experience" value="初めて"> 初めて</label>
-            <label><input type="radio" name="experience" value="少し経験あり"> 少し経験あり</label>
-            <label><input type="radio" name="experience" value="経験あり"> 経験あり</label>
-　　　　</div>
-　　　　
-　　　　<label>興味のあるコース</label>
-        <div class="check-group">
-            <label><input type="checkbox" name="course" value="SCRATCH"> Scratch学習</label>
-            <label><input type="checkbox" name="course" value="GAME"> ゲーム作成</label>
-            <label><input type="checkbox" name="course" value="ART"> ＣＧイラスト</label>
-            <label><input type="checkbox" name="course" value="MUSIC"> 音楽制作</label>
-            <label><input type="checkbox" name="course" value="HP"> ホームページ作成</label>
-            <label><input type="checkbox" name="course" value="HTML">ＨＴＭＬ</label>
-            <label><input type="checkbox" name="course" value="CSS">ＣＳＳ</label>
-            <label><input type="checkbox" name="course" value="PHP">ＰＨＰ</label>
-            <label><input type="checkbox" name="course" value="VSC">Visuai-Studio-Code</label>
-            <label><input type="checkbox" name="course" value="Git">GitHub</label>
-            <label><input type="checkbox" name="course" value="GDR">GoogleDrive</label>
-            <label><input type="checkbox" name="course" value="GAS">GoogleAppsScript</label>
-            <label><input type="checkbox" name="course" value="Unity">Unity</label>
-            <label><input type="checkbox" name="course" value="AviUtl">AviUtl</label>
-            <label><input type="checkbox" name="course" value="STEAM">ＳＴＥＡＭ</label>
-            <label><input type="checkbox" name="course" value="SDGS">ＳＤＧｓ</label>
-            <label><input type="checkbox" name="course" value="COACH">コーチング</label>
-            <label><input type="checkbox" name="course" value="LIFE">生きるチカラ</label>
-            <label><input type="checkbox" name="course" value="AIPRO">ＡＩプロンプト</label>
-            <label><input type="checkbox" name="course" value="ONLY">個人事業主</label>
-          </div>
-        <label>ご質問・ご要望</label>
-        <textarea name="message" rows="5" required placeholder="内容をご記入ください"></textarea>
-        <button type="submit">無料体験に申し込む</button>
-    
-</form>
-
-<script>
-<!-- GASに発行されたURLを貼る -->
-const GAS_URL =
-"https://script.google.com/macros/s/AKfycbxKvAc4EZavtziQVnBronJiNqpriwdQC_8G3dHiy__5b9UtqD94mcmqVgSKsjuQifTR/exec"
-
-document
-.getElementById("contactForm")
-.addEventListener("submit", async(e)=>{
-
-  e.preventDefault();
-
-  const formData =
-    new FormData(e.target);
-
-  const data =
-    Object.fromEntries(formData);
-
-  await fetch(GAS_URL,{
-    method:"POST",
-    body:JSON.stringify(data)
-  });
-
-  document.getElementById("result")
-    .innerHTML =
-    "送信ありがとうございました。";
-
-  e.target.reset();
-
-});
-
-</script>
-    <p id="result"></p>
-
-</section>
-
-</main>
-
-<footer>
-    <p>c わくわくプログラミング工房</p>
-</footer>
-
+      fetch('YOUR_WEB_APP_URL', {
+        method: 'POST',
+        body: data
+      })
+      .then(res => res.text())
+      .then(text => {
+        document.getElementById('result').textContent = text;
+        form.reset();
+      })
+      .catch(() => {
+        document.getElementById('result').textContent =
+          '送信に失敗しました。時間をおいて再度お試しください。';
+      });
+    });
+  </script>
 </body>
 </html>
