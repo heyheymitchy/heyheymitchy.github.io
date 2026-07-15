@@ -58,48 +58,76 @@
 /*****************************************************/
 /* 画面全体 */
 /*****************************************************/
-/* ベース */
+/*******************/
+/* ボディ */
 body {
-  margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #f0f4ff;
-  color: #222;
-}
-body.bg-gradient {
-  margin: 0;
-  font-family: system-ui, sans-serif;
-  background: linear-gradient(135deg, #1e3c72, #2a5298);
-  color: #fff;
-  text-align: center;
-}
+    font-family: "Hiragino Sans", "Noto Sans JP", sans-serif;　/* フォント指定 */
+    margin: 0;　/* 外側余白を消す */
+    padding:0;  /* 内側余白を0にする */
+    background: #5CE1E6; /* 背景色 #f7faff; */
+    color:#000;    /* 文字色 */
+  }
 
+/*******************/
+/* ▼ 言語切り替えロジック（JSなし） */
+/* 初期状態：日本語だけ表示 */
+.lang-ja { display: grid; }
+.lang-en { display: none; }
+
+
+/* 英語が選ばれたとき */
+#en:target ~ .lang-ja { display: none; }
+#en:target ~ .lang-en { display: grid; }
+
+/* 日本語が選ばれたとき */
+#ja:target ~ .lang-en { display: none; }
+#ja:target ~ .lang-ja { display: grid; }
+
+
+/*******************/
 /* ヘッダー */
-.site-header {
-  background: linear-gradient(135deg, #2196f3, #64b5f6);
-  color: #fff;
-  padding: 1.5rem 1rem;
-  text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  text-align: center;
+  .header {
+    overflow-x: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;  /* 横方向の配置を調整する指定 */
+    padding: 16px;
+    background: #5CE1E6; ;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+/* 言語切り替えボタン */
+.lang-switch {
+  display: flex;
+  gap: 10px;
 }
 
-.header-inner h1 {
-  margin: 0;
-  font-size: 1.6rem;
+/* 画像表示 */
+.img-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5列 */
+  gap: 12px; /* 画像の間隔 */
+  max-width: 900px;
+  margin: 0 auto;
 }
 
-.subtitle {
-  margin: 0.3rem 0;
-  font-weight: 600;
-  background: #ffd700;
-  color: #000;
+.img-grid a {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.catch {
-  margin: 0.2rem 0;
-  font-size: 0.95rem;
-  color: #f00;
+.img-grid a:hover {
+  transform: scale(1.08); /* ふわっと拡大 */
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
 }
+
+
 
 /* ヒーロー画像 */
 .hero {
@@ -257,21 +285,60 @@ input, select {
   text-align: center;
   font-size: 18px;
 }
-
-/* 保管用 */
-/* .btn-primary {
-  border: none;
-  border-radius: 999px;
-  padding: 0.8rem 1.8rem;
-  font-size: 1rem;
-  font-weight: 700;
-  color: #fff;
-  background: linear-gradient(135deg, #42a5f5, #1e88e5);
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(33,150,243,0.4);
-  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, filter 0.15s;
+.intro {
+  padding: 60px 40px;
 }
-*/
+
+.intro-wrap {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.intro-img {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.intro-img img {
+  width: 280px;
+  height: auto;
+  border-radius: 10px;
+}
+
+
+.intro-text {
+  flex: 1;
+  font-size: 20px;
+  line-height: 1.8;
+}
+
+.img-wrap {
+    position: relative;
+    display: inline-block;
+  }
+
+  .img-wrap img {
+    display: block;
+  }
+
+  .img-wrap .hover-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;          /* ふだんは非表示 */
+    transition: opacity 0.2s;
+  }
+
+  .img-wrap:hover .hover-img {
+    opacity: 1;          /* マウスを乗せたら表示 */
+  }
+
+  .img-wrap:hover .normal-img {
+    opacity: 0;          /* 元画像を消す */
+  }
+
 
 
 .check-grid {
@@ -422,5 +489,16 @@ input, select {
 @media (min-width: 1024px) {
   .card {
     padding: 2rem;
+  }
+}
+
+@media(max-width:900px){
+  .intro-wrap {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .intro-img img {
+    margin: 0 auto;
   }
 }
