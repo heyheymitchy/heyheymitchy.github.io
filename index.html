@@ -1,10 +1,7 @@
 ﻿<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!-- わくわくプログラミング工房　平兵道　のホームページ -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-
 <!DOCTYPE html >
-
-<!-- html -->
 <html lang="ja">
 
 <!-- head -->
@@ -24,21 +21,54 @@
 <!-- FC2カウンター ここまで -->
 </div>
 
+
+<!-- ▼ ここがポイント：ターゲット要素を header の「前」に置く -->
+<a id="ja"></a>
+<a id="en"></a>
+
+
+
 <!-- ヘッダー -->
 <header class="header">
 
-  <div class="logo-box"><img src="images/logo73.png" alt="ロゴ">
+
+
+<!-- 左にロゴ／右にメニュー　表示させる -->
+  <div class="logo-box"><img src="images/logo72.png" alt="ロゴ">
 　</div>
 
-  <div class="menu">
-    <a href="hajime.html"><button>はじめまして</button></a>
-    <a href="syokai.html"><button>なにがあるの</button></a>
-    <a href="course.html"><button>やってみよう</button></a>
-    <a href="faqans.html"><button>しつもんする</button></a>
-    <a href="toiawa.html"><button>かくにんする</button></a>
+<!-- 言語切り替えボタン -->
+  <div class="lang-switch">
+    <a href="#ja" class="lang-btn">日本語</a>
+    <a href="#en" class="lang-btn">English</a>
   </div>
 
+<!-- 日本語メニュー -->
+  <nav class="menu ja">
+    <a href="hello.html" class="btn">はじめまして</a>
+    <a href="course.html" class="btn">なにがあるの</a>
+    <a href="tryit.html" class="btn">やってみよう</a>
+    <a href="faqans.html" class="btn">しつもんする</a>
+    <a href="check.html" class="btn">かくにんする</a>
+  </nav>
+
+<!-- 英語メニュー -->
+  <nav class="menu en">
+    <a href="hello.html" class="btn">Hello</a>
+    <a href="course.html" class="btn">Go</a>
+    <a href="tryit.html" class="btn">Play</a>
+    <a href="faqans.html" class="btn">Ask</a>
+    <a href="check.html" class="btn">Check</a>
+  </nav>
+
 </header>
+<!-- メイン セクション　スタート-->
+ <section class="main">
+    <div class="main-text">
+      <h1></h1><p></p>
+    </div>
+ </section>
+<!-- メイン セクション　エンド　-->
 
 </body>
 </html>
