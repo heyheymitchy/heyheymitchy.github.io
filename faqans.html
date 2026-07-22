@@ -99,7 +99,7 @@
 
 
 <script>
-fetch("https://script.google.com/macros/s/AKfycbymeS5eigVWCt4e65mSox4BQEKoLOSl0VNTe4pskXiZTewlHj8HG50vLG7D34adw5WfAA/exec
+fetch("https://script.google.com/macros/s/AKfycbzKVO3kiX27vQELXOQPuCGyaGnnAe2MO2C2mCWevYnLl6Vhwi8ljq_jRay4i8vvYyqhKA/exec
 ") // GASが返すJSON
   .then(res => res.json())
   .then(data => {
@@ -119,7 +119,7 @@ document.getElementById("faqForm").onsubmit = async (e) => {
 
   const fd = new FormData(e.target);
 
-  const res = await fetch("https://script.google.com/macros/s/AKfycbymeS5eigVWCt4e65mSox4BQEKoLOSl0VNTe4pskXiZTewlHj8HG50vLG7D34adw5WfAA/exec", {
+  const res = await fetch("https://script.google.com/macros/s/AKfycbzKVO3kiX27vQELXOQPuCGyaGnnAe2MO2C2mCWevYnLl6Vhwi8ljq_jRay4i8vvYyqhKA/exec", {
     method: "POST",
     body: fd
   });
