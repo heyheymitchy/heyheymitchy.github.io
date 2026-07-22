@@ -1,6 +1,7 @@
 ﻿<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!-- わくわくプログラミング工房　平兵道　のホームページ -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- index.html -->
 <!DOCTYPE html >
 <html lang="ja">
 
@@ -26,15 +27,11 @@
 <a id="ja"></a>
 <a id="en"></a>
 
-
-
 <!-- ヘッダー -->
 <header class="header">
 
-
-
 <!-- 左にロゴ／右にメニュー　表示させる -->
-  <div class="logo-box"><img src="images/logo72.png" alt="ロゴ">
+  <div class="logo-box"><img src="images/logo.png" alt="ロゴ">
 　</div>
 
 <!-- 言語切り替えボタン -->
@@ -45,20 +42,20 @@
 
 <!-- 日本語メニュー -->
   <nav class="menu ja">
-    <a href="hello.html" class="btn">はじめまして</a>
-    <a href="course.html" class="btn">なにがあるの</a>
-    <a href="tryit.html" class="btn">やってみよう</a>
-    <a href="faqans.html" class="btn">しつもんする</a>
-    <a href="check.html" class="btn">かくにんする</a>
+    <a href="hello.html#ja" class="btn">はじめまして</a>
+    <a href="course.html#ja" class="btn">なにがあるの</a>
+    <a href="tryit.html#ja" class="btn">やってみよう</a>
+    <a href="faqans.html#ja" class="btn">しつもんする</a>
+    <a href="check.html#ja" class="btn">かくにんする</a>
   </nav>
 
 <!-- 英語メニュー -->
   <nav class="menu en">
-    <a href="hello.html" class="btn">Hello</a>
-    <a href="course.html" class="btn">Go</a>
-    <a href="tryit.html" class="btn">Play</a>
-    <a href="faqans.html" class="btn">Ask</a>
-    <a href="check.html" class="btn">Check</a>
+    <a href="hello.html#en" class="btn">Hello</a>
+    <a href="course.html#en" class="btn">Go</a>
+    <a href="tryit.html#en" class="btn">Play</a>
+    <a href="faqans.html#en" class="btn">Ask</a>
+    <a href="check.html#en" class="btn">Check</a>
   </nav>
 
 </header>
@@ -68,7 +65,42 @@
       <h1></h1><p></p>
     </div>
  </section>
+<!-- bottom-end -->
+  <section id="bottom-end" class="bottom-end">
+    <!-- style.css でbuttom画像の差し込み -->
+  </section>
 <!-- メイン セクション　エンド　-->
 
+<div class="bottom-end">
+<!-- 無料体験受付中 -->
+    <section id="form" class="contact">
+     <a href="contact.html" class="btn">無料体験講座に申し込む</a>
+　  </
+section>
+</div>
+
+<!-- <img src="images/qr.png" alt="QRコード" width="200">　-->
+
+  <!-- フッター -->
+  <footer>
+  わくわくプログラミング工房　平兵道　est.2026
+  </footer>
+
+<script>
+document.querySelectorAll(".lang-btn").forEach(btn => {
+  btn.addEventListener("click", function() {
+
+    // href="#ja" → "ja"
+    const id = this.hash.substring(1);
+
+    // sessionStorageへ保存
+    sessionStorage.setItem("lang", id);
+
+    // 次のページへ移動する場合
+    // location.href = "page2.html";
+  });
+});
+
+</script>
 </body>
 </html>

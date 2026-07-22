@@ -1,0 +1,181 @@
+﻿<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- わくわくプログラミング工房　平兵道　のホームページ -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- 紹介ページ -->
+<!-- check.html -->
+<!DOCTYPE html >
+<html lang="ja">
+
+<!-- head -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>紹介ページ</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<!-- body --> 
+<body>
+<!-- カウンター　標示用 -->
+<div align="right">
+  <!-- FC2カウンター ここから -->
+<script language="javascript" type="text/javascript" src="//counter1.fc2.com/counter.php?id=41013370&main=1"></script><noscript><img src="//counter1.fc2.com/counter_img.php?id=41013370&main=1" /></noscript>
+<!-- FC2カウンター ここまで -->
+</div>
+
+
+<!-- ▼ ここがポイント：ターゲット要素を header の「前」に置く -->
+<a id="ja"></a>
+<a id="en"></a>
+
+<!-- ヘッダー -->
+<header class="header">
+
+<!-- 左にロゴ／右にメニュー　表示させる -->
+  <div class="logo-box"><img src="images/logo.png" alt="ロゴ">
+　</div>
+
+<!-- 言語切り替えボタン -->
+  <div class="lang-switch">
+    <a href="#ja" class="lang-btn">日本語</a>
+    <a href="#en" class="lang-btn">English</a>
+  </div>
+
+<!-- 日本語メニュー -->
+  <nav class="menu ja">
+    <a href="hello.html#ja" class="btn">はじめまして</a>
+    <a href="course.html#ja" class="btn">なにがあるの</a>
+    <a href="tryit.html#ja" class="btn">やってみよう</a>
+    <a href="faqans.html#ja" class="btn">しつもんする</a>
+    <a href="check.html#ja" class="btn">かくにんする</a>
+  </nav>
+
+<!-- 英語メニュー -->
+  <nav class="menu en">
+    <a href="hello.html#en" class="btn">Hello</a>
+    <a href="course.html#en" class="btn">Go</a>
+    <a href="tryit.html#en" class="btn">Play</a>
+    <a href="faqans.html#en" class="btn">Ask</a>
+    <a href="check.html#en" class="btn">Check</a>
+  </nav>
+
+</header>
+
+
+<title>紹介ページ</title>
+
+
+</head><body>
+
+<div id="content"></div>
+
+<script>
+
+    // 日本語データ
+    const data_jaen = {
+        101: { title: "Scratch", icon: "images/icon_001.png", desc: "Scratchは、ノーコードと呼ばれるプログラミングツールです。<br>「ブロック」と呼ばれるを部品を組み合わせるだけで完成します。<br>ゲームやアニメや音楽を簡単に作ることができます。<br>［Scratch講座］では、プログラムを完成させることが目的ではありません。<br>製作途中で、うまく進まないときに、どうやって解決するか。<br>Try&Errで、色々なパターンをくりかえしたり、元に戻したり、削除したり、最初からやり直したり。<br>そんなことを経験することで、産まれる[疑問][工夫][気づき]が、未来を生き抜くチカラになります。" },
+        102: { title: "ゲーム", icon: "images/icon_002.png", desc: "ゲーム制作は創造力と論理的思考を育てる最高の学習方法です。" },
+        103: { title: "アート", icon: "images/icon_003.png", desc: "アートは色・形・感性を自由に表現できるクリエイティブ活動です。" },
+        104: { title: "音楽", icon: "images/icon_004.png", desc: "音楽はリズムとメロディで心を豊かにする最高の表現方法です。" },
+        105: { title: "英語", icon: "images/icon_005.png", desc: "英語は世界とつながるための大切なコミュニケーションツールです。" },
+
+        106: { title: "ホームページ", icon: "images/icon_006.png", desc: "ホームページ制作は情報発信の基本スキルです。" },
+        107: { title: "HTML", icon: "images/icon_007.png", desc: "HTMLはWebページの骨組みを作る言語です。" },
+        108: { title: "CSS", icon: "images/icon_008.png", desc: "CSSはWebページのデザインを作るスタイル言語です。" },
+        109: { title: "GAS", icon: "images/icon_009.png", desc: "GASはGoogleサービスを自動化できる便利なスクリプトです。" },
+        110:{ title: "Vscode", icon: "images/icon_010.png", desc: "VSCodeは世界で最も使われている高機能エディタです。" },
+
+        111:{ title: "GitHub", icon: "images/icon_011.png", desc: "GitHubはコードを保存・公開できるサービスです。" },
+        112:{ title: "プログラミング", icon: "images/icon_012.png", desc: "プログラミングは問題解決力を育てる最強の学習です。" },
+        113:{ title: "STEAM", icon: "images/icon_013.png", desc: "STEAM教育は科学・技術・芸術を統合した新しい学びです。" },
+        114:{ title: "SDGs", icon: "images/icon_014.png", desc: "SDGsは持続可能な世界を目指す国際目標です。" },
+        115:{ title: "AIプロンプト", icon: "images/icon_015.png", desc: "AIプロンプトはAIに指示を出すための文章作成技術です。" },
+
+        116:{ title: "Python", icon: "images/icon_016.png", desc: "Pythonは初心者にも優しい万能プログラミング言語です。" },
+        117:{ title: "YouTube", icon: "images/icon_017.png", desc: "YouTubeは動画で学びを広げる最高のプラットフォームです。" },
+        118:{ title: "Zoom", icon: "images/icon_018.png", desc: "Zoomはオンライン授業や会議に使われる便利なツールです。" },
+        119:{ title: "コンピュータ", icon: "images/icon_019.png", desc: "コンピュータは現代の学習に欠かせない基本ツールです。" },
+        120:{ title: "デジタルコンテンツ", icon: "images/icon_020.png", desc: "デジタルコンテンツ制作は未来の必須スキルです。" },
+
+        121:{ title: "コンサル", icon: "images/icon_021.png", desc: "コンサルは課題を分析し解決へ導く専門スキルです。" },
+        122:{ title: "ネットビジネス", icon: "images/icon_022.png", desc: "ネットビジネスは誰でも始められる新しい働き方です。" },
+        123:{ title: "個人事業者", icon: "images/icon_023.png", desc: "個人事業は自分の力で収益を生み出す働き方です。" },
+        124:{ title: "起業", icon: "images/icon_024.png", desc: "起業はアイデアを形にして社会に価値を届ける活動です。" },
+        125:{ title: "コーチング", icon: "images/icon_025.png", desc: "コーチングは相手の可能性を引き出すコミュニケーション技術です。" },
+    // 英語データ
+        901: { title: "Scratch", icon: "images/en/icon_901.png", desc: "Scratch is a fun programming tool where kids can create games and animations using blocks." },
+        902: { title: "Game", icon: "images/en/icon_902.png", desc: "Game creation boosts creativity and logical thinking." },
+        903: { title: "Art", icon: "images/en/icon_903.png", desc: "Art is a creative activity where you can freely express colors, shapes, and imagination." },
+        904: { title: "Music", icon: "images/en/icon_904.png", desc: "Music enriches the heart with rhythm and melody." },
+        905: { title: "English", icon: "images/en/icon_905.png", desc: "English is an important communication tool to connect with the world." },
+
+        906: { title: "Homepage", icon: "images/en/icon_906.png", desc: "Creating a homepage is a basic skill for sharing information." },
+        907: { title: "HTML", icon: "images/en/icon_907.png", desc: "HTML is the language that builds the structure of web pages." },
+        908: { title: "CSS", icon: "images/en/icon_908.png", desc: "CSS is the style language that designs web pages." },
+        909: { title: "GAS", icon: "images/en/icon_909.png", desc: "GAS is a useful script to automate Google services." },
+        910:{ title: "Vscode", icon: "images/en/icon_910.png", desc: "VSCode is one of the most popular code editors in the world." },
+
+        911:{ title: "GitHub", icon: "images/en/icon_911.png", desc: "GitHub is a service to store and publish code." },
+        912:{ title: "Programming", icon: "images/en/icon_912.png", desc: "Programming develops strong problem-solving skills." },
+        913:{ title: "STEAM", icon: "images/en/icon_913.png", desc: "STEAM integrates science, technology, engineering, arts, and math." },
+        914:{ title: "SDGs", icon: "images/en/icon_914.png", desc: "SDGs are global goals for a sustainable future." },
+        915:{ title: "AI Prompt", icon: "images/en/icon_915.png", desc: "AI prompts are instructions to communicate effectively with AI." },
+
+        916:{ title: "Python", icon: "images/en/icon_916.png", desc: "Python is a beginner-friendly and powerful programming language." },
+        917:{ title: "YouTube", icon: "images/en/icon_917.png", desc: "YouTube is a great platform for learning through videos." },
+        918:{ title: "Zoom", icon: "images/en/icon_918.png", desc: "Zoom is a useful tool for online classes and meetings." },
+        919:{ title: "Computer", icon: "images/en/icon_919.png", desc: "Computers are essential tools for modern learning." },
+        920:{ title: "Digital Contents", icon: "images/en/icon_920.png", desc: "Creating digital content is an important skill for the future." },
+
+        921:{ title: "Consulting", icon: "images/en/icon_921.png", desc: "Consulting analyzes problems and guides solutions." },
+        922:{ title: "Online Business", icon: "images/en/icon_922.png", desc: "Online business is a new way of working anyone can start." },
+        923:{ title: "Sole Proprietor", icon: "images/en/icon_923.png", desc: "A sole proprietor builds income independently." },
+        924:{ title: "Startup", icon: "images/en/icon_924.png", desc: "A startup turns ideas into value for society." },
+        925:{ title: "Coaching", icon: "images/en/icon_925.png", desc: "Coaching helps bring out a person's potential." }
+    };
+
+// URLパラメータから id を取得（例：?pt=101～925）
+const url = new URL(window.location.href);
+const pt = url.searchParams.get("pt");
+const lang = url.searchParams.get("lang");
+
+// 該当データを取得
+// 言語データ選択
+const item = data_jaen[pt];
+
+// HTMLに反映
+if (item) {
+  document.getElementById("content").innerHTML = `
+    <img src="${item.icon}" class="icon">
+    <div class="title">${item.title}</div>
+    <div class="desc">${item.desc}</div>
+  `;
+} else {
+  document.getElementById("content").innerHTML = `
+    <div class="title">データがありません</div>
+  `;
+}
+
+
+
+document.querySelectorAll(".lang-btn").forEach(btn => {
+  btn.addEventListener("click", function() {
+
+    // href="#ja" → "ja"
+    const id = this.hash.substring(1);
+
+    // sessionStorageへ保存
+    sessionStorage.setItem("id", id);
+
+    // 次のページへ移動する場合
+    // location.href = "page2.html";
+  });
+});
+
+const id = sessionStorage.getItem("id");
+
+
+</script>
+<a href="index.html" class="back-btn">← 戻る</a>
+</body>
+</html>

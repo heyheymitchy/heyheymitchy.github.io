@@ -1,8 +1,8 @@
-﻿<! なにがあるの　ページ ->
-<!-- course  ++++++++++++++++++++ -->
+﻿<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- わくわくプログラミング工房　平兵道　のホームページ -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- course.html -->
 <!DOCTYPE html >
-
-<!-- html -->
 <html lang="ja">
 
 <!-- head -->
@@ -10,114 +10,152 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>わくわくプログラミング工房　平兵道</title>
-<link rel="stylesheet" href="style2.css">
+<link rel="stylesheet" href="style.css">
 </head>
-
 
 <!-- body --> 
 <body>
 
-<!-- ★ 言語切替ターゲットは必ず header より前に置く ★ -->
-  <a id="ja"></a>
-  <a id="en"></a>
+<!-- ★ 言語切替ターゲット（bodyの次に置く） -->
+<a id="ja"></a>
+<a id="en"></a>
 
-<!-- カウンター　標示用 -->
-<div align="right">
-  <!-- FC2カウンター ここから -->
-<script language="javascript" type="text/javascript" src="//counter1.fc2.com/counter.php?id=41013370&main=1"></script><noscript><img src="//counter1.fc2.com/counter_img.php?id=41013370&main=1" /></noscript>
-<!-- FC2カウンター ここまで -->
+<!-- ★ ヘッダー -->
+<header class="header">
+
+<!-- 左にロゴ／右にメニュー　表示させる -->
+  <div class="logo-box"><img src="images/logo.png" alt="ロゴ">
+　</div>
+
+<!-- 言語切り替えボタン -->
+  <div class="lang-switch">
+    <a href="#ja" class="lang-btn">日本語</a>
+    <a href="#en" class="lang-btn">English</a>
+  </div>
+
+<!-- 日本語メニュー -->
+  <nav class="menu ja">
+    <a href="hello.html#ja" class="btn">はじめまして</a>
+    <a href="course.html#ja" class="btn">なにがあるの</a>
+    <a href="tryit.html#ja" class="btn">やってみよう</a>
+    <a href="faqans.html#ja" class="btn">しつもんする</a>
+    <a href="check.html#ja" class="btn">かくにんする</a>
+  </nav>
+
+<!-- 英語メニュー -->
+  <nav class="menu en">
+    <a href="hello.html#en" class="btn">Hello</a>
+    <a href="course.html#en" class="btn">Go</a>
+    <a href="tryit.html#en" class="btn">Play</a>
+    <a href="faqans.html#en" class="btn">Ask</a>
+    <a href="check.html#en" class="btn">Check</a>
+  </nav>
+</header>
+
+
+
+<h1>なにがあるの？</h1>
+<div class="img-info">
+  <h1>興味のある画面をクリックしてみよう</h1>
 </div>
 
+<!-- ★ 日本語版（言語切替用） -->
 
-<!-- ヘッダー -->
-  <header>
-    <!-- ロゴやメニュー -->
-  </header>
-
-<!-- 言語切替ボタン -->
-<div class="lang-switch">
-  <a href="#ja">日本語</a>
-  <a href="#en">English</a>
-</div>
-
-<!-- 日本語版 -->
 <div class="img-grid lang-ja">
-  <a href="page1.html"><img src="img/illust1.png" alt=""></a>
-  <a href="page2.html"><img src="img/illust2.png" alt=""></a>
-  <a href="page3.html"><img src="img/illust3.png" alt=""></a>
-  <a href="page4.html"><img src="img/illust4.png" alt=""></a>
-  <a href="page5.html"><img src="img/illust5.png" alt=""></a>
+  <a href="introduction.html?pt=101&lang=#ja" class="icon-link"><img src="images/icon_001.png" alt="Scratch"></a>
+  <a href="introduction.html?pt=102&lang=#ja" class="icon-link"><img src="images/icon_002.png" alt="Game"></a>
+  <a href="introduction.html?pt=103&lang=#ja" class="icon-link"><img src="images/icon_003.png" alt="Art"></a>
+  <a href="introduction.html?pt=104&lang=#ja" class="icon-link"><img src="images/icon_004.png" alt="Music"></a>
+  <a href="introduction.html?pt=105&lang=#ja" class="icon-link"><img src="images/icon_005.png" alt="English"></a>
 
-  <a href="page6.html"><img src="img/illust6.png" alt=""></a>
-  <a href="page7.html"><img src="img/illust7.png" alt=""></a>
-  <a href="page8.html"><img src="img/illust8.png" alt=""></a>
-  <a href="page9.html"><img src="img/illust9.png" alt=""></a>
-  <a href="page10.html"><img src="img/illust10.png" alt=""></a>
+  <a href="introduction.html?pt=106&lang=#ja" class="icon-link"><img src="images/icon_006.png" alt="HP"></a>
+  <a href="introduction.html?pt=107&lang=#ja" class="icon-link"><img src="images/icon_007.png" alt="HTML"></a>
+  <a href="introduction.html?pt=108&lang=#ja" class="icon-link"><img src="images/icon_008.png" alt="CSS"></a>
+  <a href="introduction.html?pt=109&lang=#ja" class="icon-link"><img src="images/icon_009.png" alt="GAS"></a>
+  <a href="introduction.html?pt=110&lang=#ja" class="icon-link"><img src="images/icon_010.png" alt="VScode"></a>
 
-  <a href="page11.html"><img src="img/illust11.png" alt=""></a>
-  <a href="page12.html"><img src="img/illust12.png" alt=""></a>
-  <a href="page13.html"><img src="img/illust13.png" alt=""></a>
-  <a href="page14.html"><img src="img/illust14.png" alt=""></a>
-  <a href="page15.html"><img src="img/illust15.png" alt=""></a>
+  <a href="introduction.html?pt=111&lang=#ja" class="icon-link"><img src="images/icon_011.png" alt="GitHub"></a>
+  <a href="introduction.html?pt=112&lang=#ja" class="icon-link"><img src="images/icon_012.png" alt="Programming"></a>
+  <a href="introduction.html?pt=113&lang=#ja" class="icon-link"><img src="images/icon_013.png" alt="STEAM"></a>
+  <a href="introduction.html?pt=114&lang=#ja" class="icon-link"><img src="images/icon_014.png" alt="SDGs"></a>
+  <a href="introduction.html?pt=115&lang=#ja" class="icon-link"><img src="images/icon_015.png" alt="AIprompt"></a>
 
-  <a href="page16.html"><img src="img/illust16.png" alt=""></a>
-  <a href="page17.html"><img src="img/illust17.png" alt=""></a>
-  <a href="page18.html"><img src="img/illust18.png" alt=""></a>
-  <a href="page19.html"><img src="img/illust19.png" alt=""></a>
-  <a href="page20.html"><img src="img/illust20.png" alt=""></a>
+  <a href="introduction.html?pt=116&lang=#ja" class="icon-link"><img src="images/icon_016.png" alt="Python"></a>
+  <a href="introduction.html?pt=117&lang=#ja" class="icon-link"><img src="images/icon_017.png" alt="Youtube"></a>
+  <a href="introduction.html?pt=118&lang=#ja" class="icon-link"><img src="images/icon_018.png" alt="Zoom"></a>
+  <a href="introduction.html?pt=119&lang=#ja" class="icon-link"><img src="images/icon_019.png" alt="Computer"></a>
+  <a href="introduction.html?pt=120&lang=#ja" class="icon-link"><img src="images/icon_020.png" alt="Digital"></a>
 
-  <a href="page21.html"><img src="img/illust21.png" alt=""></a>
-  <a href="page22.html"><img src="img/illust22.png" alt=""></a>
-  <a href="page23.html"><img src="img/illust23.png" alt=""></a>
-  <a href="page24.html"><img src="img/illust24.png" alt=""></a>
-  <a href="page25.html"><img src="img/illust25.png" alt=""></a>
+  <a href="introduction.html?pt=121&lang=#ja" class="icon-link"><img src="images/icon_021.png" alt="Consul"></a>
+  <a href="introduction.html?pt=122&lang=#ja" class="icon-link"><img src="images/icon_022.png" alt="NETbuz"></a>
+  <a href="introduction.html?pt=123&lang=#ja" class="icon-link"><img src="images/icon_023.png" alt="Sole"></a>
+  <a href="introduction.html?pt=124&lang=#ja" class="icon-link"><img src="images/icon_024.png" alt="Start"></a>
+  <a href="introduction.html?pt=125&lang=#ja" class="icon-link"><img src="images/icon_025.png" alt="coaching"></a>
 </div>
 
-<!-- 英語版 -->
+<!-- ★ 英語版（言語切替用） -->
+
 <div class="img-grid lang-en">
-  <a href="page51.html"><img src="img/en/illust26.png" alt=""></a>
-  <a href="page52.html"><img src="img/en/illust26.png" alt=""></a>
-  <a href="page53.html"><img src="img/en/illust26.png" alt=""></a>
-  <a href="page54.html"><img src="img/en/illust26.png" alt=""></a>
-  <a href="page55.html"><img src="img/en/illust26.png" alt=""></a>
+  <a href="introduction.html?pt=901&lang=#en" class="icon-link"><img src="images/en/icon_901.png" alt=""></a>
+  <a href="introduction.html?pt=902&lang=#en" class="icon-link"><img src="images/en/icon_902.png" alt=""></a>
+  <a href="introduction.html?pt=903&lang=#en" class="icon-link"><img src="images/en/icon_903.png" alt=""></a>
+  <a href="introduction.html?pt=904&lang=#en" class="icon-link"><img src="images/en/icon_904.png" alt=""></a>
+  <a href="introduction.html?pt=905&lang=#en" class="icon-link"><img src="images/en/icon_905.png" alt=""></a>
 
-  <a href="page56.html"><img src="img/en/illust26.png" alt=""></a>
-  <a href="page57.html"><img src="img/en/illust26.png" alt=""></a>
-  <a href="page58.html"><img src="img/en/illust26.png" alt=""></a>
-  <a href="page59.html"><img src="img/en/illust26.png" alt=""></a>
-  <a href="page60.html"><img src="img/en/illust26.png" alt=""></a>
+  <a href="introduction.html?pt=906&lang=#en" class="icon-link"><img src="images/en/icon_906.png" alt=""></a>
+  <a href="introduction.html?pt=907&lang=#en" class="icon-link"><img src="images/en/icon_907.png" alt=""></a>
+  <a href="introduction.html?pt=908&lang=#en" class="icon-link"><img src="images/en/icon_908.png" alt=""></a>
+  <a href="introduction.html?pt=909&lang=#en" class="icon-link"><img src="images/en/icon_909.png" alt=""></a>
+  <a href="introduction.html?pt=910&lang=#en" class="icon-link"><img src="images/en/icon_910.png" alt=""></a>
 
-  <a href="page61.html"><img src="img/en/illust26.png" alt=""></a>
-  <a href="page62.html"><img src="img/en/illust26.png" alt=""></a>
-  <a href="page63.html"><img src="img/en/illust26.png" alt=""></a>
-  <a href="page64.html"><img src="img/en/illust26.png" alt=""></a>
-  <a href="page65.html"><img src="img/en/illust26.png" alt=""></a>
+  <a href="introduction.html?pt=911&lang=#en" class="icon-link"><img src="images/en/icon_911.png" alt=""></a>
+  <a href="introduction.html?pt=912&lang=#en" class="icon-link"><img src="images/en/icon_912.png" alt=""></a>
+  <a href="introduction.html?pt=913&lang=#en" class="icon-link"><img src="images/en/icon_913.png" alt=""></a>
+  <a href="introduction.html?pt=914&lang=#en" class="icon-link"><img src="images/en/icon_914.png" alt=""></a>
+  <a href="introduction.html?pt=915&lang=#en" class="icon-link"><img src="images/en/icon_915.png" alt=""></a>
 
-  <a href="page66.html"><img src="img/en/illust26.png" alt=""></a>
-  <a href="page67.html"><img src="img/en/illust26.png" alt=""></a>
-  <a href="page68.html"><img src="img/en/illust26.png" alt=""></a>
-  <a href="page69.html"><img src="img/en/illust26.png" alt=""></a>
-  <a href="page70.html"><img src="img/en/illust26.png" alt=""></a>
+  <a href="introduction.html?pt=916&lang=#en" class="icon-link"><img src="images/en/icon_916.png" alt=""></a>
+  <a href="introduction.html?pt=917&lang=#en" class="icon-link"><img src="images/en/icon_917.png" alt=""></a>
+  <a href="introduction.html?pt=918&lang=#en" class="icon-link"><img src="images/en/icon_918.png" alt=""></a>
+  <a href="introduction.html?pt=919&lang=#en" class="icon-link"><img src="images/en/icon_919.png" alt=""></a>
+  <a href="introduction.html?pt=920&lang=#en" class="icon-link"><img src="images/en/icon_920.png" alt=""></a>
 
-  <a href="page71.html"><img src="img/en/illust26.png" alt=""></a>
-  <a href="page72.html"><img src="img/en/illust26.png" alt=""></a>
-  <a href="page73.html"><img src="img/en/illust26.png" alt=""></a>
-  <a href="page74.html"><img src="img/en/illust26.png" alt=""></a>
-  <a href="page75.html"><img src="img/en/illust26.png" alt=""></a>
+  <a href="introduction.html?pt=921&lang=#en" class="icon-link"><img src="images/en/icon_921.png" alt=""></a>
+  <a href="introduction.html?pt=922&lang=#en" class="icon-link"><img src="images/en/icon_922.png" alt=""></a>
+  <a href="introduction.html?pt=923&lang=#en" class="icon-link"><img src="images/en/icon_923.png" alt=""></a>
+  <a href="introduction.html?pt=924&lang=#en" class="icon-link"><img src="images/en/icon_924.png" alt=""></a>
+  <a href="introduction.html?pt=925&lang=#en" class="icon-link"><img src="images/en/icon_925.png" alt=""></a>
 </div>
 
 
-<!-- bottom-end -->
-  <section id="bottom-end" class="bottom-end">
-    <!-- style.css でbuttom画像の差し込み -->
-  </section>
 
+<!-- ★ その他の要素（巻末表示） -->
+<section np="bottom-end" class="bottom-end"></section>
 
- <img src="images/qr.png" alt="QRコード" width="200">
-  <!-- フッター -->
-  <footer>
+<img src="images/qr.png" alt="QRコード" width="200">
+
+<footer>
   わくわくプログラミング工房　平兵道　est.2026
-  </footer>
+</footer>
+
+<script>
+document.querySelectorAll(".lang-btn").forEach(btn => {
+  btn.addEventListener("click", function() {
+
+    // href="#ja" → "ja"
+    const id = this.hash.substring(1);
+
+    // sessionStorageへ保存
+    sessionStorage.setItem("id", id);
+
+    // 次のページへ移動する場合
+    // location.href = "page2.html";
+  });
+});
+
+const id = sessionStorage.getItem("id");
+
+</script>
 
 </body>
 </html>

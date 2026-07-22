@@ -1,0 +1,162 @@
+﻿<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- わくわくプログラミング工房　平兵道　のホームページ -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- faqans.html -->
+<!DOCTYPE html >
+<html lang="ja">
+
+<!-- head -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ＦＡＱＡＮＳ</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<!-- body --> 
+<body>
+<!-- カウンター　標示用 -->
+<div align="right">
+  <!-- FC2カウンター ここから -->
+<script language="javascript" type="text/javascript" src="//counter1.fc2.com/counter.php?id=41013370&main=1"></script><noscript><img src="//counter1.fc2.com/counter_img.php?id=41013370&main=1" /></noscript>
+<!-- FC2カウンター ここまで -->
+</div>
+
+
+<!-- ▼ ここがポイント：ターゲット要素を header の「前」に置く -->
+<a id="ja"></a>
+<a id="en"></a>
+
+<!-- ヘッダー -->
+<header class="header">
+
+<!-- 左にロゴ／右にメニュー　表示させる -->
+  <div class="logo-box"><img src="images/logo.png" alt="ロゴ">
+　</div>
+
+<!-- 言語切り替えボタン -->
+  <div class="lang-switch">
+    <a href="#ja" class="lang-btn">日本語</a>
+    <a href="#en" class="lang-btn">English</a>
+  </div>
+
+<!-- 日本語メニュー -->
+  <nav class="menu ja">
+    <a href="hello.html" class="btn">はじめまして</a>
+    <a href="course.html" class="btn">なにがあるの</a>
+    <a href="tryit.html" class="btn">やってみよう</a>
+    <a href="faqans.html" class="btn">しつもんする</a>
+    <a href="check.html" class="btn">かくにんする</a>
+  </nav>
+
+<!-- 英語メニュー -->
+  <nav class="menu en">
+    <a href="hello.html#en" class="btn">Hello</a>
+    <a href="course.html#en" class="btn">Go</a>
+    <a href="tryit.html#en" class="btn">Play</a>
+    <a href="faqans.html#en" class="btn">Ask</a>
+    <a href="check.html#en" class="btn">Check</a>
+  </nav>
+
+</header>
+
+<div class="bottom-end">
+<!-- 無料体験受付中 -->
+    <section id="form" class="contact">
+     <a href="contact.html" class="btn">無料体験講座に申し込む</a>
+　  </section>
+</div>
+ <img src="images/qr.png" alt="QRコード" width="200">
+  <!-- フッター -->
+  <footer>
+  わくわくプログラミング工房　平兵道　est.2026
+  </footer>
+
+
+<!-- Googleフォーム or 自作フォーム（HTML → GAS）で質問回答を送信 -->
+<div id="faq"><h1>ＦＡＱＡＮＳのページです</h1></div>
+
+<!-- FAQ追加フォーム（HTML → GAS） -->
+<!-- FAQ追加フォーム -->
+<div class="faq-form">
+  <h2>FAQを追加する</h2>
+
+  <form id="faqForm">
+　　<label>※管理者コード</label>
+    <input type="password" name="code" required placeholder="管理者コードを入力">
+
+    <label>質問（Q）</label>
+    <input type="text" name="q" required placeholder="質問を入力してください">
+
+    <label>回答（A）</label>
+    <textarea name="a" required placeholder="回答を入力してください"></textarea>
+
+    <button type="submit">FAQを追加する</button>
+  </form>
+
+  <p id="result"></p>
+</div>
+
+
+<script>
+fetch("https://script.google.com/macros/s/AKfycbymeS5eigVWCt4e65mSox4BQEKoLOSl0VNTe4pskXiZTewlHj8HG50vLG7D34adw5WfAA/exec
+") // GASが返すJSON
+  .then(res => res.json())
+  .then(data => {
+    const box = document.getElementById("faq");
+    data.forEach(item => {
+      box.innerHTML += `
+        <div class="faq-item">
+          <h3>${item.q}</h3>
+          <p>${item.a}</p>
+        </div>
+      `;
+    });
+  });
+
+document.getElementById("faqForm").onsubmit = async (e) => {
+  e.preventDefault();
+
+  const fd = new FormData(e.target);
+
+  const res = await fetch("https://script.google.com/macros/s/AKfycbymeS5eigVWCt4e65mSox4BQEKoLOSl0VNTe4pskXiZTewlHj8HG50vLG7D34adw5WfAA/exec", {
+    method: "POST",
+    body: fd
+  });
+
+  const text = await res.text();
+  document.getElementById("result").innerText = text;
+};
+
+
+
+</script>
+<style>
+.faq-form {
+  width: 90%;
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 12px;
+  background: #fff4f8;
+  border: 2px solid #ffb6d9;
+}
+.faq-form input, .faq-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+.faq-form button {
+  width: 100%;
+  padding: 12px;
+  background: #ff66b3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+}
+</style>
+</body>
+</html>
