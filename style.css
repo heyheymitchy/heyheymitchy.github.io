@@ -73,13 +73,19 @@ body {
 /*******************/
 /* ▼ 言語切り替えロジック（JSなし） */
 
+/* 日本語と英語を重ねて、片方だけ表示 */
 /* 初期状態：日本語だけ表示 */
+.menu.ja { display: flex; }
 .menu.en { display: none; }
+
+.lang-ja { display: grid; }
 .lang-en { display: none; }
+
 /* 初期状態：日本語だけ表示（強制） */
 body:not(:target) .lang-en { display: none;}
 
 /* #en がターゲットなら英語表示 */
+/* 英語表示時（ハッシュ #en が付いたら切り替え） */
 #en:target ~ .header .menu.ja { display: none;}
 #en:target ~ .header .menu.en { display: flex;}
 #en:target ~ .lang-ja { display: none; }
@@ -91,9 +97,11 @@ body:not(:target) .lang-en { display: none;}
 #ja:target ~ .lang-en { display: none; }
 #ja:target ~ .lang-ja { display: grid; }
 
+
 /*******************/
 /* ヘッダー */
   .header {
+    position: relative; /* ← 追加 */
     overflow-x: auto;
     display: flex;
     align-items: center;
@@ -105,8 +113,14 @@ body:not(:target) .lang-en { display: none;}
 
 /* 言語切り替えボタン */
 .lang-switch {
+  position: absolute;
+  left: 200px;   /* ヘッダー右端に固定 */
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
-  gap: 10px;
+  gap: 16px;
+  flex-wrap: nowrap;
+
 }
 
 .lang-btn {
@@ -123,12 +137,11 @@ body:not(:target) .lang-en { display: none;}
   background: #bbb;
 }
 
-
 /* 左のロゴ */
 
   .logo-box {
     width: 150px;
-    height:25px;
+    height:30px;
     border-radius: 20px;
     display: flex;
     align-items: center;
@@ -140,6 +153,10 @@ body:not(:target) .lang-en { display: none;}
 
 /* メニュー（横一列固定） */
   .menu {
+    position: absolute;
+    right: 16px;   /* ヘッダー右端に固定 */
+    top: 50%;
+    transform: translateY(-50%);
     display: flex;
     gap: 16px;
     flex-wrap: nowrap; /* ← 折り返し禁止 */
@@ -159,6 +176,8 @@ body:not(:target) .lang-en { display: none;}
   text-decoration: none;
   transition: 0.2s;
   box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+  width: 180px; /* ← 固定幅にすると完璧 */
+  text-align: center;
 }
 /* 右のボタンを押したとき */
 
@@ -253,7 +272,7 @@ body:not(:target) .lang-en { display: none;}
         font-size: 20px;
     }
 
-
+/*****************************************************/
 /*****************************************************/
 /* MAIN　(メインのイメージ) */
 .main{
@@ -262,8 +281,30 @@ body:not(:target) .lang-en { display: none;}
   background-size: contain;      /* ← 画像を絶対に切らない */
   background-position: center;
   background-repeat: no-repeat;
+}
+
+/* 初期状態：日本語だけ表示 */
+.main.en { display: none;}
+
+
+/* 日本語画像 */
+.main .ja {
   background-image: url("images/main.png");
 }
+
+/* 英語画像 */
+.main .en {
+  background-image: url("images/main9.png");
+}
+
+/* #en がURLについたら英語版を表示 */
+#en:target ~  .main .en { display: block;}
+#en:target ~  .main .ja { display: none;}
+
+/* #ja がURLについたら日本語版を表示 */
+#ja:target ~  .main .ja { display: block;}
+#ja:target ~  .main .en { display: none;}
+
 
 /**********************************/
 /* main::before
@@ -415,18 +456,112 @@ body:not(:target) .lang-en { display: none;}
   margin-right: 0.5rem;
 }
 
+/* FAQタイトル */
+.faq-title {
+  text-align: center;
+  font-size: 28px;
+  color: #ff4fa3;
+  margin: 30px 0 10px;
+  font-weight: bold;
+}
 
+/* FAQ一覧の箱 */
+.faq-list {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto 40px;
+}
 
+/* FAQアイテム（横並び） */
+.faq-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+
+  background: #fff4f8;
+  border: 2px solid #ffb6d9;
+  border-radius: 16px;
+  padding: 20px;
+  margin: 16px 0;
+  box-shadow: 0 4px 8px rgba(255, 150, 200, 0.3);
+  transition: 0.2s;
+}
+
+/* ホバーでふわっと浮く */
+.faq-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(255, 150, 200, 0.4);
+}
+
+/* 左側：質問（Q） */
+.faq-q {
+  width: 40%;
+  font-size: 20px;
+  color: #ff66b3;
+  font-weight: bold;
+}
+
+/* 右側：回答（A） */
+.faq-a {
+  width: 60%;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #444;
+}
+
+/* FAQを追加する：フォーマット指定 */
+
+.faq-form {
+  width: 90%;
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 12px;
+  background: #fff4f8;
+  border: 2px solid #ffb6d9;
+}
+
+.faq-form input, .faq-form textarea {
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+.faq-form button {
+  width: 100%;
+  padding: 12px;
+  background: #ff66b3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+}
 /**********************************/
 /* contact:hover（特別キャンペーンの確認ボタン）*/
-
+/* 英語版対応 */
 .contact {
   text-align: center;  /* 中央寄せ */
-  margin-top: 10px;
-  font-size: 24px;
+  margin-top: 5px;
+  font-size: 28px;
   color:red;
-  padding:10px;                     /* 余白 */
+  padding:10px;  /* 余白 */
+  width: 100%; /* ← 固定幅にすると完璧 */
 }
+
+/* 初期状態：日本語だけ表示 */
+.contact.en { display: none; }
+
+/* #en がURLについたら英語版を表示 */
+#en:target ~ .contact .en { display: block; }
+#en:target ~ .contact .ja { display: none; }
+
+/* #ja がURLについたら日本語版を表示 */
+#ja:target ~ .contact .ja { display: block; }
+#ja:target ~ .contact .en { display: none; }
+
 
 .btn-primary, .btn-secondary {
   display: inline-block;
@@ -466,9 +601,23 @@ footer{
     background:#0066cc;               /* 背景色 */
     color:white;                      /* 文字色 */
 }
+
+/* 初期状態：日本語だけ表示 */
+.footer.en { display: none; }
+
+/* #en がURLについたら英語版を表示 */
+#en:target ~ .footer.en { display: block; }
+#en:target ~ .footer.ja { display: none; }
+
+/* #ja がURLについたら日本語版を表示 */
+#ja:target ~ .footer.ja { display: block; }
+#ja:target ~ .footer.en { display: none; }
+
+/*****************************************************/
 /*****************************************************/
 /* スマートフォン対策用　*/
 /* ここからはスマホ表示用の指定です */
+/*****************************************************/
 /* @media(max-width:900px)指定 */
 
 @media(max-width:900px){
@@ -619,7 +768,7 @@ input, select {
   font-size: 18px;
 }
 .intro {
-  padding: 60px 40px;
+  padding: 30px 20px;
 }
 
 .intro-wrap {
@@ -773,7 +922,7 @@ input, select {
   margin-top: 2rem;
   padding: 1.2rem 1rem;
   text-align: center;
-  background: #e3f2fd;
+  background: #1e88e5;
   font-size: 0.85rem;
 }
 
@@ -783,7 +932,7 @@ input, select {
 
 .footer-nav a {
   margin: 0 0.5rem;
-  color: #1e88e5;
+  color: black;
   text-decoration: none;
   font-weight: 600;
 }

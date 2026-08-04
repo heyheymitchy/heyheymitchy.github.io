@@ -60,21 +60,34 @@
 
 </header>
 
+<!-- FAQ一覧（ポップデザイン） -->
+<div id="faq" class="faq-list">
+  <h1 class="faq-title">ＦＡＱ（しつもん と こたえ）</h1>
+</div>
+
 <div class="bottom-end">
 <!-- 無料体験受付中 -->
     <section id="form" class="contact">
      <a href="contact.html" class="btn">無料体験講座に申し込む</a>
 　  </section>
 </div>
+
+<!--削除中 
  <img src="images/qr.png" alt="QRコード" width="200">
+ -->
+
   <!-- フッター -->
   <footer>
   わくわくプログラミング工房　平兵道　est.2026
   </footer>
 
 
-<!-- Googleフォーム or 自作フォーム（HTML → GAS）で質問回答を送信 -->
-<div id="faq"><h1>ＦＡＱＡＮＳのページです</h1></div>
+<!-- 自作フォーム（HTML → GAS）で質問回答を手動で送信します -->
+<!-- ＳＴＥＰ２では全自動反映されるようにコード修正予定です -->
+
+<div id="faq"><h1>※ここは、スタッフの管理用のページです（触らないでね）</h1>
+              <h2>ＦＡＱの追加情報をスタッフが日々管理しています</h2>
+</div>
 
 <!-- FAQ追加フォーム（HTML → GAS） -->
 <!-- FAQ追加フォーム -->
@@ -82,15 +95,9 @@
   <h2>FAQを追加する</h2>
 
   <form id="faqForm">
-　　<label>※管理者コード</label>
-    <input type="password" name="code" required placeholder="管理者コードを入力">
-
-    <label>質問（Q）</label>
-    <input type="text" name="q" required placeholder="質問を入力してください">
-
-    <label>回答（A）</label>
-    <textarea name="a" required placeholder="回答を入力してください"></textarea>
-
+　　<label>※管理者コード</label><input type="password" name="code" required placeholder="管理者コードを入力">
+    <label>質問（Q）</label><input type="text" name="q" required placeholder="質問を入力してください">
+    <label>回答（A）</label><textarea name="a" required placeholder="回答を入力してください"></textarea>
     <button type="submit">FAQを追加する</button>
   </form>
 
@@ -99,64 +106,44 @@
 
 
 <script>
-fetch("https://script.google.com/macros/s/AKfycbzKVO3kiX27vQELXOQPuCGyaGnnAe2MO2C2mCWevYnLl6Vhwi8ljq_jRay4i8vvYyqhKA/exec
-") // GASが返すJSON
+// GASが返すJSONで一覧表を作成する
+
+fetch("https://script.google.com/macros/s/AKfycbzqAP_j1ebvg8ufstag-EGPY2W71reTW6fqpUu-9jSMlCLZqxqeaj0A6bVLRin3e1_IPA/exec")
   .then(res => res.json())
   .then(data => {
     const box = document.getElementById("faq");
     data.forEach(item => {
       box.innerHTML += `
         <div class="faq-item">
-          <h3>${item.q}</h3>
-          <p>${item.a}</p>
+          <div class="faq-q">Q. ${item.q}</div>
+          <div class="faq-a">A. ${item.a}</div>
         </div>
       `;
     });
   });
+
+// FAQ追加フォームを送信したときに、GASへデータを送る処理
+// ＯＫ－ＮＧを受け取り画面に表示させる
 
 document.getElementById("faqForm").onsubmit = async (e) => {
   e.preventDefault();
 
   const fd = new FormData(e.target);
 
-  const res = await fetch("https://script.google.com/macros/s/AKfycbzKVO3kiX27vQELXOQPuCGyaGnnAe2MO2C2mCWevYnLl6Vhwi8ljq_jRay4i8vvYyqhKA/exec", {
+  const res = await fetch("https://script.google.com/macros/s/AKfycbzqAP_j1ebvg8ufstag-EGPY2W71reTW6fqpUu-9jSMlCLZqxqeaj0A6bVLRin3e1_IPA/exec", {
     method: "POST",
     body: fd
   });
 
   const text = await res.text();
   document.getElementById("result").innerText = text;
+
+// ★★★ ここが重要：FAQ一覧を再読み込み ★★★
+  loadFAQ();
+
 };
 
-
-
 </script>
-<style>
-.faq-form {
-  width: 90%;
-  max-width: 500px;
-  margin: 20px auto;
-  padding: 20px;
-  border-radius: 12px;
-  background: #fff4f8;
-  border: 2px solid #ffb6d9;
-}
-.faq-form input, .faq-form textarea {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0 16px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
-.faq-form button {
-  width: 100%;
-  padding: 12px;
-  background: #ff66b3;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-}
-</style>
+
 </body>
 </html>

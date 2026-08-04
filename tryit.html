@@ -1,0 +1,107 @@
+﻿<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- わくわくプログラミング工房　平兵道　のホームページ -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- tryit.html -->
+<!-- やってみよう　の ページ -->
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>やってみようのページ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<!-- body --> 
+<body>
+<!-- カウンター　標示用 -->
+<div align="right">
+  <!-- FC2カウンター ここから -->
+<script language="javascript" type="text/javascript" src="//counter1.fc2.com/counter.php?id=41013370&main=1"></script><noscript><img src="//counter1.fc2.com/counter_img.php?id=41013370&main=1" /></noscript>
+<!-- FC2カウンター ここまで -->
+</div>
+
+
+<!-- ▼ ここがポイント：ターゲット要素を header の「前」に置く -->
+<a id="ja"></a>
+<a id="en"></a>
+
+<!-- ヘッダー -->
+<header class="header">
+
+<!-- 左にロゴ／右にメニュー　表示させる -->
+  <div class="logo-box"><img src="images/logo.png" alt="ロゴ">
+　</div>
+
+<!-- 言語切り替えボタン -->
+  <div class="lang-switch">
+    <a href="#ja" class="lang-btn">日本語</a>
+    <a href="#en" class="lang-btn">English</a>
+  </div>
+
+<!-- 日本語メニュー -->
+  <nav class="menu ja">
+    <a href="hello.html" class="btn">はじめまして</a>
+    <a href="course.html" class="btn">なにがあるの</a>
+    <a href="tryit.html" class="btn">やってみよう</a>
+    <a href="faqans.html" class="btn">しつもんする</a>
+    <a href="check.html" class="btn">かくにんする</a>
+  </nav>
+
+<!-- 英語メニュー -->
+  <nav class="menu en">
+    <a href="hello.html#en" class="btn">Hello</a>
+    <a href="course.html#en" class="btn">Go</a>
+    <a href="tryit.html#en" class="btn">Play</a>
+    <a href="faqans.html#en" class="btn">Ask</a>
+    <a href="check.html#en" class="btn">Check</a>
+  </nav>
+
+</header>
+
+<section class="intro">
+  <div class="intro-wrap">
+     <div class="intro-img">
+       <img id="kazu-img"
+            src="images/hajimemasite.png"
+            alt="kazu"
+            onmouseover="this.src='images/hoka_no_shashin.png'"
+            onmouseout="this.src='images/hajimemasite.png'">
+      <span style="background:#ccc; color:#000; padding:8px 16px; font-size:32px; font-weight:bold; display:inline-block; margin-top:20px;">　［ＫＡＺＵ］　</span>
+     </div>
+
+     <div class="intro-text">
+      <h2>＜やってみよう＞</h2>
+      <p>「わくわくプログラミング工房　平兵道(へいへいみっち)」代表の　ＫＡＺＵです</p>
+      <p>私たちの工房コンセプトは、受験勉強を教えるようなティーチングではありません</p>
+      <p>プログラミングを通して、</p>
+      <p>「未来を切りひらく力」「 ワクワクしながら気づき、考えるチカラを伸ばす」</p>
+      <p>「 文系や理系を超えた　［アート×音楽］を融合したSTEAM教育」を　感じることができます</p>
+      <p>そして、”あなた自分自身が、考えて行動できるように”私たちは、コーチング　します</p><br>
+      <p>※STEAM：自分で考え、作り、発信するチカラを育てること</p>
+      <p>※コンセプト：基本的な考え方のことです</p>
+      <br>
+      <p></p>
+      <h2>＜略歴＞</h2>
+      <p>■大手ＩＴ企業にて営業企画から開発・保守運用までの業務を経験</p>
+      <p>■ホームページ構築業務では各種言語（HTML／CSS／PHP／Python等）に精通</p>
+      <p>■趣味(Ⅰ)の音楽制作ではAviUtl/SONAR/R8/AviUtl等を独学で学びＭＶ制作活動</p>
+      <p>■趣味(Ⅱ)のゲーム制作ではUnity／ScratchをＷＥＢ学習にてスキル取得</p>
+      <p>■趣味(Ⅲ)の資格取得では「基本情報処理」「カラーコーディネーター」「エコ検定」合格</p>
+      <p>■現在、G-STEAM会員（一般社団法人国際STEAM教育推進機構　会員）</p>
+    </div>
+  </div>
+</section>
+
+<button class="btn-back" onclick="history.back()">前の画面に戻る</button>
+  
+
+</body>
+</html>
+
+  <!-- フッター -->
+  <footer>
+  わくわくプログラミング工房　平兵道　est.2026
+  </footer>
+
+</body>
+</html>

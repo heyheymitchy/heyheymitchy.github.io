@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>無料体験講座お申込みのページ｜オンライン講座お申し込み</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <h1>わくわくプログラミング工房　平兵道</h1>
+    <p class="subtitle">こちらは、［無料体験講座]専用のページです</p>
+    <p class="catch">【※注意】[無料体験]以外は、有料の申し込みとなりますので、お間違えの無いようお願いいたします！</p>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <img src="images/hero.jpg" alt="オンライン講座イメージ">
+  </section>
+
+  <section class="form-section card">
+    <h2>オンライン講座お申し込みフォーム</h2>
+
+    <form id="entryForm">
+      <div class="form-row">
+        <label for="name">申込者氏名</label>
+        <input type="text" id="name" name="name" required placeholder="日本　一郎">
+      </div>
+
+      <div class="form-row">
+        <label for="kana">フリガナ</label>
+        <input type="text" id="kana" name="kana" required placeholder="にほん　いちろう">
+      </div>
+
+      <div class="form-row">
+        <label for="email">メールアドレス</label>
+        <input type="email" id="email" name="email" required placeholder="sample@gmail.com">
+      </div>
+
+      <div class="form-row">
+        <label for="tel">電話番号</label>
+        <input type="tel" id="tel" name="tel"　required placeholder="09012345678（－ハイフンなし）">
+      </div>
+
+      <div class="form-row">
+        <label for="post">郵便番号</label>
+        <input type="text" id="post" name="post"　required placeholder="1234567（－ハイフンなし）">
+      </div>
+
+      <div class="form-row">
+        <label for="course">希望講座名</label>
+        <select id="course" name="course" required placeholder="無料体験講座">
+          <option value="">選択してください</option>
+          <option value="scratch-free">無料体験講座</option>
+        </select>
+      </div>
+
+      <div class="form-row terms-row">
+        <input type="checkbox" id="agree" name="agree" required>
+        <label for="agree">
+          <a href="terms.html" target="_blank">利用規約</a>に同意します
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">無料体験に申し込む</button>
+      </div>
+    </form>
+
+    <p id="formMessage" class="form-message"></p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <nav class="footer-nav">
+    <a href="https://heyheymitchy.github.io/">ホーム</a>
+　　<a href="privacy.html">プライバシーポリシー</a>
+    <a href="terms.html">利用規約</a>
+    <a href="mailto:heymitchy347@gmail.com">お問い合わせ</a>
+  </nav>
+  <p class="copy">2026(C)　わくわくプログラミング工房　平兵道</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

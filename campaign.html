@@ -1,62 +1,113 @@
-<!DOCTYPE html>
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- わくわくプログラミング工房　平兵道　のホームページ -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- はじめましてのページ ->
+<!-- hello.html -->
+<!DOCTYPE html >
 <html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <title>わくわくプログラミング工房 平兵道｜会員登録申込</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="style2.css">
-</head>
-<body>
 
-<header class="site-header">
-  <div class="header-inner">
-    <h1>わくわくプログラミング工房　平兵道</h1>
-　　<h1 style="color: yellow; background: red; border: 4px solid red; padding: 10px 20px; display: inline-block; border-radius: 10px;" display: inline-block;>［特別会員］わくわくキャンペーンのお知らせ</h1>
+<!-- head -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>わくわくプログラミング工房 平兵道｜会員登録申込</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<!-- body --> 
+<body>
+<!-- カウンター　標示用 -->
+<div align="right">
+  <!-- FC2カウンター ここから -->
+<script language="javascript" type="text/javascript" src="//counter1.fc2.com/counter.php?id=41013370&main=1"></script><noscript><img src="//counter1.fc2.com/counter_img.php?id=41013370&main=1" /></noscript>
+<!-- FC2カウンター ここまで -->
+</div>
+
+
+<!-- ▼ ここがポイント：ターゲット要素を header の「前」に置く -->
+<a id="ja"></a>
+<a id="en"></a>
+
+<!-- ヘッダー -->
+<header class="header">
+
+<!-- 左にロゴ／右にメニュー　表示させる -->
+  <div class="logo-box"><img src="images/logo.png" alt="ロゴ">
+　</div>
+
+<!-- 言語切り替えボタン -->
+  <div class="lang-switch">
+    <a href="#ja" class="lang-btn">日本語</a>
+    <a href="#en" class="lang-btn">English</a>
   </div>
+
+<!-- 日本語メニュー -->
+  <nav class="menu ja">
+    <a href="hello.html" class="btn">はじめまして</a>
+    <a href="course.html" class="btn">なにがあるの</a>
+    <a href="tryit.html" class="btn">やってみよう</a>
+    <a href="faqans.html" class="btn">しつもんする</a>
+    <a href="check.html" class="btn">かくにんする</a>
+  </nav>
+
+<!-- 英語メニュー -->
+  <nav class="menu en">
+    <a href="hello.html#en" class="btn">Hello</a>
+    <a href="course.html#en" class="btn">Go</a>
+    <a href="tryit.html#en" class="btn">Play</a>
+    <a href="faqans.html#en" class="btn">Ask</a>
+    <a href="check.html#en" class="btn">Check</a>
+  </nav>
+
 </header>
 
+<body>
 
 <main>
 <BR>
 <div align="center">
-  　<h1 style="width:1000px; color: yellow; background:black; padding:15px 25px; display:inline-block; justify-content:center;">
+  　<h1 style="width:1180px; color: yellow; background:black; padding:15px 25px; display:inline-block; justify-content:center;">
   ＜特別会員＞キャンペーン特典
 　</h1>
 </div>
 
 <div style="display:flex; gap:20px; margin-top:30px; justify-content:center;">
 
-  <!-- 左：特別会員 -->
-  <div style="width:500px; border:4px solid red; padding:20px; background:#fffbe6; font-size:20px; line-height:1.6;">
-    <h2 style="color:red; font-size:24px; margin-top:0;">＜特別会員＞</h2>
-    <p><B>■入会費：4,800円<span style="background:yellow;color:red; font-weight:bold;"> ★キャンペーン特典→ [無料]　　</span></B></p>
-    <p><B>■年会費：9,600円<span style="background:yellow;color:red; font-weight:bold;"> ★キャンペーン特典→ [無料]　　</span></B></p>
+  <!-- 左：わくわく特別会員 -->
+  <div style="width:550px; border:4px solid red; padding:20px; background:#fffbe6; font-size:20px; line-height:1.6;">
+    <h2 style="color:red; font-size:24px; margin-top:0;">＜わくわく特別会員＞</h2>
+    <p><B>■入会費：4,800円<span style="background:yellow;color:red; font-weight:bold;">　★キャンペーン特典→ [無料]　　</span></B></p>
+    <p><B>■年会費：9,600円<span style="background:yellow;color:red; font-weight:bold;">　★キャンペーン特典→ [無料]　　</span></B></p>
     <p><B>■受講料：1,200円<span style="color:red; font-weight:bold;">（特別会員価格）</span></B></p>
     <p><B>■資料代：1,200円<span style="color:red; font-weight:bold;">（特別会員価格）</span></B><font color="blue">※1</font></p>
     <p><B>特別講座：4,800円<span style="color:red; font-weight:bold;">（特別会員価格）</span></B><font color="blue">※2</font></p>
     <p><B>特別資料：4,800円～<span style="color:red; font-weight:bold;">（特別会員価格）</span></B><font color="blue">※3</font></p>
-
-    <p align="left" style="margin-top:15px; font-size:22px; color:red; font-weight:bold;">
-      <font color="blue">※1.［受講のみ］の方は、資料購入は不要です<br>
-      ※2.［特別講座］は不定期の開催となります<br>
-      ※3.［注意］開催内容および諸事情により、<BR>資料配布は出来兼ねる場合がございます<br></font>
-    </p>
    </div>　
 
   <!-- 右：一般会員 -->
-  <div style="width:500px; border:4px solid #999; padding:20px; background:#f7f7f7; font-size:20px; line-height:1.6;">
-    <h2 style="color:#555; font-size:24px; margin-top:0;">＜一般会員＞</h2>
+  <div style="width:550px; border:4px solid #999; padding:20px; background:#f7f7f7; font-size:20px; line-height:1.6;">
+    <h2 style="color:#555; font-size:24px; margin-top:0;">＜わくわく一般会員＞</h2>
     <p>□入会費：2,400円（一般会員価格）</p>
     <p>□年会費：6,000円（一般会員価格）</p>
     <p>□受講料：2,400円（一般会員価格）</p>
     <p>□資料代：2,400円（一般会員価格）<font color="blue">※1</font></p>
     <p>特別講座：9,600円（一般会員価格）<font color="blue">※2</font></p>
     <p>特別資料：9,600円～（一般会員価格）<font color="blue">※3</font></p>
-    
 　</div>
 </div>
+<br>
 <div align="center">
-  <p style="font-size:28px; background:yellow; color:red; font-weight:bold; margin-top:20px;">　今だけ！特別会員は［入会費］［年会費］が完全無料！　</p>
+  　<h2 style="width:1180px; color: yellow; background:#fffbe6; padding:15px 25px; display:inline-block; justify-content:center;">
+  <p align="left" style="margin-top:15px; font-size:22px; color:red; font-weight:bold;">
+      <font color="blue">※1.［受講のみ］の方は、資料購入は不要です<br>
+      ※2.［特別講座］は不定期の開催となります<br>
+      ※3.［注意］開催内容および諸事情により、資料配布が出来兼ねる場合がございます<br></font>
+    </p>
+　</h2>
+</div>
+
+<div align="center">
+  <p style="font-size:28px; background:yellow; color:red; font-weight:bold; margin-top:15px;">　今だけ！”わくわく特別会員”は［入会費］［年会費］が完全無料！　</p>
 </div>
 <div align="center"><button class="btn-back" onclick="history.back()">前の画面に戻る</button></div>
 
@@ -67,9 +118,9 @@
     <a href="index.html">ホーム</a>
     <a href="privacy.html">プライバシーポリシー</a>
     <a href="terms.html">利用規約</a>
-    <a href="mailto:info@example.com">お問い合わせ</a>
+    <a href="mailto:heymitchy347@gmail.com">お問い合わせ</a>
   </nav>
-  <p class="copy">2026 $00A9 わくわくプログラミング工房　平兵道</p>
+  <p class="copy">2026 (c) わくわくプログラミング工房　平兵道</p>
 </footer>
 
 <script src="script.js"></script>

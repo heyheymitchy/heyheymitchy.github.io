@@ -22,7 +22,6 @@
 <!-- FC2カウンター ここまで -->
 </div>
 
-
 <!-- ▼ ここがポイント：ターゲット要素を header の「前」に置く -->
 <a id="ja"></a>
 <a id="en"></a>
@@ -59,32 +58,42 @@
   </nav>
 
 </header>
+
 <!-- メイン セクション　スタート-->
- <section class="main">
-    <div class="main-text">
-      <h1></h1><p></p>
-    </div>
- </section>
+<section class="main">
+
+<!-- 日本語版 -->
+ <div id="ja" class="main ja"></div>
+<!-- 英語版 -->
+ <div id="en" class="main en"></div>
+
+ <div class="main-text">
+  <h1></h1><p></p>
+ </div>
+
+</section>
+
 <!-- bottom-end -->
-  <section id="bottom-end" class="bottom-end">
-    <!-- style.css でbuttom画像の差し込み -->
-  </section>
+
+<section id="bottom-end" class="bottom-end">
+<!-- style.css でbuttom画像の差し込み -->
+</section>
 <!-- メイン セクション　エンド　-->
 
-<div class="bottom-end">
+<!-- 削除中 <div class="bottom-end">　-->
 <!-- 無料体験受付中 -->
-    <section id="form" class="contact">
-     <a href="contact.html" class="btn">無料体験講座に申し込む</a>
-　  </
-section>
-</div>
+  <section id="form" class="contact">
+<!-- 日本語版 -->
+     <div id="ja" class="contact ja"><a href="contact.html#ja" class="btn">無料体験申込み</a></div>
+<!-- 英語版 -->
+     <div id="en" class="contact en"><a href="contact.html#en" class="btn">Free to Apply</a></div>
+  </section>
 
 <!-- <img src="images/qr.png" alt="QRコード" width="200">　-->
 
-  <!-- フッター -->
-  <footer>
-  わくわくプログラミング工房　平兵道　est.2026
-  </footer>
+<!-- フッター -->
+  <footer class="footer ja">わくわくプログラミング工房　平兵道　est.2026</footer>
+  <footer class="footer en">Wakuwaku Programming Lab Heyheymitchy est.2026</footer>
 
 <script>
 document.querySelectorAll(".lang-btn").forEach(btn => {

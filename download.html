@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>ƒfƒWƒ^ƒ‹ƒRƒ“ƒeƒ“ƒc ƒ_ƒEƒ“ƒ[ƒh</title>
+<title>ãƒ‡ã‚¸ã‚¿ãƒ«ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -55,33 +55,33 @@
 
 <body>
 <div class="container">
-  <h1>ƒfƒWƒ^ƒ‹ƒRƒ“ƒeƒ“ƒc ƒ_ƒEƒ“ƒ[ƒh</h1>
-  <div id="content">“Ç‚İ‚İ’†...</div>
+  <h1>ãƒ‡ã‚¸ã‚¿ãƒ«ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰</h1>
+  <div id="content">èª­ã¿è¾¼ã¿ä¸­...</div>
 </div>
 
 <script>
-// URLƒpƒ‰ƒ[ƒ^‚©‚ç session_id ‚ğæ“¾
+// URLãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‹ã‚‰ session_id ã‚’å–å¾—
 const params = new URLSearchParams(window.location.search);
 const sessionId = params.get("session_id");
 
 if (!sessionId) {
   document.getElementById("content").innerHTML =
-    '<p class="error">•s³‚ÈƒAƒNƒZƒX‚Å‚·B</p>';
+    '<p class="error">ä¸æ­£ãªã‚¢ã‚¯ã‚»ã‚¹ã§ã™ã€‚</p>';
 } else {
-  // GAS API ‚É–â‚¢‡‚í‚¹
-  fetch(`https://script.google.com/macros/s/y‚ ‚È‚½‚ÌWebApp URLz/exec?session_id=${sessionId}`)
+  // GAS API ã«å•ã„åˆã‚ã›
+  fetch(`https://script.google.com/macros/s/ã€ã‚ãªãŸã®WebApp URLã€‘/exec?session_id=${sessionId}`)
     .then(res => res.json())
     .then(data => {
       if (!data.valid) {
         document.getElementById("content").innerHTML =
-          '<p class="error">w“ü‚ªŠm”F‚Å‚«‚Ü‚¹‚ñB</p>';
+          '<p class="error">è³¼å…¥ãŒç¢ºèªã§ãã¾ã›ã‚“ã€‚</p>';
         return;
       }
 
-      // “®‰æ
+      // å‹•ç”»
       const videoHtml = `
         <div class="section">
-          <h2>“®‰æ</h2>
+          <h2>å‹•ç”»</h2>
           <iframe src="https://www.youtube.com/embed/${data.youtube_id}" allowfullscreen></iframe>
         </div>
       `;
@@ -89,8 +89,8 @@ if (!sessionId) {
       // PDF
       const pdfHtml = `
         <div class="section">
-          <h2>PDF‹³Ş</h2>
-          <a class="btn" href="${data.pdf_dl_url}">PDF‚ğƒ_ƒEƒ“ƒ[ƒh</a>
+          <h2>PDFæ•™æ</h2>
+          <a class="btn" href="${data.pdf_dl_url}">PDFã‚’ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰</a>
         </div>
       `;
 
@@ -98,7 +98,7 @@ if (!sessionId) {
     })
     .catch(() => {
       document.getElementById("content").innerHTML =
-        '<p class="error">ƒf[ƒ^‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½B</p>';
+        '<p class="error">ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸã€‚</p>';
     });
 }
 </script>
