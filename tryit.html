@@ -73,7 +73,7 @@
 
   <section class="form-section card">
     <h2>オンライン講座お申し込みフォーム</h2>
-
+    <p id="formMessage" class="form-message"></p>
     <form id="entryForm">
       <div class="form-row">
         <label for="name">申込者氏名</label>
@@ -136,25 +136,26 @@
 </footer>
 
 <script>
-    document.getElementById('entryForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const form = e.target;
-      const data = new FormData(form);
+document.getElementById('entryForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = new FormData(form);
 
-      fetch('YOUR_WEB_APP_URL', {
-        method: 'POST',
-        body: data
-      })
-      .then(res => res.text())
-      .then(text => {
-        document.getElementById('result').textContent = text;
-        form.reset();
-      })
-      .catch(() => {
-        document.getElementById('result').textContent =
-          '送信に失敗しました。時間をおいて再度お試しください。';
-      });
-    });
+  fetch('【あなたのWebApp URL】', {
+    method: 'POST',
+    body: data
+  })
+  .then(res => res.text())
+  .then(text => {
+    document.getElementById('formMessage').textContent = text;
+    form.reset();
+  })
+  .catch(() => {
+    document.getElementById('formMessage').textContent =
+      '送信に失敗しました。時間をおいて再度お試しください。';
+  });
+});
+
   </script>
 </body>
 </html>
