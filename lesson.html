@@ -1,0 +1,85 @@
+﻿<!-- lesson.html（完成版テンプレート） -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>受講ページ</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .lesson-box {
+      margin: 40px auto;
+      padding: 30px;
+      max-width: 700px;
+      background: #fffbea;
+      border: 3px solid #ffcc00;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .expired-box {
+      margin: 40px auto;
+      padding: 30px;
+      max-width: 600px;
+      background: #ffe5e5;
+      border: 3px solid #ff4d4d;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="content">
+
+  <div class="lesson-box">
+    <h2>受講ページ</h2>
+    <p>以下の動画・PDFをご利用ください。</p>
+
+    <div id="videoArea"></div>
+    <div id="pdfArea"></div>
+  </div>
+
+</div>
+
+<script>
+  // ① URLから memberId を取得
+  const params = new URLSearchParams(window.location.search);
+  const memberId = params.get("memberId");
+
+  // ② GASで期限チェック
+  fetch("YOUR_WEBAPP_URL?checkExpire=1&memberId=" + memberId)
+    .then(res => res.json())
+    .then(json => {
+      if (json.expired) {
+        // 期限切れなら画面を差し替え
+        document.getElementById("content").innerHTML = `
+          <div class="expired-box">
+            <h2>視聴期限が終了しました</h2>
+            <p>ご利用ありがとうございました。</p>
+          </div>
+        `;
+      } else {
+        // 期限内なら動画・PDFを表示（GASから取得）
+        loadCourseResources(memberId);
+      }
+    });
+
+  // ③ GASから動画URL・PDFURLを取得して表示
+  function loadCourseResources(memberId) {
+    fetch("YOUR_WEBAPP_URL?getResources=1&memberId=" + memberId)
+      .then(res => res.json())
+      .then(json => {
+        document.getElementById("videoArea").innerHTML =
+          `<p><a href="${json.videoUrl}" target="_blank">? 動画を見る</a></p>`;
+
+        document.getElementById("pdfArea").innerHTML =
+          `<p><a href="${json.pdfUrl}" target="_blank">?? PDFをダウンロード</a></p>`;
+      });
+  }
+</script>
+
+</body>
+</html>

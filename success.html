@@ -1,38 +1,75 @@
-﻿<!-- success.html（Stripe決済完了後） -->
+﻿<!-- success.html（完成版テンプレート）-->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>決済が完了しました｜わくわくプログラミング工房 平兵道</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>お申込み完了ページ</title>
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    .success-box {
+      margin: 40px auto;
+      padding: 30px;
+      max-width: 600px;
+      background: #f0f8ff;
+      border: 3px solid #4da9ff;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .member-id {
+      font-size: 36px;
+      font-weight: 900;
+      color: #ff4081;
+      margin: 10px 0;
+    }
+    .expire {
+      font-size: 24px;
+      font-weight: bold;
+      color: #004a8f;
+      margin-top: 20px;
+    }
+  </style>
 </head>
+
 <body>
-<header class="site-header">
-  <div class="header-inner">
-    <h1>決済が完了しました</h1>
-    <p class="subtitle">ご購入ありがとうございます</p>
-  </div>
-</header>
-<main>
-  <section class="card">
-    <p>決済が正常に完了しましたので、</p>
-    <p>ご登録いただいたメールアドレス宛に、</p>
-    <ul>
-      <li>受講用動画URL</li>
-      <li>PDF資料ダウンロードURL</li>
-    </ul>
-    <p>を自動送信しています。メールをご確認ください。</p>
-  </section>
-</main>
-<footer class="site-footer">
-  <nav class="footer-nav">
-    <a href="index.html">ホーム</a>
-    <a href="privacy.html">プライバシーポリシー</a>
-    <a href="terms.html">利用規約</a>
-  </nav>
-  <p class="copy">2026 c わくわくプログラミング工房　平兵道</p>
-</footer>
+
+<div class="success-box">
+  <h2>お申込みありがとうございました！</h2>
+
+  <p>あなたの会員番号は</p>
+  <div id="memberId" class="member-id"></div>
+
+  <p class="expire">
+    視聴期限：<span id="expire"></span>
+  </p>
+
+  <p style="margin-top:30px;">
+    下のボタンから受講ページへ進めます
+  </p>
+
+  <a id="lessonLink" class="btn-primary" href="#">受講ページへ</a>
+</div>
+
+<script>
+  // ① URLから memberId を取得
+  const params = new URLSearchParams(window.location.search);
+  const memberId = params.get("memberId");
+
+  document.getElementById("memberId").textContent = memberId;
+
+  // ② GASから expireDays を取得
+  fetch("YOUR_WEBAPP_URL?memberId=" + memberId)
+    .then(res => res.json())
+    .then(json => {
+      document.getElementById("expire").textContent =
+        json.expireDays + "日間（本日より）";
+
+      // ③ lesson.html へ memberId を付けて遷移できるようにする
+      document.getElementById("lessonLink").href =
+        "lesson.html?memberId=" + memberId;
+    });
+</script>
+
 </body>
 </html>
-

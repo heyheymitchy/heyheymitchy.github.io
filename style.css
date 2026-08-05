@@ -912,10 +912,36 @@ input, select {
 
 /* フォームメッセージ */
 .form-message {
-  margin-top: 0.8rem;
-  font-size: 0.9rem;
-  color: #e53935;
+  margin-top: 20px;
+  padding: 20px;
+  background: #f0f8ff;
+  border: 3px solid #4da9ff;
+  border-radius: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #004a8f;
+  text-align: center;
+  line-height: 1.8;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
+
+/* 会員番号を大きく表示 */
+.member-id {
+  display: block;
+  font-size: 36px;
+  font-weight: 900;
+  color: #ff4081;
+  margin-top: 10px;
+  background: #fff176;
+  padding: 5px 15px;
+  border-radius: 10px;
+  animation: pop 0.6s ease-out;
+}
+@keyframes pop {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
 
 /* フッター */
 .site-footer {
