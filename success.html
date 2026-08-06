@@ -59,7 +59,7 @@
   document.getElementById("memberId").textContent = memberId;
 
   // ② GASから expireDays を取得
-  fetch("YOUR_WEBAPP_URL?memberId=" + memberId)
+  fetch("https://script.google.com/macros/s/AKfycbzSbX_OZnOUn1q2c8X9xm1wl0yJU5AyLxCCFSOIkRP0l4kj57EP4mL4RZ3q3rrUpFik/exec?memberId=" + memberId)
     .then(res => res.json())
     .then(json => {
       document.getElementById("expire").textContent =

@@ -50,7 +50,7 @@
   const memberId = params.get("memberId");
 
   // ② GASで期限チェック
-  fetch("YOUR_WEBAPP_URL?checkExpire=1&memberId=" + memberId)
+  fetch("https://script.google.com/macros/s/AKfycbzSbX_OZnOUn1q2c8X9xm1wl0yJU5AyLxCCFSOIkRP0l4kj57EP4mL4RZ3q3rrUpFik/exec?checkExpire=1&memberId=" + memberId)
     .then(res => res.json())
     .then(json => {
       if (json.expired) {
@@ -69,7 +69,7 @@
 
   // ③ GASから動画URL・PDFURLを取得して表示
   function loadCourseResources(memberId) {
-    fetch("YOUR_WEBAPP_URL?getResources=1&memberId=" + memberId)
+    fetch("https://script.google.com/macros/s/AKfycbzSbX_OZnOUn1q2c8X9xm1wl0yJU5AyLxCCFSOIkRP0l4kj57EP4mL4RZ3q3rrUpFik/exec?getResources=1&memberId=" + memberId)
       .then(res => res.json())
       .then(json => {
         document.getElementById("videoArea").innerHTML =

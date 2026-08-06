@@ -141,8 +141,7 @@ document.getElementById('entryForm').addEventListener('submit', function(e) {
   const data = new FormData(form);
 
 <!-- GAS修正時はデプロイ後にＵＲＬ修正すること20260805 -->
-  fetch('
-https://script.google.com/macros/s/AKfycbycut98dXXqXNebWwUXQPQgmrL_KUpTR_bkHnlIsKiwUJKfTBGS-tzZr3j3eFAQjEgz/exec', {
+  fetch('https://script.google.com/macros/s/AKfycbzSbX_OZnOUn1q2c8X9xm1wl0yJU5AyLxCCFSOIkRP0l4kj57EP4mL4RZ3q3rrUpFik/exec', {
     method: 'POST',
     body: data
   })
