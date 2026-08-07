@@ -141,7 +141,7 @@ document.getElementById('entryForm').addEventListener('submit', function(e) {
   const data = new FormData(form);
 
 <!-- GAS修正時はデプロイ後にＵＲＬ修正すること20260805 -->
-  fetch('https://script.google.com/macros/s/AKfycbzSbX_OZnOUn1q2c8X9xm1wl0yJU5AyLxCCFSOIkRP0l4kj57EP4mL4RZ3q3rrUpFik/exec', {
+  fetch('https://script.google.com/macros/s/AKfycbybs_Vv8kRNeI-PYZCh7e6AW4epDykkNKZLq3HOFICWygA-hT_9gDOgwbYc0u-XfUH4/exec', {
     method: 'POST',
     body: data
   })
@@ -153,7 +153,7 @@ document.getElementById('entryForm').addEventListener('submit', function(e) {
     `［申込確認できました。ありがとうございました］\n` +
     `［あなたの会員番号は “${memberId}” です］`;
 
-  document.getElementById('formMessage').textContent = msg;
+     document.getElementById('formMessage').textContent = msg;
 
   // Stripe Checkout へ遷移する場合
   if (json.checkoutUrl) {
