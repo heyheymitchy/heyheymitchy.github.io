@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>決済ページ</title>
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+  body { font-family:"Rounded Mplus 1c"; background:#fff8f0; padding:20px; }
+  .box { background:#fff; padding:20px; border-radius:12px; max-width:400px; margin:auto; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+  button { width:100%; padding:12px; margin-top:10px; border-radius:8px; background:#ff8a00; color:#fff; font-size:18px; cursor:pointer; }
+</style>
+</head>
+<body>
+
+<div class="box">
+  <h2>決済へ進む</h2>
+  <p>以下のボタンを押すと、Stripe の決済画面に移動します。</p>
+  <button id="payBtn">決済画面へ</button>
+</div>
+
+<script>
+const stripe = Stripe("pk_test_51U1cGDRpMQH46JyklwjmwRZ6wTybt9LCn7AWYORq84xzQULhpEKTBlIhR8bXCLbwOCWpAUrO67igBlp1GdyYLwf500ni9YGwsV");
+
+document.getElementById("payBtn").addEventListener("click", () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const checkoutUrl = urlParams.get("checkoutUrl");
+
+  if (!checkoutUrl) {
+    alert("checkoutUrl がありません");
+    return;
+  }
+
+  window.location.href = checkoutUrl;
+});
+</script>
+
+</body>
+</html>
