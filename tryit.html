@@ -139,7 +139,7 @@
 // GAS修正時はデプロイ後にＵＲＬ修正すること20260811
 // const GAS_URL = "★あなたのGASデプロイURL★";
 
-  const GAS_URL = "https://script.google.com/macros/s/AKfycbw9vhLGvUfvT6TMJPAQCHFXMqGxDKr4E1JtECd1cUFqZQOqS4l3dqoZGv6aBddGKKl0/exec";
+  const GAS_URL = "const GAS_URL = "https://script.google.com/macros/s/AKfycbyiQ9oFLq8DhtTZBU58yhO7tJVB6pY_kQQWNXeu90k6QofCU-UO7R7WVvPNiH86o37v/exec";
   document.getElementById("entryForm").addEventListener("submit", async (e) => {
    e.preventDefault();
 
@@ -153,7 +153,9 @@
       body: JSON.stringify(formData)
     });
 
+    console.log("status:", res.status);   // ← 追加
     const data = await res.json();
+    console.log("data:", data);           // ← 追加
 
     if (data.memberId) {
       const msg =
@@ -170,6 +172,7 @@
     }
 
   } catch (error) {
+    console.error(error);                 // ← 追加
     document.getElementById('formMessage').textContent =
       '送信に失敗しました。時間をおいて再度お試しください。';
   }

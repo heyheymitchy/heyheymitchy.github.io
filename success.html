@@ -62,9 +62,9 @@
 
 // GASをデプロイしたら②ＵＲＬ修正すること20260811
 // ② GASから expireDays を取得
-  fetch("https://script.google.com/macros/s/AKfycbw9vhLGvUfvT6TMJPAQCHFXMqGxDKr4E1JtECd1cUFqZQOqS4l3dqoZGv6aBddGKKl0/exec?memberId=" + memberId)
-    .then(res => res.json())
-    .then(json => {
+  fetch("https://script.google.com/macros/s/AKfycbyiQ9oFLq8DhtTZBU58yhO7tJVB6pY_kQQWNXeu90k6QofCU-UO7R7WVvPNiH86o37v/exec?memberId=" + memberId)
+   .then(res => res.json())
+   .then(json => {
       document.getElementById("expire").textContent =
         json.expireDays + "日間（本日より）";
 

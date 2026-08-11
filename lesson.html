@@ -52,7 +52,7 @@
   const memberId = params.get("memberId");
 
 // ② GASで期限チェック
-  fetch("https://script.google.com/macros/s/AKfycbw9vhLGvUfvT6TMJPAQCHFXMqGxDKr4E1JtECd1cUFqZQOqS4l3dqoZGv6aBddGKKl0/exec?checkExpire=1&memberId=" + memberId)
+  fetch("https://script.google.com/macros/s/AKfycbyiQ9oFLq8DhtTZBU58yhO7tJVB6pY_kQQWNXeu90k6QofCU-UO7R7WVvPNiH86o37v/exec?checkExpire=1&memberId=" + memberId)
     .then(res => res.json())
     .then(json => {
       if (json.expired) {
@@ -71,9 +71,9 @@
 
 // ③ GASから動画URL・PDFURLを取得して表示
   function loadCourseResources(memberId) {
-    fetch("https://script.google.com/macros/s/AKfycbw9vhLGvUfvT6TMJPAQCHFXMqGxDKr4E1JtECd1cUFqZQOqS4l3dqoZGv6aBddGKKl0/exec?getResources=1&memberId=" + memberId)
-      .then(res => res.json())
-      .then(json => {
+    fetch("https://script.google.com/macros/s/AKfycbyiQ9oFLq8DhtTZBU58yhO7tJVB6pY_kQQWNXeu90k6QofCU-UO7R7WVvPNiH86o37v/exec?getResources=1&memberId=" + memberId)
+     .then(res => res.json())
+     .then(json => {
         document.getElementById("videoArea").innerHTML =
           `<p><a href="${json.videoUrl}" target="_blank">? 動画を見る</a></p>`;
 
