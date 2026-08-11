@@ -45,13 +45,14 @@
 </div>
 
 <script>
-<!-- GAS修正時はデプロイ後にＵＲＬ修正すること②③20260805 -->
-  // ① URLから memberId を取得
+// GAS修正時はデプロイ後にＵＲＬ修正すること②③20260811
+// ① URLから memberId を取得
+
   const params = new URLSearchParams(window.location.search);
   const memberId = params.get("memberId");
 
-  // ② GASで期限チェック
-  fetch("https://script.google.com/macros/s/AKfycby63B_K0iFIyhHP3VX7MSl2oHAZSdCJT9KFDaBKH95Mw6qwLbfq1pX87gqab89GxUkB/exec?checkExpire=1&memberId=" + memberId)
+// ② GASで期限チェック
+  fetch("https://script.google.com/macros/s/AKfycbw9vhLGvUfvT6TMJPAQCHFXMqGxDKr4E1JtECd1cUFqZQOqS4l3dqoZGv6aBddGKKl0/exec?checkExpire=1&memberId=" + memberId)
     .then(res => res.json())
     .then(json => {
       if (json.expired) {
@@ -68,9 +69,9 @@
       }
     });
 
-  // ③ GASから動画URL・PDFURLを取得して表示
+// ③ GASから動画URL・PDFURLを取得して表示
   function loadCourseResources(memberId) {
-    fetch("https://script.google.com/macros/s/AKfycby63B_K0iFIyhHP3VX7MSl2oHAZSdCJT9KFDaBKH95Mw6qwLbfq1pX87gqab89GxUkB/exec?getResources=1&memberId=" + memberId)
+    fetch("https://script.google.com/macros/s/AKfycbw9vhLGvUfvT6TMJPAQCHFXMqGxDKr4E1JtECd1cUFqZQOqS4l3dqoZGv6aBddGKKl0/exec?getResources=1&memberId=" + memberId)
       .then(res => res.json())
       .then(json => {
         document.getElementById("videoArea").innerHTML =

@@ -98,12 +98,12 @@
 
       <div class="form-row">
         <label for="tel">電話番号</label>
-        <input type="tel" id="tel" name="tel"　required placeholder="09012345678（－ハイフンなし）">
+        <input type="tel" id="tel" name="tel" required placeholder="09012345678（－ハイフンなし）">
       </div>
 
       <div class="form-row">
         <label for="post">郵便番号</label>
-        <input type="text" id="post" name="post"　required placeholder="1234567（－ハイフンなし）">
+        <input type="text" id="post" name="post" required placeholder="1234567（－ハイフンなし）">
       </div>
 
       <div class="form-row">
@@ -126,33 +126,35 @@
       </div>
     <button class="btn-back" onclick="history.back()">前の画面に戻る</button>
     </form>
- 
+
     <p id="msg"></p>
-    <p id="formMessage" class="form-message"></p>
+
   </section>
 </main>
 
 
-<!-- GAS修正時はデプロイ後にＵＲＬ修正すること20260806 -->
-<!-- const GAS_URL = "★あなたのGASデプロイURL★";-->
+
+
 <script>
-  const GAS_URL = "https://script.google.com/macros/s/AKfycby63B_K0iFIyhHP3VX7MSl2oHAZSdCJT9KFDaBKH95Mw6qwLbfq1pX87gqab89GxUkB/exec";
+// GAS修正時はデプロイ後にＵＲＬ修正すること20260811
+// const GAS_URL = "★あなたのGASデプロイURL★";
 
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbw9vhLGvUfvT6TMJPAQCHFXMqGxDKr4E1JtECd1cUFqZQOqS4l3dqoZGv6aBddGKKl0/exec";
   document.getElementById("entryForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
+   e.preventDefault();
 
-  const formData = new FormData(e.target);
+  const formData = Object.fromEntries(new FormData(e.target));
   document.getElementById("msg").innerText = "送信中…";
 
   try {
     const res = await fetch(GAS_URL, {
       method: "POST",
-      body: formData
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData)
     });
 
     const data = await res.json();
 
-    // 会員番号の表示
     if (data.memberId) {
       const msg =
         `［申込確認できました。ありがとうございました］\n` +
@@ -160,7 +162,6 @@
       document.getElementById('formMessage').textContent = msg;
     }
 
-    // Stripe Checkout に移動
     if (data.checkoutUrl) {
       window.location.href = data.checkoutUrl;
     } else {

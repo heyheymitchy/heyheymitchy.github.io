@@ -52,15 +52,17 @@
 </div>
 
 <script>
-// GASをデプロイしたら②ＵＲＬ修正すること 
-  // ① URLから memberId を取得
+
+// ① URLから memberId を取得
+
   const params = new URLSearchParams(window.location.search);
   const memberId = params.get("memberId");
 
   document.getElementById("memberId").textContent = memberId;
 
-  // ② GASから expireDays を取得
-  fetch("https://script.google.com/macros/s/AKfycby63B_K0iFIyhHP3VX7MSl2oHAZSdCJT9KFDaBKH95Mw6qwLbfq1pX87gqab89GxUkB/exec?memberId=" + memberId)
+// GASをデプロイしたら②ＵＲＬ修正すること20260811
+// ② GASから expireDays を取得
+  fetch("https://script.google.com/macros/s/AKfycbw9vhLGvUfvT6TMJPAQCHFXMqGxDKr4E1JtECd1cUFqZQOqS4l3dqoZGv6aBddGKKl0/exec?memberId=" + memberId)
     .then(res => res.json())
     .then(json => {
       document.getElementById("expire").textContent =
