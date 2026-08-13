@@ -139,7 +139,7 @@
 // GAS修正時はデプロイ後にＵＲＬ修正すること20260811
 // const GAS_URL = "★あなたのGASデプロイURL★";
 
-  const GAS_URL = "const GAS_URL = "https://script.google.com/macros/s/AKfycbyiQ9oFLq8DhtTZBU58yhO7tJVB6pY_kQQWNXeu90k6QofCU-UO7R7WVvPNiH86o37v/exec";
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbyiQ9oFLq8DhtTZBU58yhO7tJVB6pY_kQQWNXeu90k6QofCU-UO7R7WVvPNiH86o37v/exec";
   document.getElementById("entryForm").addEventListener("submit", async (e) => {
    e.preventDefault();
 
@@ -149,6 +149,7 @@
   try {
     const res = await fetch(GAS_URL, {
       method: "POST",
+      mode: "no-cors", // ← 追加
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData)
     });
