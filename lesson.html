@@ -52,7 +52,7 @@
   const memberId = params.get("memberId");
 
 // ② GASで期限チェック
-  fetch("https://script.google.com/macros/s/AKfycbw-dtOI2bM1OhRGva3dvRPPKt5shjeRO9d-rVbAwrb1dGZj01iPhG2RcS7UCqaOTtKH/exec?checkExpire=1&memberId=" + memberId)
+  fetch("https://script.google.com/macros/s/AKfycbw6smkXG7u4W4fJ7nXVXrgpZeUJHHVvpY7AdHVpMdLkdC051oa7VbfnmBwe_GviwJ_p/exec?checkExpire=1&memberId=" + memberId)
     .then(res => res.json())
     .then(json => {
       if (json.expired) {
@@ -71,7 +71,7 @@
 
 // ③ GASから動画URL・PDFURLを取得して表示
   function loadCourseResources(memberId) {
-    fetch("https://script.google.com/macros/s/AKfycbw-dtOI2bM1OhRGva3dvRPPKt5shjeRO9d-rVbAwrb1dGZj01iPhG2RcS7UCqaOTtKH/exec?getResources=1&memberId=" + memberId)
+    fetch("https://script.google.com/macros/s/AKfycbw6smkXG7u4W4fJ7nXVXrgpZeUJHHVvpY7AdHVpMdLkdC051oa7VbfnmBwe_GviwJ_p/exec?getResources=1&memberId=" + memberId)
      .then(res => res.json())
      .then(json => {
         document.getElementById("videoArea").innerHTML =
