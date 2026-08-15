@@ -45,14 +45,14 @@
 </div>
 
 <script>
-// GAS修正時はデプロイ後にＵＲＬ修正すること②③20260811
+// GAS修正時はデプロイ後にＵＲＬ修正すること②③20260815
 // ① URLから memberId を取得
 
   const params = new URLSearchParams(window.location.search);
   const memberId = params.get("memberId");
 
 // ② GASで期限チェック
-  fetch("https://script.google.com/macros/s/AKfycbyiQ9oFLq8DhtTZBU58yhO7tJVB6pY_kQQWNXeu90k6QofCU-UO7R7WVvPNiH86o37v/exec?checkExpire=1&memberId=" + memberId)
+  fetch("https://script.google.com/macros/s/AKfycbw-dtOI2bM1OhRGva3dvRPPKt5shjeRO9d-rVbAwrb1dGZj01iPhG2RcS7UCqaOTtKH/exec?checkExpire=1&memberId=" + memberId)
     .then(res => res.json())
     .then(json => {
       if (json.expired) {
@@ -71,7 +71,7 @@
 
 // ③ GASから動画URL・PDFURLを取得して表示
   function loadCourseResources(memberId) {
-    fetch("https://script.google.com/macros/s/AKfycbyiQ9oFLq8DhtTZBU58yhO7tJVB6pY_kQQWNXeu90k6QofCU-UO7R7WVvPNiH86o37v/exec?getResources=1&memberId=" + memberId)
+    fetch("https://script.google.com/macros/s/AKfycbw-dtOI2bM1OhRGva3dvRPPKt5shjeRO9d-rVbAwrb1dGZj01iPhG2RcS7UCqaOTtKH/exec?getResources=1&memberId=" + memberId)
      .then(res => res.json())
      .then(json => {
         document.getElementById("videoArea").innerHTML =

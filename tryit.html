@@ -98,17 +98,17 @@
 
       <div class="form-row">
         <label for="tel">電話番号</label>
-        <input type="tel" id="tel" name="tel" required placeholder="09012345678（－ハイフンなし）">
+        <input type="text" id="tel" name="tel" required placeholder="01234567890（－ハイフンなし）">
       </div>
 
       <div class="form-row">
         <label for="post">郵便番号</label>
-        <input type="text" id="post" name="post" required placeholder="1234567（－ハイフンなし）">
+        <input type="text" id="post" name="post" required placeholder="0123456（－ハイフンなし）">
       </div>
 
       <div class="form-row">
-        <label for="course">希望講座名</label>
-        <select id="course" name="course" required placeholder="無料体験講座">
+        <label for="courseId">希望講座名</label>
+        <select id="courseId" name="courseId" required placeholder="無料体験講座">
           <option value="">選択してください</option>
           <option value="kssc00">Scratch体験講座（無料）</option>
         </select>
@@ -139,45 +139,33 @@
 // GAS修正時はデプロイ後にＵＲＬ修正すること20260811
 // const GAS_URL = "★あなたのGASデプロイURL★";
 
-  const GAS_URL = "https://script.google.com/macros/s/AKfycbyiQ9oFLq8DhtTZBU58yhO7tJVB6pY_kQQWNXeu90k6QofCU-UO7R7WVvPNiH86o37v/exec";
-  document.getElementById("entryForm").addEventListener("submit", async (e) => {
-   e.preventDefault();
+const GAS_URL = "https://script.google.com/macros/s/AKfycbw-dtOI2bM1OhRGva3dvRPPKt5shjeRO9d-rVbAwrb1dGZj01iPhG2RcS7UCqaOTtKH/exec";
+
+document.getElementById("entryForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
   const formData = Object.fromEntries(new FormData(e.target));
   document.getElementById("msg").innerText = "送信中…";
 
   try {
-    const res = await fetch(GAS_URL, {
+    await fetch(GAS_URL, {
       method: "POST",
-      mode: "no-cors", // ← 追加
+      mode: "no-cors",   // ← これが絶対に必要
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData)
     });
 
-    console.log("status:", res.status);   // ← 追加
-    const data = await res.json();
-    console.log("data:", data);           // ← 追加
-
-    if (data.memberId) {
-      const msg =
-        `［申込確認できました。ありがとうございました］\n` +
-        `［あなたの会員番号は “${data.memberId}” です］`;
-      document.getElementById('formMessage').textContent = msg;
-    }
-
-    if (data.checkoutUrl) {
-      window.location.href = data.checkoutUrl;
-    } else {
-      document.getElementById("msg").innerText =
-        "エラー：checkoutUrl がありません（GAS側のエラーの可能性）";
-    }
+    // ★ ここでレスポンスは読めないので成功扱いにする
+    document.getElementById('formMessage').textContent =
+      '［申込を受け付けました］\n［確認メールを送信します］';
 
   } catch (error) {
-    console.error(error);                 // ← 追加
+    console.error(error);
     document.getElementById('formMessage').textContent =
       '送信に失敗しました。時間をおいて再度お試しください。';
   }
 });
+
 </script>
 
 <!-- フッター -->
