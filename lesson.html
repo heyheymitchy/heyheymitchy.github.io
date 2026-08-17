@@ -44,44 +44,147 @@
 
 </div>
 
+<div id="pdfViewerArea"></div>
+<p><button id="viewPdfBtn" class="btn-primary">📄 PDFを表示する</button></p>
 <script>
-// GAS修正時はデプロイ後にＵＲＬ修正すること②③20260815
+// GAS修正時はデプロイ後にＵＲＬ修正すること５８行目20260815
 // ① URLから memberId を取得
+const params = new URLSearchParams(window.location.search);
+const memberId = params.get("memberId");
 
-  const params = new URLSearchParams(window.location.search);
-  const memberId = params.get("memberId");
+// GAS Web API URL
+// GASで期限チェック
 
-// ② GASで期限チェック
-  fetch("https://script.google.com/macros/s/AKfycbw6smkXG7u4W4fJ7nXVXrgpZeUJHHVvpY7AdHVpMdLkdC051oa7VbfnmBwe_GviwJ_p/exec?checkExpire=1&memberId=" + memberId)
+const API_URL = "https://script.google.com/macros/s/AKfycbw6smkXG7u4W4fJ7nXVXrgpZeUJHHVvpY7AdHVpMdLkdC051oa7VbfnmBwe_GviwJ_p/exec";
+
+// ------------------------------
+// PDFビューア（iframe表示）
+// ------------------------------
+function viewPdf() {
+
+  fetch(`${API_URL}?downloadPdf=1&memberId=${memberId}`)
+    .then(res => {
+
+      // ① 期限切れチェック
+      if (res.headers.get("Content-Type").includes("application/json")) {
+        return res.json().then(json => {
+          if (json.error === "expired") {
+            alert("視聴期限が終了しています");
+          }
+        });
+      }
+      return res.blob();
+    })
+    .then(blob => {
+      if (!blob) return;
+      const url = URL.createObjectURL(blob);
+      // iframe を生成して画面に追加
+      document.getElementById("pdfViewerArea").innerHTML = `
+        <iframe 
+          src="${url}" 
+          width="100%" 
+          height="600px" 
+          style="border: none; border-radius: 12px; background: #fff;">
+        </iframe>
+      `;
+    });
+}
+
+// ------------------------------
+// ② 教材（動画URL・PDFURL）取得
+// ------------------------------
+function loadResources() {
+
+  fetch(`${API_URL}?getResources=1&memberId=${memberId}`)
     .then(res => res.json())
     .then(json => {
-      if (json.expired) {
-        // 期限切れなら画面を差し替え
-        document.getElementById("content").innerHTML = `
-          <div class="expired-box">
-            <h2>視聴期限が終了しました</h2>
-            <p>ご利用ありがとうございました。</p>
-          </div>
-        `;
-      } else {
-        // 期限内なら動画・PDFを表示（GASから取得）
-        loadCourseResources(memberId);
-      }
-    });
 
-// ③ GASから動画URL・PDFURLを取得して表示
-  function loadCourseResources(memberId) {
-    fetch("https://script.google.com/macros/s/AKfycbw6smkXG7u4W4fJ7nXVXrgpZeUJHHVvpY7AdHVpMdLkdC051oa7VbfnmBwe_GviwJ_p/exec?getResources=1&memberId=" + memberId)
-     .then(res => res.json())
-     .then(json => {
-        document.getElementById("videoArea").innerHTML =
-          `<p><a href="${json.videoUrl}" target="_blank">? 動画を見る</a></p>`;
+      // 動画表示（Drive動画 or YouTube）
+      document.getElementById("videoArea").innerHTML = `
+        <p><a href="#" id="openVideo">🎬 動画を見る</a></p>
+      `;
 
-        document.getElementById("pdfArea").innerHTML =
-          `<p><a href="${json.pdfUrl}" target="_blank">?? PDFをダウンロード</a></p>`;
+      document.getElementById("openVideo").addEventListener("click", () => {
+        downloadVideo();
       });
-  }
+
+      // PDFダウンロード（GAS経由）
+      document.getElementById("pdfArea").innerHTML = `
+        <p><a href="#" id="downloadPdf">📄 PDFをダウンロード</a></p>
+      `;
+
+      document.getElementById("downloadPdf").addEventListener("click", () => {
+        downloadPdf();
+      });
+    });
+}
+
+
+// ------------------------------
+// ③ PDFダウンロード（GAS経由・安全版）
+// ------------------------------
+function downloadPdf() {
+  fetch(`${API_URL}?downloadPdf=1&memberId=${memberId}`)
+    .then(res => {
+
+      // 期限切れチェック
+      if (res.headers.get("Content-Type").includes("application/json")) {
+        return res.json().then(json => {
+          if (json.error === "expired") {
+            alert("視聴期限が終了しています");
+          }
+        });
+      }
+
+      return res.blob();
+    })
+    .then(blob => {
+      if (!blob) return;
+
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank");
+    });
+}
+
+
+// ------------------------------
+// ④ 動画ダウンロード（GAS経由・安全版）
+// ------------------------------
+function downloadVideo() {
+  fetch(`${API_URL}?downloadVideo=1&memberId=${memberId}`)
+    .then(res => {
+
+      // 期限切れチェック
+      if (res.headers.get("Content-Type").includes("application/json")) {
+        return res.json().then(json => {
+          if (json.error === "expired") {
+            alert("視聴期限が終了しています");
+          }
+        });
+      }
+
+      return res.blob();
+    })
+    .then(blob => {
+      if (!blob) return;
+
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank");
+    });
+}
+document.getElementById("viewPdfBtn").addEventListener("click", viewPdf);
 </script>
 
+<!-- △　PDF iframe ビューアのメリット -->
+<!-- ■PDFのURLをユーザーに渡さない -->
+<!-- → URLコピーしても使えない／Drive共有リンクの漏洩を完全防止 -->
+<!-- ■GAS が期限チェックしてから返す -->
+<!-- → 期限切れなら絶対に閲覧不可 -->
+<!-- ■Blob URL は一時的 -->
+<!-- → ブラウザを閉じると消える／再利用不可 -->
+<!-- ■iframe 内で閲覧のみ -->
+<!-- → ダウンロードボタンが出ない／コピー防止に強い -->
+<!-- ■Drive の共有権限（setDriveExpire）と二重防御 -->
+<!-- → Drive側でも期限切れ／GAS側でも期限切れ -->
 </body>
 </html>

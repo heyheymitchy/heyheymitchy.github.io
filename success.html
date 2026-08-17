@@ -36,42 +36,87 @@
 
 <div class="success-box">
   <h2>お申込みありがとうございました！</h2>
-
-  <p>あなたの会員番号は</p>
-  <div id="memberId" class="member-id"></div>
-
-  <p class="expire">
-    視聴期限：<span id="expire"></span>
-  </p>
-
-  <p style="margin-top:30px;">
-    下のボタンから受講ページへ進めます
-  </p>
-
-  <a id="lessonLink" class="btn-primary" href="#">受講ページへ</a>
+  <p>あなたの会員番号は<div id="memberId" class="member-id"></div>です</p>
+  <p>お申し込み日：<span id="createdAt"></span></p>
+  <p>視聴期限：<span id="expireDays"></span>日間</p>
+  <p>期限日：<span id="expireDate"></span></p>
+  <p style="margin-top:30px;">下のボタンから受講ページへ進めます</p>
+  <a id="lessonLink" class="btn-primary" href="#">▶ 受講ページへすすむ</a>
 </div>
 
+<div id="videoPlayerArea"></div>
+<p><button id="playVideoBtn" class="btn-primary">🎬 動画を再生する</button></p>
 <script>
+// GASをデプロイしたらＵＲＬ修正すること６０行目
 
-// ① URLから memberId を取得
+// URLから memberId を取得
+const params = new URLSearchParams(window.location.search);
+const memberId = params.get("memberId");
 
-  const params = new URLSearchParams(window.location.search);
-  const memberId = params.get("memberId");
+// GAS Web API URL
+const API_URL = "https://script.google.com/macros/s/AKfycbw6smkXG7u4W4fJ7nXVXrgpZeUJHHVvpY7AdHVpMdLkdC051oa7VbfnmBwe_GviwJ_p/exec";
 
-  document.getElementById("memberId").textContent = memberId;
+// ------------------------------
+// ① success.html 用：期限情報取得
+// ------------------------------
+fetch(`${API_URL}?memberId=${memberId}`)
+  .then(res => res.json())
+  .then(json => {
 
-// GASをデプロイしたら②ＵＲＬ修正すること20260815
-// ② GASから expireDays を取得
-  fetch("https://script.google.com/macros/s/AKfycbw6smkXG7u4W4fJ7nXVXrgpZeUJHHVvpY7AdHVpMdLkdC051oa7VbfnmBwe_GviwJ_p/exec?memberId=" + memberId)
-   .then(res => res.json())
-   .then(json => {
-      document.getElementById("expire").textContent =
-        json.expireDays + "日間（本日より）";
+    // 期限日
+    const expireDate = new Date(json.expireDate);
+    const expireStr = `${expireDate.getFullYear()}年${expireDate.getMonth()+1}月${expireDate.getDate()}日`;
 
-      // ③ lesson.html へ memberId を付けて遷移できるようにする
-      document.getElementById("lessonLink").href =
-        "lesson.html?memberId=" + memberId;
+    // 作成日
+    const createdAt = new Date(json.createdAt);
+    const createdStr = `${createdAt.getFullYear()}年${createdAt.getMonth()+1}月${createdAt.getDate()}日`;
+
+    // 画面に反映
+    document.getElementById("memberId").textContent = json.memberId;
+    document.getElementById("expireDays").textContent = json.expireDays;
+    document.getElementById("createdAt").textContent = createdStr;
+    document.getElementById("expireDate").textContent = expireStr;
+
+    // 受講ページへのリンクを安全に設定
+    document.getElementById("lessonLink").href =
+      `lesson.html?memberId=${memberId}`;
+  });
+
+// ------------------------------
+// Drive動画ストリーミング再生
+// ------------------------------
+function playVideo() {
+
+  fetch(`${API_URL}?downloadVideo=1&memberId=${memberId}`)
+    .then(res => {
+
+      // 期限切れチェック
+      if (res.headers.get("Content-Type").includes("application/json")) {
+        return res.json().then(json => {
+          if (json.error === "expired") {
+            alert("視聴期限が終了しています");
+          }
+        });
+      }
+
+      return res.blob();
+    })
+    .then(blob => {
+      if (!blob) return;
+
+      const url = URL.createObjectURL(blob);
+
+      // videoタグを生成して画面に追加
+      document.getElementById("videoPlayerArea").innerHTML = `
+        <video id="lessonVideo" controls autoplay width="100%" style="border-radius: 12px;">
+          <source src="${url}" type="video/mp4">
+          お使いのブラウザは動画再生に対応していません。
+        </video>
+      `;
     });
+}
+document.getElementById("playVideoBtn").addEventListener("click", playVideo);
+
 </script>
 
 </body>
