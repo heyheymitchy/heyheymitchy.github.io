@@ -35,50 +35,50 @@
 <body>
 
 <div class="box">
-  <h2>👤 会員情報</h2>
+  <h2>$D83D$DC64 会員情報</h2>
   <p>会員番号：<span id="memberId"></span></p>
   <p>お名前：<span id="memberName"></span></p>
   <p>受講講座：<span id="courseName"></span></p>
 </div>
 
 <div class="box">
-  <h2>⏰ 視聴期限</h2>
+  <h2>$23F0 視聴期限</h2>
   <p>お申し込み日：<span id="createdAt"></span></p>
   <p>視聴期限：<span id="expireDate"></span></p>
   <p>残り日数：<span id="remainDays"></span> 日</p>
 </div>
 
 <div class="box">
-  <h2>🎬 動画プレイヤー</h2>
-  <button class="btn" id="playVideoBtn">▶ 動画を再生する</button>
+  <h2>$D83C$DFAC 動画プレイヤー</h2>
+  <button class="btn" id="playVideoBtn">$25B6 動画を再生する</button>
   <div id="videoPlayerArea" style="margin-top:20px;"></div>
 </div>
 
 <div class="box">
-  <h2>📄 PDFビューア</h2>
-  <button class="btn" id="viewPdfBtn">📄 PDFを表示する</button>
+  <h2>$D83D$DCC4 PDFビューア</h2>
+  <button class="btn" id="viewPdfBtn">$D83D$DCC4 PDFを表示する</button>
   <div id="pdfViewerArea" style="margin-top:20px;"></div>
 </div>
 
 <div class="box">
-  <h2>📚 受講履歴</h2>
+  <h2>$D83D$DCDA 受講履歴</h2>
   <ul id="historyList"></ul>
 </div>
 
 <div class="box">
-  <h2>🌟 次のおすすめ講座</h2>
+  <h2>$D83C$DF1F 次のおすすめ講座</h2>
   <p id="nextCourseName"></p>
 </div>
 
 <script>
-  // GASをデプロイしたらＵＲＬ修正すること７１行目
+  // GASをデプロイしたらＵＲＬ修正すること82行目
 
 // URLから memberId を取得
 const params = new URLSearchParams(window.location.search);
 const memberId = params.get("memberId");
 
 // GAS Web API URL
-const API_URL = "https://script.google.com/macros/s/AKfycbw6smkXG7u4W4fJ7nXVXrgpZeUJHHVvpY7AdHVpMdLkdC051oa7VbfnmBwe_GviwJ_p/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbzYWjNmXY9ehL4KVr2is1okiAhuMlxYvyMYcnjg6AxIsezOD2NcukqEVN_t3vjGTcwy/exec";
 
 // ------------------------------
 // ① マイページ情報取得（期限＋講座名）

@@ -132,14 +132,11 @@
   </section>
 </main>
 
-
-
-
 <script>
-// GAS修正時はデプロイ後にＵＲＬ修正すること20260815
-// const GAS_URL = "★あなたのGASデプロイURL★";
+// mode: "no-cors",  ← これが絶対に必要　削除した
+// GAS修正時はデプロイ後にＵＲＬ修正すること20260817
 
-   const GAS_URL = "https://script.google.com/macros/s/AKfycbw6smkXG7u4W4fJ7nXVXrgpZeUJHHVvpY7AdHVpMdLkdC051oa7VbfnmBwe_GviwJ_p/exec";
+   const GAS_URL = "https://script.google.com/macros/s/AKfycbzYWjNmXY9ehL4KVr2is1okiAhuMlxYvyMYcnjg6AxIsezOD2NcukqEVN_t3vjGTcwy/exec";
    document.getElementById("entryForm").addEventListener("submit", async (e) => {
    e.preventDefault();
    const formData = Object.fromEntries(new FormData(e.target));
@@ -148,7 +145,6 @@
   try {
     await fetch(GAS_URL, {
       method: "POST",
-      mode: "no-cors",   // ← これが絶対に必要
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData)
     });
