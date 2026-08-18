@@ -33,7 +33,6 @@
 <body>
 
 <div id="content">
-
   <div class="lesson-box">
     <h2>受講ページ</h2>
     <p>以下の動画・PDFをご利用ください。</p>
@@ -41,32 +40,51 @@
     <div id="videoArea"></div>
     <div id="pdfArea"></div>
   </div>
-
+</div>
+<div id="nextCourseArea" class="lesson-box" style="margin-top:20px; background:#e8fff5; border-color:#00c080;">
+  <h3>次のステップへ進む</h3>
+  <p id="nextCourseName"></p>
+  <a id="nextCourseLink" class="btn-primary" href="#">次の講座へすすむ</a>
 </div>
 
-<div id="pdfViewerArea"></div>
-<p><button id="viewPdfBtn" class="btn-primary">$D83D$DCC4 PDFを表示する</button></p>
-<script>
-// GAS修正時はデプロイ後にＵＲＬ修正すること５８行目20260817
 
-// ① URLから memberId を取得
+
+<div id="pdfViewerArea"></div>
+<p><button id="viewPdfBtn" class="btn-primary"> PDFを表示する</button></p>
+<script>
+
+<script>
+// ============================================
+// lesson.html（教材ページ）
+// GAS API と連携して動画・PDFを安全に提供する
+// ============================================
+
+// ---------------------------------------------------------
+// ① URLから memberId を取得（マイページから遷移）
+// ---------------------------------------------------------
 const params = new URLSearchParams(window.location.search);
 const memberId = params.get("memberId");
 
-// GAS Web API URL
-// GASで期限チェック
+// ---------------------------------------------------------
+// ② GAS Web API の URL（doGet）
+// ---------------------------------------------------------
+// GAS修正時はデプロイ後にＵＲＬ修正すること68行目20260818
 
 const API_URL = "https://script.google.com/macros/s/AKfycbzYWjNmXY9ehL4KVr2is1okiAhuMlxYvyMYcnjg6AxIsezOD2NcukqEVN_t3vjGTcwy/exec";
 
-// ------------------------------
+
+// =========================================================
 // PDFビューア（iframe表示）
-// ------------------------------
+// =========================================================
 function viewPdf() {
 
+  // GAS に PDF を要求（downloadPdf=1）
   fetch(`${API_URL}?downloadPdf=1&memberId=${memberId}`)
     .then(res => {
 
-      // ① 期限切れチェック
+      // -----------------------------------------------------
+      // ① JSON が返ってきた場合 → 期限切れ
+      // -----------------------------------------------------
       if (res.headers.get("Content-Type").includes("application/json")) {
         return res.json().then(json => {
           if (json.error === "expired") {
@@ -74,12 +92,18 @@ function viewPdf() {
           }
         });
       }
+
+      // -----------------------------------------------------
+      // ② PDF Blob を取得
+      // -----------------------------------------------------
       return res.blob();
     })
     .then(blob => {
       if (!blob) return;
+
+      // Blob URL を iframe に埋め込む（安全）
       const url = URL.createObjectURL(blob);
-      // iframe を生成して画面に追加
+
       document.getElementById("pdfViewerArea").innerHTML = `
         <iframe 
           src="${url}" 
@@ -91,29 +115,50 @@ function viewPdf() {
     });
 }
 
-// ------------------------------
-// ② 教材（動画URL・PDFURL）取得
-// ------------------------------
+// 次の講座案内
+function loadNextCourse() {
+  fetch(`${API_URL}?getNextCourse=1&memberId=${memberId}`)
+    .then(res => res.json())
+    .then(json => {
+      if (!json || !json.nextCourseId) return;
+
+      document.getElementById("nextCourseName").textContent =
+        `次のおすすめ講座：${json.nextCourseName}`;
+
+      document.getElementById("nextCourseLink").href =
+        `https://yourdomain.com/course/${json.nextCourseId}.html`;
+    });
+}
+
+// ページ読み込み時に実行
+loadNextCourse();
+
+// =========================================================
+// ③ 教材（動画URL・PDFURL）取得
+// =========================================================
 function loadResources() {
 
+  // GAS に教材情報を要求（getResources=1）
   fetch(`${API_URL}?getResources=1&memberId=${memberId}`)
     .then(res => res.json())
     .then(json => {
 
-      // 動画表示（Drive動画 or YouTube）
+      // -----------------------------------------------------
+      // 動画リンク（クリックで downloadVideo()）
+      // -----------------------------------------------------
       document.getElementById("videoArea").innerHTML = `
-        <p><a href="#" id="openVideo">$D83C$DFAC 動画を見る</a></p>
+        <p><a href="#" id="openVideo">?? 動画を見る</a></p>
       `;
-
       document.getElementById("openVideo").addEventListener("click", () => {
         downloadVideo();
       });
 
-      // PDFダウンロード（GAS経由）
+      // -----------------------------------------------------
+      // PDFリンク（クリックで downloadPdf()）
+      // -----------------------------------------------------
       document.getElementById("pdfArea").innerHTML = `
-        <p><a href="#" id="downloadPdf">$D83D$DCC4 PDFをダウンロード</a></p>
+        <p><a href="#" id="downloadPdf">?? PDFをダウンロード</a></p>
       `;
-
       document.getElementById("downloadPdf").addEventListener("click", () => {
         downloadPdf();
       });
@@ -121,10 +166,11 @@ function loadResources() {
 }
 
 
-// ------------------------------
-// ③ PDFダウンロード（GAS経由・安全版）
-// ------------------------------
+// =========================================================
+// ④ PDFダウンロード（GAS経由・安全版）
+// =========================================================
 function downloadPdf() {
+
   fetch(`${API_URL}?downloadPdf=1&memberId=${memberId}`)
     .then(res => {
 
@@ -143,15 +189,16 @@ function downloadPdf() {
       if (!blob) return;
 
       const url = URL.createObjectURL(blob);
-      window.open(url, "_blank");
+      window.open(url, "_blank"); // 新しいタブで開く
     });
 }
 
 
-// ------------------------------
-// ④ 動画ダウンロード（GAS経由・安全版）
-// ------------------------------
+// =========================================================
+// ⑤ 動画ダウンロード（GAS経由・安全版）
+// =========================================================
 function downloadVideo() {
+
   fetch(`${API_URL}?downloadVideo=1&memberId=${memberId}`)
     .then(res => {
 
@@ -173,7 +220,13 @@ function downloadVideo() {
       window.open(url, "_blank");
     });
 }
+
+
+// =========================================================
+// ⑥ PDFビューアボタンのイベント登録
+// =========================================================
 document.getElementById("viewPdfBtn").addEventListener("click", viewPdf);
+
 </script>
 
 <!-- △　PDF iframe ビューアのメリット -->

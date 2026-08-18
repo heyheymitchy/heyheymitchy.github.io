@@ -2,160 +2,119 @@
 <!-- わくわくプログラミング工房　平兵道　のホームページ -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!-- course.html -->
-<!DOCTYPE html >
+<!DOCTYPE html>
 <html lang="ja">
-
-<!-- head -->
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>わくわくプログラミング工房　平兵道</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>講座一覧</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .course-list {
+      max-width: 900px;
+      margin: 40px auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .course-box {
+      background: #fffbea;
+      border: 3px solid #ffcc00;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .course-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #ff4081;
+    }
+    .course-meta {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
-
-<!-- body --> 
 <body>
 
-<!-- ★ 言語切替ターゲット（bodyの次に置く） -->
-<a id="ja"></a>
-<a id="en"></a>
-
-<!-- ★ ヘッダー -->
-<header class="header">
-
-<!-- 左にロゴ／右にメニュー　表示させる -->
-  <div class="logo-box"><img src="images/logo.png" alt="ロゴ">
-　</div>
-
-<!-- 言語切り替えボタン -->
-  <div class="lang-switch">
-    <a href="#ja" class="lang-btn">日本語</a>
-    <a href="#en" class="lang-btn">English</a>
-  </div>
-
-<!-- 日本語メニュー -->
-  <nav class="menu ja">
-    <a href="hello.html#ja" class="btn">はじめまして</a>
-    <a href="course.html#ja" class="btn">なにがあるの</a>
-    <a href="tryit.html#ja" class="btn">やってみよう</a>
-    <a href="faqans.html#ja" class="btn">しつもんする</a>
-    <a href="check.html#ja" class="btn">かくにんする</a>
-  </nav>
-
-<!-- 英語メニュー -->
-  <nav class="menu en">
-    <a href="hello.html#en" class="btn">Hello</a>
-    <a href="course.html#en" class="btn">Go</a>
-    <a href="tryit.html#en" class="btn">Play</a>
-    <a href="faqans.html#en" class="btn">Ask</a>
-    <a href="check.html#en" class="btn">Check</a>
-  </nav>
-</header>
-
-
-
-<h1>なにがあるの？</h1>
-<div class="img-info">
-  <h1>興味のある画面をクリックしてみよう</h1>
-</div>
-
-<!-- ★ 日本語版（言語切替用） -->
-
-<div class="img-grid lang-ja">
-  <a href="introduction.html?pt=101&lang=#ja" class="icon-link"><img src="images/icon_001.png" alt="Scratch"></a>
-  <a href="introduction.html?pt=102&lang=#ja" class="icon-link"><img src="images/icon_002.png" alt="Game"></a>
-  <a href="introduction.html?pt=103&lang=#ja" class="icon-link"><img src="images/icon_003.png" alt="Art"></a>
-  <a href="introduction.html?pt=104&lang=#ja" class="icon-link"><img src="images/icon_004.png" alt="Music"></a>
-  <a href="introduction.html?pt=105&lang=#ja" class="icon-link"><img src="images/icon_005.png" alt="English"></a>
-
-  <a href="introduction.html?pt=106&lang=#ja" class="icon-link"><img src="images/icon_006.png" alt="HP"></a>
-  <a href="introduction.html?pt=107&lang=#ja" class="icon-link"><img src="images/icon_007.png" alt="HTML"></a>
-  <a href="introduction.html?pt=108&lang=#ja" class="icon-link"><img src="images/icon_008.png" alt="CSS"></a>
-  <a href="introduction.html?pt=109&lang=#ja" class="icon-link"><img src="images/icon_009.png" alt="GAS"></a>
-  <a href="introduction.html?pt=110&lang=#ja" class="icon-link"><img src="images/icon_010.png" alt="VScode"></a>
-
-  <a href="introduction.html?pt=111&lang=#ja" class="icon-link"><img src="images/icon_011.png" alt="GitHub"></a>
-  <a href="introduction.html?pt=112&lang=#ja" class="icon-link"><img src="images/icon_012.png" alt="Programming"></a>
-  <a href="introduction.html?pt=113&lang=#ja" class="icon-link"><img src="images/icon_013.png" alt="STEAM"></a>
-  <a href="introduction.html?pt=114&lang=#ja" class="icon-link"><img src="images/icon_014.png" alt="SDGs"></a>
-  <a href="introduction.html?pt=115&lang=#ja" class="icon-link"><img src="images/icon_015.png" alt="AIprompt"></a>
-
-  <a href="introduction.html?pt=116&lang=#ja" class="icon-link"><img src="images/icon_016.png" alt="Python"></a>
-  <a href="introduction.html?pt=117&lang=#ja" class="icon-link"><img src="images/icon_017.png" alt="Youtube"></a>
-  <a href="introduction.html?pt=118&lang=#ja" class="icon-link"><img src="images/icon_018.png" alt="Zoom"></a>
-  <a href="introduction.html?pt=119&lang=#ja" class="icon-link"><img src="images/icon_019.png" alt="Computer"></a>
-  <a href="introduction.html?pt=120&lang=#ja" class="icon-link"><img src="images/icon_020.png" alt="Digital"></a>
-
-  <a href="introduction.html?pt=121&lang=#ja" class="icon-link"><img src="images/icon_021.png" alt="Consul"></a>
-  <a href="introduction.html?pt=122&lang=#ja" class="icon-link"><img src="images/icon_022.png" alt="NETbuz"></a>
-  <a href="introduction.html?pt=123&lang=#ja" class="icon-link"><img src="images/icon_023.png" alt="Sole"></a>
-  <a href="introduction.html?pt=124&lang=#ja" class="icon-link"><img src="images/icon_024.png" alt="Start"></a>
-  <a href="introduction.html?pt=125&lang=#ja" class="icon-link"><img src="images/icon_025.png" alt="coaching"></a>
-</div>
-
-<!-- ★ 英語版（言語切替用） -->
-
-<div class="img-grid lang-en">
-  <a href="introduction.html?pt=901&lang=#en" class="icon-link"><img src="images/en/icon_901.png" alt=""></a>
-  <a href="introduction.html?pt=902&lang=#en" class="icon-link"><img src="images/en/icon_902.png" alt=""></a>
-  <a href="introduction.html?pt=903&lang=#en" class="icon-link"><img src="images/en/icon_903.png" alt=""></a>
-  <a href="introduction.html?pt=904&lang=#en" class="icon-link"><img src="images/en/icon_904.png" alt=""></a>
-  <a href="introduction.html?pt=905&lang=#en" class="icon-link"><img src="images/en/icon_905.png" alt=""></a>
-
-  <a href="introduction.html?pt=906&lang=#en" class="icon-link"><img src="images/en/icon_906.png" alt=""></a>
-  <a href="introduction.html?pt=907&lang=#en" class="icon-link"><img src="images/en/icon_907.png" alt=""></a>
-  <a href="introduction.html?pt=908&lang=#en" class="icon-link"><img src="images/en/icon_908.png" alt=""></a>
-  <a href="introduction.html?pt=909&lang=#en" class="icon-link"><img src="images/en/icon_909.png" alt=""></a>
-  <a href="introduction.html?pt=910&lang=#en" class="icon-link"><img src="images/en/icon_910.png" alt=""></a>
-
-  <a href="introduction.html?pt=911&lang=#en" class="icon-link"><img src="images/en/icon_911.png" alt=""></a>
-  <a href="introduction.html?pt=912&lang=#en" class="icon-link"><img src="images/en/icon_912.png" alt=""></a>
-  <a href="introduction.html?pt=913&lang=#en" class="icon-link"><img src="images/en/icon_913.png" alt=""></a>
-  <a href="introduction.html?pt=914&lang=#en" class="icon-link"><img src="images/en/icon_914.png" alt=""></a>
-  <a href="introduction.html?pt=915&lang=#en" class="icon-link"><img src="images/en/icon_915.png" alt=""></a>
-
-  <a href="introduction.html?pt=916&lang=#en" class="icon-link"><img src="images/en/icon_916.png" alt=""></a>
-  <a href="introduction.html?pt=917&lang=#en" class="icon-link"><img src="images/en/icon_917.png" alt=""></a>
-  <a href="introduction.html?pt=918&lang=#en" class="icon-link"><img src="images/en/icon_918.png" alt=""></a>
-  <a href="introduction.html?pt=919&lang=#en" class="icon-link"><img src="images/en/icon_919.png" alt=""></a>
-  <a href="introduction.html?pt=920&lang=#en" class="icon-link"><img src="images/en/icon_920.png" alt=""></a>
-
-  <a href="introduction.html?pt=921&lang=#en" class="icon-link"><img src="images/en/icon_921.png" alt=""></a>
-  <a href="introduction.html?pt=922&lang=#en" class="icon-link"><img src="images/en/icon_922.png" alt=""></a>
-  <a href="introduction.html?pt=923&lang=#en" class="icon-link"><img src="images/en/icon_923.png" alt=""></a>
-  <a href="introduction.html?pt=924&lang=#en" class="icon-link"><img src="images/en/icon_924.png" alt=""></a>
-  <a href="introduction.html?pt=925&lang=#en" class="icon-link"><img src="images/en/icon_925.png" alt=""></a>
-</div>
-
-
-
-<!-- ★ その他の要素（巻末表示） -->
-<section np="bottom-end" class="bottom-end"></section>
-
-<img src="images/qr.png" alt="QRコード" width="200">
-
-<footer>
-  わくわくプログラミング工房　平兵道　est.2026
-</footer>
+<h2 style="text-align:center;">講座一覧</h2>
+<div id="courseList" class="course-list"></div>
 
 <script>
-document.querySelectorAll(".lang-btn").forEach(btn => {
-  btn.addEventListener("click", function() {
+// GAS Web API URL
+const API_URL = "https://script.google.com/macros/s/AKfycbzYWjNmXY9ehL4KVr2is1okiAhuMlxYvyMYcnjg6AxIsezOD2NcukqEVN_t3vjGTcwy/exec";
 
-    // href="#ja" → "ja"
-    const id = this.hash.substring(1);
+// Stripe公開キー（あなたのキーに差し替え）
+const STRIPE_PK = "pk_test_51U1cGDRpMQH46JyklwjmwRZ6wTybt9LCn7AWYORq84xzQULhpEKTBlIhR8bXCLbwOCWpAUrO67igBlp1GdyYLwf500ni9YGwsV";
 
-    // sessionStorageへ保存
-    sessionStorage.setItem("id", id);
+// courseId → Stripe price_id の対応表（手動管理 or 後でAPI化）
+const PRICE_MAP = {
+  "COURSE001": "price_1200",
+  "COURSE002": "price_2400",
+  "COURSE003": "price_4800",
+  "COURSE004": "price_9600",
+};
 
-    // 次のページへ移動する場合
-    // location.href = "page2.html";
+// Stripe初期化
+const stripe = Stripe(STRIPE_PK);
+
+// 講座一覧取得
+fetch(`${API_URL}?getCourseCatalog=1`)
+  .then(res => res.json())
+  .then(list => {
+    let html = "";
+
+    list.forEach(course => {
+      const priceId = PRICE_MAP[course.courseId] || null;
+
+      html += `
+        <div class="course-box">
+          <div class="course-title">${course.courseName}</div>
+          <div class="course-meta">
+            講座ID：${course.courseId}<br>
+            視聴期限：${course.expireDays}日間<br>
+            次の講座：${course.nextCourseName || "（なし）"}
+          </div>
+          <p>
+            <a href="lesson.html?memberId=TEST_${course.courseId}" class="btn-primary">
+              サンプル受講ページを見る
+            </a>
+          </p>
+          ${priceId ? `
+          <p>
+            <button class="btn-primary" onclick="startCheckout('${course.courseId}')">
+              この講座を購入する
+            </button>
+          </p>
+          ` : `
+          <p style="color:#999;">※この講座は現在購入できません</p>
+          `}
+        </div>
+      `;
+    });
+
+    document.getElementById("courseList").innerHTML = html;
   });
-});
 
-const id = sessionStorage.getItem("id");
+// Stripe Checkout開始
+function startCheckout(courseId) {
+  const priceId = PRICE_MAP[courseId];
+  if (!priceId) {
+    alert("この講座は現在購入できません");
+    return;
+  }
 
+  stripe.redirectToCheckout({
+    lineItems: [{ price: priceId, quantity: 1 }],
+    mode: "payment",
+    successUrl: "https://heyheymitchy.github.io/success.html?memberId={CHECKOUT_SESSION_ID}",
+    cancelUrl: "https://heyheymitchy.github.io/cancel.html",
+  });
+}
 </script>
 
 </body>
 </html>
+

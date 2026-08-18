@@ -41,58 +41,101 @@
   <p>視聴期限：<span id="expireDays"></span>日間</p>
   <p>期限日：<span id="expireDate"></span></p>
   <p style="margin-top:30px;">下のボタンから受講ページへ進めます</p>
-  <a id="lessonLink" class="btn-primary" href="#">$25B6 受講ページへすすむ</a>
+  <a id="lessonLink" class="btn-primary" href="#">受講ページへすすむ</a>
+</div>
+
+<div id="nextCourseBox" class="success-box" style="margin-top:20px; background:#fff0f5; border-color:#ff80c0;">
+  <h3>次のステップのご案内</h3>
+  <p id="nextCourseName"></p>
+  <a id="nextCourseLink" class="btn-primary" href="#">次の講座へすすむ</a>
 </div>
 
 <div id="videoPlayerArea"></div>
-<p><button id="playVideoBtn" class="btn-primary">$D83C$DFAC 動画を再生する</button></p>
+<p><button id="playVideoBtn" class="btn-primary">動画を再生する</button></p>
 <script>
 // GASをデプロイしたらＵＲＬ修正すること６０行目
 
+// ============================================
+// success.html（申込み完了ページ）
+// GAS API と連携して期限情報・動画再生を行う
+// ============================================
 
-// URLから memberId を取得
+// ---------------------------------------------------------
+// ① URLから memberId を取得（Checkout成功後に付与）
+// ---------------------------------------------------------
 const params = new URLSearchParams(window.location.search);
 const memberId = params.get("memberId");
 
-
-// GAS Web API URL
+// ---------------------------------------------------------
+// ② GAS Web API の URL（doGet）
+// ---------------------------------------------------------
 const API_URL = "https://script.google.com/macros/s/AKfycbzYWjNmXY9ehL4KVr2is1okiAhuMlxYvyMYcnjg6AxIsezOD2NcukqEVN_t3vjGTcwy/exec";
 
-// ------------------------------
-// ① success.html 用：期限情報取得
-// ------------------------------
+
+// =========================================================
+// ③ success.html 用：期限情報取得
+// =========================================================
+// doGet の「success.html 用：期限情報」ブロックが返す
 fetch(`${API_URL}?memberId=${memberId}`)
   .then(res => res.json())
   .then(json => {
 
-    // 期限日
+    // -----------------------------------------------------
+    // 期限日（expireDate）を YYYY年MM月DD日 に整形
+    // -----------------------------------------------------
     const expireDate = new Date(json.expireDate);
-    const expireStr = `${expireDate.getFullYear()}年${expireDate.getMonth()+1}月${expireDate.getDate()}日`;
+    const expireStr =
+      `${expireDate.getFullYear()}年${expireDate.getMonth()+1}月${expireDate.getDate()}日`;
 
-    // 作成日
+    // -----------------------------------------------------
+    // 作成日（createdAt）を YYYY年MM月DD日 に整形
+    // -----------------------------------------------------
     const createdAt = new Date(json.createdAt);
-    const createdStr = `${createdAt.getFullYear()}年${createdAt.getMonth()+1}月${createdAt.getDate()}日`;
+    const createdStr =
+      `${createdAt.getFullYear()}年${createdAt.getMonth()+1}月${createdAt.getDate()}日`;
 
+    // -----------------------------------------------------
     // 画面に反映
+    // -----------------------------------------------------
     document.getElementById("memberId").textContent = json.memberId;
     document.getElementById("expireDays").textContent = json.expireDays;
     document.getElementById("createdAt").textContent = createdStr;
     document.getElementById("expireDate").textContent = expireStr;
 
+    // -----------------------------------------------------
     // 受講ページへのリンクを安全に設定
+    // -----------------------------------------------------
     document.getElementById("lessonLink").href =
       `lesson.html?memberId=${memberId}`;
   });
 
-// ------------------------------
-// Drive動画ストリーミング再生
-// ------------------------------
+// -----------------------------------------------------
+// 次の講座案内
+// -----------------------------------------------------
+fetch(`${API_URL}?getNextCourse=1&memberId=${memberId}`)
+  .then(res => res.json())
+  .then(json => {
+    if (!json || !json.nextCourseId) return;
+
+    document.getElementById("nextCourseName").textContent =
+      `次のおすすめ講座：${json.nextCourseName}`;
+
+    document.getElementById("nextCourseLink").href =
+      `https://yourdomain.com/course/${json.nextCourseId}.html`;
+  });
+
+// =========================================================
+// ④ Drive動画ストリーミング再生（安全版）
+// =========================================================
 function playVideo() {
 
+  // GAS に動画を要求（downloadVideo=1）
   fetch(`${API_URL}?downloadVideo=1&memberId=${memberId}`)
     .then(res => {
 
-      // 期限切れチェック
+      // -----------------------------------------------------
+      // ① JSON が返ってきた場合 → 期限切れ
+      // -----------------------------------------------------
       if (res.headers.get("Content-Type").includes("application/json")) {
         return res.json().then(json => {
           if (json.error === "expired") {
@@ -101,14 +144,17 @@ function playVideo() {
         });
       }
 
+      // -----------------------------------------------------
+      // ② 動画 Blob を取得
+      // -----------------------------------------------------
       return res.blob();
     })
     .then(blob => {
       if (!blob) return;
 
+      // Blob URL を video タグに埋め込む（安全）
       const url = URL.createObjectURL(blob);
 
-      // videoタグを生成して画面に追加
       document.getElementById("videoPlayerArea").innerHTML = `
         <video id="lessonVideo" controls autoplay width="100%" style="border-radius: 12px;">
           <source src="${url}" type="video/mp4">
@@ -117,8 +163,9 @@ function playVideo() {
       `;
     });
 }
-document.getElementById("playVideoBtn").addEventListener("click", playVideo);
 
+// ボタンにイベント登録
+document.getElementById("playVideoBtn").addEventListener("click", playVideo)
 </script>
 
 </body>
