@@ -9,7 +9,6 @@
 <head>
   <meta charset="UTF-8">
   <title>やってみようのページ</title>
-  <!-- <script src="https://js.stripe.com/v3/"></script> -->
   <style>
   body { font-family: "Rounded Mplus 1c"; background:#f7faff; padding:20px; }
   .box { background:#fff; padding:20px; border-radius:12px; max-width:400px; margin:auto; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
@@ -133,25 +132,52 @@
 </main>
 
 <script>
-// mode: "no-cors",  ← これが絶対に必要　削除した
 // GAS修正時はデプロイ後にＵＲＬ修正すること20260818
 
-   const GAS_URL = "https://script.google.com/macros/s/AKfycbyP2_J79T5epZQ2uChgEH1feGLOxAwFXfFymEoY-cmu3FilSPvGzPOxnoa3G38cHmoICg/exec";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbz5MSQhrTUtEZWgGfCCpEuzTxfO_1Ki6SbWYi9-qbZQDEqTjg-zOlAkYhksdnVTs0AT/exec";
+const STRIPE_URL = "https://script.google.com/macros/s/AKfycby-wSsLLufU9XvBBa1zLSJ-VoKYe3wR1VSauTNViNZkKGwSrSL8uaIrmqTcpCxHntiqsQ/exec"; // ←あなたのStripe GAS URLに変更
 
-   document.getElementById("entryForm").addEventListener("submit", async (e) => {
-   e.preventDefault();
-   const formData = Object.fromEntries(new FormData(e.target));
-   document.getElementById("msg").innerText = "送信中…";
+
+document.getElementById("entryForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  document.getElementById("msg").innerText = "送信中…";
 
   try {
+    // ① フォームの基本データを取得
+    const form = document.getElementById("entryForm");
+    const formData = new FormData(form);
+
+    // ② Stripe Checkout セッションを作成（あなたのStripe GASへ送信）
+    const stripeRes = await fetch(STRIPE_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+      priceId: formData.get("courseId"), // ← 修正
+      email: formData.get("email")
+  })
+});
+
+const session = await stripeRes.json();
+
+// ★ここで追加
+formData.append("stripeSessionId", session.id);
+
+    // ③ StripeセッションIDを formData に追加 ← ★ここが重要
+    formData.append("stripeSessionId", session.id);
+
+    // ④ GAS（本体）へ送信（FormData形式）
     await fetch(GAS_URL, {
-       method: "POST",
-      body: formData // ← JSONではなくFormData
+      method: "POST",
+      body: formData
     });
 
-    // ★ ここでレスポンスは読めないので成功扱いにする
+    // ⑤ 申込完了メッセージ
     document.getElementById('formMessage').textContent =
-      '［申込を受け付けました］\n ［確認メールを送信します］';
+      '［申込を受け付けました］\n［確認メールを送信します］';
+
+    // ⑥ Stripe Checkout へ移動
+    window.location.href = session.url;
 
   } catch (error) {
     console.error(error);
@@ -159,7 +185,6 @@
       '送信に失敗しました。時間をおいて再度お試しください。';
   }
 });
-
 </script>
 
 <!-- フッター -->
