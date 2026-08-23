@@ -114,7 +114,7 @@ body:not(:target) .lang-en { display: none;}
 /* 言語切り替えボタン */
 .lang-switch {
   position: absolute;
-  left: 200px;   /* ヘッダー右端に固定 */
+  left: 300px;   /* ヘッダー右端に固定 */
   top: 50%;
   transform: translateY(-50%);
   display: flex;
