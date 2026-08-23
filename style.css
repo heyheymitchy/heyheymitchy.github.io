@@ -97,32 +97,61 @@ body:not(:target) .lang-en { display: none;}
 #ja:target ~ .lang-en { display: none; }
 #ja:target ~ .lang-ja { display: grid; }
 
-
-/*******************/
+/******************************************************************************************/
+/*左             中央                  右**************************************************/
+/*┌────────┬────────────────────┬────────────┐*/
+/*│  LOGO  │ 日本語  English    │ Home About │*****************************************/
+/*└────────┴────────────────────┴────────────┘*/
+/******************************************************************************************/
 /* ヘッダー */
-  .header {
-    position: relative; /* ← 追加 */
-    overflow-x: auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;  /* 横方向の配置を調整する指定 */
-    padding: 16px;
-    background: #5CE1E6; ;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
+.header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 20px;
 
-/* 言語切り替えボタン */
+  padding: 16px;
+  background: #5CE1E6;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+  overflow-x: auto;
+}
+/* ロゴ */
+.logo-box {
+  width: 150px;
+  height: 30px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 20px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* 言語切替 */
 .lang-switch {
-  position: absolute;
-  left: 300px;   /* ヘッダー右端に固定 */
-  top: 50%;
-  transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: nowrap;
+}
+
+/* 右メニュー */
+.menu {
   display: flex;
   gap: 16px;
   flex-wrap: nowrap;
-
 }
 
+
+
+/*  */
+
+/* 言語切替ボタン */
 .lang-btn {
   padding: 8px 16px;
   background: #ddd;
@@ -132,36 +161,13 @@ body:not(:target) .lang-en { display: none;}
   font-size: 20px;
   color: #333;
 }
-
+/* 言語切替ボタン（マウス乗せる前） */
 .lang-btn:hover {
   background: #bbb;
 }
 
-/* 左のロゴ */
-
-  .logo-box {
-    width: 150px;
-    height:30px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-size: 20px;
-    font-weight: bold;
-  }
-
 /* メニュー（横一列固定） */
-  .menu {
-    position: absolute;
-    right: 16px;   /* ヘッダー右端に固定 */
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    gap: 16px;
-    flex-wrap: nowrap; /* ← 折り返し禁止 */
-  }
-
+ 
 
 /* 右のボタン */
 /* ボタン（青→ピンク） */
