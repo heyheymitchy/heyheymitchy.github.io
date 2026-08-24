@@ -132,7 +132,6 @@
 </main>
 
 <script>
-// GAS修正時はデプロイ後にＵＲＬ修正すること20260823
 
 const GAS_URL = "https://script.google.com/macros/s/AKfycbwW4xvhJtdcnWtysOwGSfbtB4syxuF3ruLCunKCj6MiTaEry2_9gsASxEZQ5aIJuOE/exec";
 const STRIPE_URL = "https://script.google.com/macros/s/AKfycby-wSsLLufU9XvBBa1zLSJ-VoKYe3wR1VSauTNViNZkKGwSrSL8uaIrmqTcpCxHntiqsQ/exec";
@@ -143,47 +142,65 @@ document.getElementById("entryForm").addEventListener("submit", async (e) => {
   document.getElementById("msg").innerText = "送信中…";
 
   try {
-    // ① フォームの基本データを取得
     const form = document.getElementById("entryForm");
     const formData = new FormData(form);
 
-    // ② Stripe Checkout セッションを作成（あなたのStripe GASへ送信）
+    // ① Stripe GAS 呼び出し
     const stripeRes = await fetch(STRIPE_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-      priceId: formData.get("courseId"), // ← 修正
-      email: formData.get("email")
-  })
-});
+        priceId: formData.get("courseId"),
+        email: formData.get("email")
+      })
+    });
 
-const session = await stripeRes.json();
+    console.log("stripeRes status:", stripeRes.status);
 
-// ★ここで追加
-formData.append("stripeSessionId", session.id);
+    if (!stripeRes.ok) {
+      const text = await stripeRes.text();
+      console.error("Stripe GAS error body:", text);
+      throw new Error("Stripe GAS がエラーを返しました");
+    }
 
-    // ③ StripeセッションIDを formData に追加 ← ★ここが重要
+    const session = await stripeRes.json();
+    console.log("Stripe session:", session);
+
+    if (!session.id || !session.url) {
+      throw new Error("Stripe セッション情報が不正です");
+    }
+
+    // ② stripeSessionId を FormData に追加
     formData.append("stripeSessionId", session.id);
 
-    // ④ GAS（本体）へ送信（FormData形式）
-    await fetch(GAS_URL, {
+    // ③ GAS_URL へ FormData 送信
+    const gasRes = await fetch(GAS_URL, {
       method: "POST",
       body: formData
     });
 
-    // ⑤ 申込完了メッセージ
+    console.log("gasRes status:", gasRes.status);
+
+    const gasText = await gasRes.text();
+    console.log("gasRes body:", gasText);
+
+    if (!gasRes.ok) {
+      throw new Error("GAS_URL がエラーを返しました");
+    }
+
     document.getElementById('formMessage').textContent =
       '［申込を受け付けました］\n［確認メールを送信します］';
 
-    // ⑥ Stripe Checkout へ移動
+    // ④ Stripe Checkout へ移動
     window.location.href = session.url;
 
   } catch (error) {
-    console.error(error);
+    console.error("送信エラー:", error);
     document.getElementById('formMessage').textContent =
       '送信に失敗しました。時間をおいて再度お試しください。';
   }
 });
+
 </script>
 
 <!-- フッター -->
