@@ -132,67 +132,32 @@
 </main>
 
 <script>
-
-const GAS_URL = "https://script.google.com/macros/s/AKfycbysMnrvvKoV92MRNwGoaBXrQeXy8nDmbsRnaaX5VFY2Y5C-pc1fQJLcgh2rnk21J_zu/exec";
-const STRIPE_URL = "https://script.google.com/macros/s/AKfycby-wSsLLufU9XvBBa1zLSJ-VoKYe3wR1VSauTNViNZkKGwSrSL8uaIrmqTcpCxHntiqsQ/exec";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbyBhCB1VEBioZYa5JEuzOT97N7yH--GVt0Rf9qNRKI8pUrnNxFL0cJCafSzEPl6efep/exec";
 
 document.getElementById("entryForm").addEventListener("submit", async (e) => {
   e.preventDefault();
-
   document.getElementById("msg").innerText = "送信中…";
 
   try {
     const form = document.getElementById("entryForm");
     const formData = new FormData(form);
 
-    // ① Stripe GAS 呼び出し
-    const stripeRes = await fetch(STRIPE_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        priceId: formData.get("courseId"),
-        email: formData.get("email")
-      })
-    });
+    // ? Stripe連携を完全に外す
+    // formData.append("stripeSessionId", "dummy_session");
 
-    console.log("stripeRes status:", stripeRes.status);
-
-    if (!stripeRes.ok) {
-      const text = await stripeRes.text();
-      console.error("Stripe GAS error body:", text);
-      throw new Error("Stripe GAS がエラーを返しました");
-    }
-
-    const session = await stripeRes.json();
-    console.log("Stripe session:", session);
-
-    if (!session.id || !session.url) {
-      throw new Error("Stripe セッション情報が不正です");
-    }
-
-    // ② stripeSessionId を FormData に追加
-    formData.append("stripeSessionId", session.id);
-
-    // ③ GAS_URL へ FormData 送信
     const gasRes = await fetch(GAS_URL, {
       method: "POST",
       body: formData
     });
 
     console.log("gasRes status:", gasRes.status);
-
     const gasText = await gasRes.text();
     console.log("gasRes body:", gasText);
 
-    if (!gasRes.ok) {
-      throw new Error("GAS_URL がエラーを返しました");
-    }
+    if (!gasRes.ok) throw new Error("GAS_URL がエラーを返しました");
 
     document.getElementById('formMessage').textContent =
       '［申込を受け付けました］\n［確認メールを送信します］';
-
-    // ④ Stripe Checkout へ移動
-    window.location.href = session.url;
 
   } catch (error) {
     console.error("送信エラー:", error);
