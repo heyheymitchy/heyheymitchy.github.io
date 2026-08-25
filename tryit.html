@@ -49,7 +49,6 @@
     <h2>オンライン講座お申し込みフォーム</h2>
     <p id="formMessage" class="form-message"></p>
 
-    <!-- ? IDを「form」に変更 -->
     <form id="form">
       <label for="name">申込者氏名</label>
       <input type="text" id="name" name="name" required placeholder="日本　一郎">
@@ -86,23 +85,67 @@
 </main>
 
 <script>
-const GAS_URL = "https://script.google.com/macros/s/AKfycbyvFx7BkmdJ97I-kkU9ctb3sBBZyAPCJJsT-S1hGEDuNOwtl_55NvSeijeh7QgQPBu_/exec";
+// --------------------------------------------------
+// ① MAIN_GAS（会員登録）
+// --------------------------------------------------
+const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycbyvFx7BkmdJ97I-kkU9ctb3sBBZyAPCJJsT-S1hGEDuNOwtl_55NvSeijeh7QgQPBu_/exec";
+
+
+// --------------------------------------------------
+// ② STRIPE_GAS（Checkout セッション生成）
+// --------------------------------------------------
+const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbwxIp68wBpg5SH0px2cqSQLy5HChgEuM618NHE3KvI-kVUPVQdWckL3Hp1Ov54n0N66Vg/exec";
+
 
 document.getElementById("form").addEventListener("submit", async (e) => {
   e.preventDefault();
-  const formData = new FormData(e.target);
+  const formData = Object.fromEntries(new FormData(e.target));
+
+  document.getElementById("msg").innerText = "送信中…";
 
   try {
-    const res = await fetch(GAS_URL, {
+    // --------------------------------------------------
+    // MAIN_GAS に送信（会員登録）
+    // --------------------------------------------------
+    const res = await fetch(MAIN_GAS_URL, {
       method: "POST",
-      body: formData
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData)
     });
+
     const json = await res.json();
-    console.log(json);
-    alert("送信成功！");
+
+    // 会員番号の表示
+    if (json.memberId) {
+      document.getElementById("formMessage").innerText =
+        `［申込確認できました。ありがとうございました］\n` +
+        `［あなたの会員番号は “${json.memberId}” です］`;
+    }
+
+    // --------------------------------------------------
+    // Stripe Checkout を開始
+    // --------------------------------------------------
+    const stripeRes = await fetch(STRIPE_GAS_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: formData.email,
+        priceId: "price_0000"   // ←あなたの priceId に変更
+      })
+    });
+
+    const stripeJson = await stripeRes.json();
+
+    if (stripeJson.url) {
+      window.location.href = stripeJson.url;  // Stripe Checkoutへ移動
+    } else {
+      document.getElementById("msg").innerText =
+        "Stripe Checkout の URL が取得できませんでした（GAS側のエラーの可能性）";
+    }
+
   } catch (err) {
-    console.error(err);
-    alert("送信エラー：" + err);
+    document.getElementById("msg").innerText =
+      "送信エラーが発生しました。時間をおいて再度お試しください。";
   }
 });
 </script>
