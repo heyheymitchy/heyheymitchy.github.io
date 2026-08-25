@@ -86,24 +86,23 @@
 </main>
 
 <script>
-const WORKER_URL = "https://f60a2577.member-awn.pages.dev";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbyzuHtjeMwIaxzeYTiVVSpgr_a2odbMhidIelsJo9kTMG0lC0bYsInSxjMF2xUUGuPK/exec";
 
 document.getElementById("form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
 
   try {
-    const res = await fetch(WORKER_URL, {
+    const res = await fetch(GAS_URL, {
       method: "POST",
       body: formData
     });
-
     const json = await res.json();
-    console.log("Worker → GAS 結果:", json);
+    console.log(json);
     alert("送信成功！");
   } catch (err) {
-    console.error("送信エラー:", err);
-    alert("送信に失敗しました。時間をおいて再度お試しください。");
+    console.error(err);
+    alert("送信エラー：" + err);
   }
 });
 </script>
