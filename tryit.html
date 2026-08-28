@@ -187,6 +187,7 @@ document.getElementById("form").addEventListener("submit", function(event) {
 fetch(STRIPE_GAS_URL)
   .then(res => res.json())
   .then(data => {
+    console.log("Products JSON:", data);
     const select = document.getElementById("paidCourse");
     select.innerHTML = '<option value="">選択してください</option>';
 
@@ -198,8 +199,8 @@ fetch(STRIPE_GAS_URL)
         select.appendChild(opt);
       }
     });
-  });
-
+  })
+  .catch(err => console.error("Products fetch error:", err));
 
 // ===============================
 // Stripe Checkout（no-cors）
