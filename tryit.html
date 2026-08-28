@@ -10,78 +10,69 @@
   <meta charset="UTF-8">
   <title>やってみようのページ</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <style>
-  body {
-    font-family: "Rounded Mplus 1c", sans-serif;
-    background: #fdf6ff;
-    padding: 20px;
-    color: #444;
-  }
-
-  h2 {
-    background: #ffccf5;
-    padding: 10px 15px;
-    border-radius: 10px;
-    color: #333;
-  }
-
-  .section {
-    margin-bottom: 30px;
-    padding: 20px;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 0 8px rgba(0,0,0,0.1);
-  }
-
-  label {
-    font-weight: bold;
-    margin-bottom: 8px;
-    display: block;
-  }
-
-  select {
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    border: 2px solid #ff99dd;
-    font-size: 16px;
-    background: #fff7fc;
-  }
-
-  .btn {
-    display: block;
-    width: 100%;
-    margin-top: 20px;
-    padding: 15px;
-    background: #ff66c4;
-    color: white;
-    font-size: 18px;
-    border-radius: 12px;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    text-align: center;
-  }
-
-  .btn:hover {
-    background: #ff4fb8;
-  }
-
-  .note {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #666;
-  }
-</style>
+    body {
+      font-family: "Rounded Mplus 1c", sans-serif;
+      background: #fdf6ff;
+      padding: 20px;
+      color: #444;
+    }
+    h2 {
+      background: #ffccf5;
+      padding: 10px 15px;
+      border-radius: 10px;
+      color: #333;
+    }
+    .section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+    label {
+      font-weight: bold;
+      margin-bottom: 8px;
+      display: block;
+    }
+    select, input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 2px solid #ff99dd;
+      font-size: 16px;
+      background: #fff7fc;
+      box-sizing: border-box;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      padding: 15px;
+      background: #ff66c4;
+      color: white;
+      font-size: 18px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      text-align: center;
+    }
+    .btn:hover {
+      background: #ff4fb8;
+    }
+    .note {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #666;
+    }
+  </style>
 
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-<div align="right">
-  <script language="javascript" type="text/javascript" src="//counter1.fc2.com/counter.php?id=41013370&main=1"></script>
-  <noscript><img src="//counter1.fc2.com/counter_img.php?id=41013370&main=1" /></noscript>
-</div>
 
 <header class="header">
   <div class="logo-box"><img src="images/logo.png" alt="ロゴ"></div>
@@ -101,94 +92,74 @@
 <main>
 
   <!-- =============================== -->
-  <!-- 商品一覧（Productsシート連携） -->
+  <!-- 無料体験講座申込フォーム -->
   <!-- =============================== -->
-  
-
-  <!-- =============================== -->
-  <!-- 無料体験講座申込フォーム（既存） -->
-  <!-- =============================== -->
-  <section class="site-header">
-    <div class="header-inner">
-      <h1>お申込みのページ</h1>
-      <p class="subtitle">今回、［無料体験講座］を申込される皆様には<span style="color:red; font-size:18px; font-weight:bold;">［わくわく無料キャンペーン］特典</span>として<span style="color:red; background: yellow; font-size:18px; font-weight:bold; padding:0px;">［入会費用］［年会費］が無料となる［特別会員］</span>と、させていただきます</p>
-      <p class="catch">【※注意】趣旨にご賛同頂けない場合には、お手数をお掛けしますが［前の画面に戻る］（左下ボタン）よりお戻りください</p>
-    </div>
-    <div class="center-box">
-      <a href="campaign.html" class="btn-campaign">特別会員わくわくキャンペーンの内容確認へ</a>
-    </div>
-  </section>
-
   <section class="form-section card">
     <h2>特別会員様登録フォーム　兼　無料体験講座お申込みフォーム</h2>
-    <p id="formMessage" class="form-message"></p>
 
     <form id="form">
       <label for="name">申込者氏名</label>
-      <input type="text" id="name" name="name" required placeholder="日本　一郎">
+      <input type="text" id="name" name="name" required>
 
       <label for="kana">ふりがな</label>
-      <input type="text" id="kana" name="kana" required placeholder="にほん　いちろう">
+      <input type="text" id="kana" name="kana" required>
 
       <label for="email">メールアドレス</label>
-      <input type="email" id="email" name="email" required placeholder="sample@gmail.com">
+      <input type="email" id="email" name="email" required>
 
       <label for="tel">電話番号</label>
-      <input type="text" id="tel" name="tel" required placeholder="01234567890">
+      <input type="text" id="tel" name="tel" required>
 
       <label for="post">郵便番号</label>
-      <input type="text" id="post" name="post" required placeholder="0123456">
+      <input type="text" id="post" name="post" required>
 
-      <label for="courseId">希望講座名</label>
-        <select id="courseId" name="courseId" required>
-          <option value="">選択してください</option>
-          <option value="kssc00">Scratch体験講座（無料）</option>
-        </select>
+      <label for="trialCourse">希望講座名（無料）</label>
+      <select id="trialCourse" name="trialCourse" required>
+        <option value="">選択してください</option>
+        <option value="kssc00">Scratch体験講座（無料）</option>
+      </select>
 
       <div class="form-row terms-row">
         <input type="checkbox" id="agree" name="agree" required>
         <label for="agree"><a href="terms.html" target="_blank">利用規約</a>に同意します</label>
       </div>
 
-      <div class="form-actions">
-        <button type="submit" class="btn-primary"><b>無料体験講座</b>（兼特別会員登録）に申し込む</button>
-      </div>
-      <button class="btn-back" onclick="history.back()">前の画面に戻る</button>
+      <button type="submit" class="btn">無料体験講座に申し込む</button>
     </form>
-
-    <p id="msg"></p>
   </section>
+
+  <!-- =============================== -->
+  <!-- 有料講座（Productsシート連携） -->
+  <!-- =============================== -->
+  <h2>有料講座（自動生成）</h2>
+  <div class="section">
+    <p>有料講座は、選択後「申し込む（購入へ進む）」ボタンを押すと Stripe 決済へ進みます。</p>
+
+    <form id="paidForm">
+      <label>希望講座名（有料）</label>
+      <select id="paidCourse"></select>
+
+      <button type="button" class="btn" onclick="submitPaid()">申し込む（購入へ進む）</button>
+
+      <p class="note">※決済完了後、案内ページ（mypage.html）へ戻ります。</p>
+    </form>
+  </div>
+
 </main>
 
-<!-- 有料講座の追加（2026/08/28）-->
-<h2>有料講座（自動生成）</h2>
-<div class="section">
-  <p>有料講座は、選択後「申し込む（購入へ進む）」ボタンを押すと Stripe 決済へ進みます。</p>
-
-  <form id="paidForm">
-    <label>希望講座名（有料）</label>
-    <select id="paidCourse"></select>
-    <button type="button" class="btn" onclick="submitPaid()">申し込む（購入へ進む）</button>
-  <p class="note">※決済完了後、案内ページ（mypage.html）へ戻ります。</p>
-  </form>
-</div>
-
 <script>
-// ----------------------------------------------------------
-// ① Products シートから商品一覧を取得（自動反映）
-// ----------------------------------------------------------
 // --------------------------------------------------
-// GAS URLの設定（デプロイしたら修正すること）
+// GAS URL設定（あなたの環境に合わせて）
 // --------------------------------------------------
-const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycbwusnDX0XvyPocyLf2QAwPERs9OcfQa4rPVs1uFJJbuTMVcE93Iwb8PpWpzolFbAloQ/exec";
-const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbyriWuqerH2hzBjmzicjYfmxfYL2pjntZpAIE-koQoUWOLZiqJK8dvSMZqNkrJddb7APw/exec";
+const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbyy9wyD6m6S8QVgftf1WihUj8PV0YmynaXE7d2zxJRhiWZAFHxdZRw6Mq_lK3Jde88/exec";
 
-
-// 商品一覧を読み込む（Productsシート → JSON）
+// --------------------------------------------------
+// Products シート → JSON を読み込む
+// --------------------------------------------------
 fetch(STRIPE_GAS_URL)
   .then(res => res.json())
   .then(data => {
-    console.log("Products JSON:", data); // ← デバッグ出力
+    console.log("Products JSON:", data);
     const select = document.getElementById("paidCourse");
     select.innerHTML = '<option value="">選択してください</option>';
 
@@ -201,56 +172,36 @@ fetch(STRIPE_GAS_URL)
       }
     });
   })
-  .catch(err => console.error("Fetch error:", err));
+  .catch(err => console.error("Products fetch error:", err));
 
-// ------------------------------
-// ② 無料体験講座の送信
-// ------------------------------
-function submitTrial() {
-  const course = document.getElementById("trialCourse").value;
-  if (!course) {
-    alert("無料体験講座を選択してください");
-    return;
-  }
-
-  // MAIN_GAS へ送信
-  fetch(MAIN_GAS_URL, {
-    method: "POST",
-    body: JSON.stringify({ course })
-  })
-  .then(() => {
-    alert("無料体験講座の申込が完了しました！");
-  });
-}
-
-// ------------------------------
-// ③ 有料講座の Stripe Checkout へ遷移
-// ------------------------------
+// --------------------------------------------------
+// Stripe Checkout（doPostCheckout へ POST）
+// --------------------------------------------------
 function submitPaid() {
   const priceId = document.getElementById("paidCourse").value;
   const email = document.getElementById("email").value;
+
   if (!priceId) {
     alert("有料講座を選択してください");
     return;
   }
 
-  fetch(STRIPE_GAS_URL + "?mode=checkout", {
-  method: "POST",
-  body: JSON.stringify({ price_id: priceId, email: email })
-})
+  fetch(STRIPE_GAS_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ price_id: priceId, email: email })
+  })
   .then(res => res.json())
   .then(data => {
-    console.log("Checkout Response:", data); // ← デバッグ用
-    if (data.url) {
-      window.location.href = data.url;  // Stripe Checkout へ遷移
+    console.log("Checkout Response:", data);
+    if (data.url && !data.url.startsWith("Stripeエラー")) {
+      window.location.href = data.url;
     } else {
-      alert("決済ページの取得に失敗しました");
+      alert("決済ページの取得に失敗しました\n" + (data.error || data.url));
     }
-  });
-  .catch(err => console.error("Fetch error:", err));
+  })
+  .catch(err => alert("通信エラー: " + err));
 }
-}
-
 </script>
 
 <footer class="site-footer">
@@ -262,5 +213,6 @@ function submitPaid() {
   </nav>
   <p class="copy">2026(C) わくわくプログラミング工房 平兵道</p>
 </footer>
+
 </body>
 </html>
