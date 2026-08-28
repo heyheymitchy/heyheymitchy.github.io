@@ -139,8 +139,8 @@
       <label for="post">郵便番号</label>
       <input type="text" id="post" name="post" required placeholder="0123456">
 
-      <label for="trialCourse">希望講座名</label>
-        <select id="trialCourse" name="trialCourse" required>
+      <label for="courseId">希望講座名</label>
+        <select id="courseId" name="courseId" required>
           <option value="">選択してください</option>
           <option value="kssc00">Scratch体験講座（無料）</option>
         </select>
@@ -181,7 +181,7 @@
 // GAS URLの設定（デプロイしたら修正すること）
 // --------------------------------------------------
 const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycbwusnDX0XvyPocyLf2QAwPERs9OcfQa4rPVs1uFJJbuTMVcE93Iwb8PpWpzolFbAloQ/exec";
-const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbzAhQ2lnEM5z_EGqC6Si1bhcuJ-8GZWGcJLatIxRD3k3Q6oNMd8guk7jsRYk86fsTadMQ/exec";
+const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbyyhIPCUGP6QTyPqNF8RuVurphcj2f32H5rwlIyCEbqRQ9FTMExyMnVB4cfsGTgkOA4JA/exec";
 
 // 商品一覧を読み込む（Productsシート → JSON）
 fetch(STRIPE_GAS_URL)
@@ -202,7 +202,7 @@ fetch(STRIPE_GAS_URL)
   })
   .catch(err => console.error("Fetch error:", err));
 
-/ ------------------------------
+// ------------------------------
 // ② 無料体験講座の送信
 // ------------------------------
 function submitTrial() {
