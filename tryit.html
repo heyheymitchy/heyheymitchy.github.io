@@ -99,28 +99,28 @@
 
     <form id="form">
       <label for="name">申込者氏名</label>
-      <input type="text" id="name" name="name" required>
+      <input type="text" id="name" required>
 
       <label for="kana">ふりがな</label>
-      <input type="text" id="kana" name="kana" required>
+      <input type="text" id="kana" required>
 
       <label for="email">メールアドレス</label>
-      <input type="email" id="email" name="email" required>
+      <input type="email" id="email" required>
 
       <label for="tel">電話番号</label>
-      <input type="text" id="tel" name="tel" required>
+      <input type="text" id="tel" required>
 
       <label for="post">郵便番号</label>
-      <input type="text" id="post" name="post" required>
+      <input type="text" id="post" required>
 
       <label for="trialCourse">希望講座名（無料）</label>
-      <select id="trialCourse" name="trialCourse" required>
+      <select id="trialCourse" required>
         <option value="">選択してください</option>
         <option value="kssc00">Scratch体験講座（無料）</option>
       </select>
 
       <div class="form-row terms-row">
-        <input type="checkbox" id="agree" name="agree" required>
+        <input type="checkbox" id="agree" required>
         <label for="agree"><a href="terms.html" target="_blank">利用規約</a>に同意します</label>
       </div>
 
@@ -151,11 +151,41 @@
 // --------------------------------------------------
 // GAS URL設定（あなたの環境に合わせて）
 // --------------------------------------------------
-const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycbwusnDX0XvyPocyLf2QAwPERs9OcfQa4rPVs1uFJJbuTMVcE93Iwb8PpWpzolFbAloQ/exec";
-const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbzuw-LQCSqyjI33nP9xlNdqx7DpkmdyO1QQqwgq2l6ld-4nGiznfmg55GIyZ2XzZlZY0Q/exec";
+const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycby_6mLfz67GlCMK9kzRQ2BMzJISb-gY0y_3H-oaMiMfkwXlOjyfybkfLfRM9eQ0eR-P/exec";
+const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbxWDT4I3RYOm53Cc5mtN6IuJQljjIVCt2UuA-3H3Pd3Bwcy2QYV0Sbv-2XVZ4CGUS4faw/exec";
+
 
 // --------------------------------------------------
-// Products シート → JSON を読み込む
+// 無料体験フォーム送信（MAIN_GAS）
+// --------------------------------------------------
+document.getElementById("form").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const data = {
+    name: document.getElementById("name").value,
+    kana: document.getElementById("kana").value,
+    email: document.getElementById("email").value,
+    tel: document.getElementById("tel").value,
+    post: document.getElementById("post").value,
+    courseId: document.getElementById("trialCourse").value
+  };
+
+  fetch(MAIN_GAS_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(result => {
+    alert(result.message);
+    console.log(result);
+  })
+  .catch(err => alert("送信エラー: " + err));
+});
+
+
+// --------------------------------------------------
+// Products シート → JSON を読み込む（STRIPE_GAS）
 // --------------------------------------------------
 fetch(STRIPE_GAS_URL)
   .then(res => res.json())
@@ -175,8 +205,9 @@ fetch(STRIPE_GAS_URL)
   })
   .catch(err => console.error("Products fetch error:", err));
 
+
 // --------------------------------------------------
-// Stripe Checkout（doPostCheckout へ POST）
+// Stripe Checkout（doPostCheckout へ JSON POST）
 // --------------------------------------------------
 function submitPaid() {
   const priceId = document.getElementById("paidCourse").value;
