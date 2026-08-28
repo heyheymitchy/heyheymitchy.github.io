@@ -181,7 +181,8 @@
 // GAS URLの設定（デプロイしたら修正すること）
 // --------------------------------------------------
 const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycbwusnDX0XvyPocyLf2QAwPERs9OcfQa4rPVs1uFJJbuTMVcE93Iwb8PpWpzolFbAloQ/exec";
-const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbyyhIPCUGP6QTyPqNF8RuVurphcj2f32H5rwlIyCEbqRQ9FTMExyMnVB4cfsGTgkOA4JA/exec";
+const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbysDQGFpdsQNR3SDAQlfSXH-_mE51QeXo5VVFaWxIcwvUD73K_bkXOxalO5WmCtqHxdLw/exec";
+
 
 // 商品一覧を読み込む（Productsシート → JSON）
 fetch(STRIPE_GAS_URL)
@@ -227,16 +228,16 @@ function submitTrial() {
 // ------------------------------
 function submitPaid() {
   const priceId = document.getElementById("paidCourse").value;
-
+  const email = document.getElementById("email").value;
   if (!priceId) {
     alert("有料講座を選択してください");
     return;
   }
 
-  fetch(STRIPE_GAS_URL, {
-    method: "POST",
-    body: JSON.stringify({ price_id: priceId })
-  })
+  fetch(STRIPE_GAS_URL + "?mode=checkout", {
+  method: "POST",
+  body: JSON.stringify({ price_id: priceId, email: email })
+})
   .then(res => res.json())
   .then(data => {
     if (data.url) {
