@@ -181,7 +181,7 @@
 // GAS URLの設定（デプロイしたら修正すること）
 // --------------------------------------------------
 const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycbwusnDX0XvyPocyLf2QAwPERs9OcfQa4rPVs1uFJJbuTMVcE93Iwb8PpWpzolFbAloQ/exec";
-const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbysDQGFpdsQNR3SDAQlfSXH-_mE51QeXo5VVFaWxIcwvUD73K_bkXOxalO5WmCtqHxdLw/exec";
+const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbyriWuqerH2hzBjmzicjYfmxfYL2pjntZpAIE-koQoUWOLZiqJK8dvSMZqNkrJddb7APw/exec";
 
 
 // 商品一覧を読み込む（Productsシート → JSON）
@@ -240,12 +240,15 @@ function submitPaid() {
 })
   .then(res => res.json())
   .then(data => {
+    console.log("Checkout Response:", data); // ← デバッグ用
     if (data.url) {
       window.location.href = data.url;  // Stripe Checkout へ遷移
     } else {
       alert("決済ページの取得に失敗しました");
     }
   });
+  .catch(err => console.error("Fetch error:", err));
+}
 }
 
 </script>
