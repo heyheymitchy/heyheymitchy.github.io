@@ -148,13 +148,11 @@
 </main>
 
 <script>
-<script>
 // ===============================
 // GAS URL設定
 // ===============================
-const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycby_6mLfz67GlCMK9kzRQ2BMzJISb-gY0y_3H-oaMiMfkwXlOjyfybkfLfRM9eQ0eR-P/exec";
-const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbwatPfKCKNY_oWbTJFDBxFGLz4ZQ-23yxHBHOJjGyBPxeQa-P0fkFfrR0ZYtfOq_XpNgw/exec";
-
+const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycbwXZEKgRSkcsCcm-SxpA_9qQdnb8kFe5Ug2GKGGDmwDl6oWK2Wje6EBYwiR7o1TFxIY/exec";
+const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbx0KkpPbgTeS6wNWJCXLTO8a_RtT0ClzCCaNWwuYykLh6RfTTQM3XaU0dmQ5PMWmQGJsg/exec";
 
 // ===============================
 // 無料体験フォーム送信（no-cors）
@@ -181,12 +179,12 @@ document.getElementById("form").addEventListener("submit", function(event) {
   alert("お申込みを受け付けました！");
 });
 
-
 // ===============================
 // Products JSON（通常 GET）
 // ===============================
-fetch(STRIPE_GAS_URL + "?mode=products")
-  .then(res => res.json())
+fetch(STRIPE_GAS_URL)
+  .then(res => res.text())        // ★ HtmlService のため text() で受け取る
+  .then(text => JSON.parse(text)) // ★ JSON に変換
   .then(data => {
     console.log("Products JSON:", data);
     const select = document.getElementById("paidCourse");
