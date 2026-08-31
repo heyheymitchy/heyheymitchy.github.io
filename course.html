@@ -1,120 +1,56 @@
-﻿<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!-- わくわくプログラミング工房　平兵道　のホームページ -->
-<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!-- course.html -->
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>講座一覧</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    .course-list {
-      max-width: 900px;
-      margin: 40px auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-    }
-    .course-box {
-      background: #fffbea;
-      border: 3px solid #ffcc00;
-      border-radius: 20px;
-      padding: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    .course-title {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: #ff4081;
-    }
-    .course-meta {
-      font-size: 14px;
-      color: #555;
-      margin-bottom: 10px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Course List</title>
+<style>
+.course-list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  justify-items: center;
+  align-items: center;
+  padding: 20px;
+}
+.course-item {
+  text-align: center;
+  cursor: pointer;
+}
+.course-item img {
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+}
+</style>
 </head>
 <body>
 
-<h2 style="text-align:center;">講座一覧</h2>
 <div id="courseList" class="course-list"></div>
 
+<script src="data.js"></script>
 <script>
-// GAS Web API URL
-const API_URL = "https://script.google.com/macros/s/AKfycbz5MSQhrTUtEZWgGfCCpEuzTxfO_1Ki6SbWYi9-qbZQDEqTjg-zOlAkYhksdnVTs0AT/exec";
+const lang = sessionStorage.getItem("lang") || "ja";
+const start = lang === "ja" ? 101 : 901;
+const end   = lang === "ja" ? 125 : 925;
 
-// Stripe公開キー（testのキーに差し替え）
-const STRIPE_PK = "pk_test_51U1cGDRpMQH46JyklwjmwRZ6wTybt9LCn7AWYORq84xzQULhpEKTBlIhR8bXCLbwOCWpAUrO67igBlp1GdyYLwf500ni9YGwsV";
+const courseList = document.getElementById("courseList");
 
-// courseId → Stripe price_id の対応表（手動管理 or 後でAPI化）
-const PRICE_MAP = {
-  "COURSE001": "price_1200",
-  "COURSE002": "price_2400",
-  "COURSE003": "price_4800",
-  "COURSE004": "price_9600",
-};
+for (let pt = start; pt <= end; pt++) {
+  const item = data_jaen[pt];
+  if (!item) continue;
 
-// Stripe初期化
-const stripe = Stripe(STRIPE_PK);
-
-// 講座一覧取得
-fetch(`${API_URL}?getCourseCatalog=1`)
-  .then(res => res.json())
-  .then(list => {
-    let html = "";
-
-    list.forEach(course => {
-      const priceId = PRICE_MAP[course.courseId] || null;
-
-      html += `
-        <div class="course-box">
-          <div class="course-title">${course.courseName}</div>
-          <div class="course-meta">
-            講座ID：${course.courseId}<br>
-            視聴期限：${course.expireDays}日間<br>
-            次の講座：${course.nextCourseName || "（なし）"}
-          </div>
-          <p>
-            <a href="lesson.html?memberId=TEST_${course.courseId}" class="btn-primary">
-              サンプル受講ページを見る
-            </a>
-          </p>
-          ${priceId ? `
-          <p>
-            <button class="btn-primary" onclick="startCheckout('${course.courseId}')">
-              この講座を購入する
-            </button>
-          </p>
-          ` : `
-          <p style="color:#999;">※この講座は現在購入できません</p>
-          `}
-        </div>
-      `;
-    });
-
-    document.getElementById("courseList").innerHTML = html;
+  const div = document.createElement("div");
+  div.className = "course-item";
+  div.innerHTML = `
+    <img src="${item.icon}" alt="${item.title}">
+    <div>${item.title}</div>
+  `;
+  div.addEventListener("click", () => {
+    window.location.href = `check.html?pt=${pt}`;
   });
-
-// Stripe Checkout開始
-function startCheckout(courseId) {
-  const priceId = PRICE_MAP[courseId];
-  if (!priceId) {
-    alert("この講座は現在購入できません");
-    return;
-  }
-
-  stripe.redirectToCheckout({
-    lineItems: [{ price: priceId, quantity: 1 }],
-    mode: "payment",
-    successUrl: "https://heyheymitchy.github.io/success.html?memberId={CHECKOUT_SESSION_ID}",
-    cancelUrl: "https://heyheymitchy.github.io/cancel.html",
-  });
+  courseList.appendChild(div);
 }
 </script>
 
 </body>
 </html>
-

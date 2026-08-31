@@ -247,7 +247,9 @@ body:not(:target) .lang-en { display: none;}
   height: 20px; /* ← 文字の高さを確保 */
 }
 
-/* introductionの画面イメージ */
+
+
+/* courceの画面イメージ */
 .desc {
     display: flex;         /* 横並びにする */
     align-items: center;   /* 縦の位置を中央に合わせる */
@@ -278,6 +280,74 @@ body:not(:target) .lang-en { display: none;}
         text-decoration: none;
         font-size: 20px;
     }
+
+.course-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.course-item {
+  text-align: center;
+  cursor: pointer;
+}
+
+.course-item img {
+  width: 120px;
+  height: 120px;
+  border-radius:
+ 12px;
+}
+
+    .course-box {
+      background: #fffbea;
+      border: 3px solid #ffcc00;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .course-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #ff4081;
+    }
+    .course-meta {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+/* 横一列スクロール */
+.course-list.row {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 10px;
+}
+
+/* グリッド表示（3列） */
+.course-list.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 16px;
+  padding: 10px;
+}
+
+.course-item {
+  width: 120px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.course-item img {
+  width: 100%;
+  border-radius: 12px;
+}
 
 /*****************************************************/
 /*****************************************************/
