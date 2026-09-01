@@ -1,14 +1,13 @@
 ﻿<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!-- わくわくプログラミング工房　平兵道　のホームページ -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!-- tryit.html -->
-<!-- やってみよう　の ページ -->
-<!-- 講座申し込みページ -->
+<!-- regist.html -->
+<!-- 会員登録＆お試し無料講座申し込みのページ -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>やってみようのページ</title>
+  <title>会員登録＆お試し無料講座申込のページ</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
@@ -80,8 +79,7 @@
     <a href="#ja" class="lang-btn">日本語</a>
     <a href="#en" class="lang-btn">English</a>
   </div>
-
-  <!-- 日本語メニュー -->
+<!-- 日本語メニュー -->
   <nav class="menu ja">
     <a href="hello.html" class="btn">はじめまして</a>
     <a href="course.html" class="btn">なにがあるの</a>
@@ -89,8 +87,7 @@
     <a href="faqans.html" class="btn">しつもんする</a>
     <a href="check.html" class="btn">かくにんする</a>
   </nav>
-
-  <!-- 英語メニュー -->
+<!-- 英語メニュー -->
   <nav class="menu en">
     <a href="hello.html#en" class="btn">Hello</a>
     <a href="course.html#en" class="btn">Go</a>
@@ -101,98 +98,78 @@
 </header>
 
 <main>
+
   <!-- =============================== -->
-  <!-- 有料講座（Productsシート連携） -->
+  <!-- 特別会員様登録＆無料体験講座申込-->
   <!-- =============================== -->
   <section class="form-section card">
-    <h2>こちらは、有料講座お申込みフォームです</h2>
-    <h2>有料講座申し込み前には［利用規約］をご確認ください</h2>
+    <h2>特別会員様登録フォーム　兼　無料体験講座お申込みフォーム</h2>
 
-    <div class="section">
-      <p>有料講座は、選択後「申し込む（購入へ進む）」ボタンを押すと料金徴収（Stripe決済）へ進みます。</p>
+    <form id="form">
+      <label for="name">申込者氏名</label>
+      <input type="text" id="name" required>
 
-      <form id="paidForm">
-        <label for="memberID">会員番号</label>
-        <input type="text" id="memberID" name="memberID" required placeholder="（例）WKS0001">
+      <label for="kana">ふりがな</label>
+      <input type="text" id="kana" required>
 
-        <label for="name">申込者氏名</label>
-        <input type="text" id="name" name="name" required placeholder="日本　一郎">
+      <label for="email">メールアドレス</label>
+      <input type="email" id="email" required>
 
-        <label>希望講座名（有料）</label>
-        <select id="paidCourse"></select>
+      <label for="tel">電話番号</label>
+      <input type="text" id="tel" required>
 
-        <div class="form-row terms-row">
-          <input type="checkbox" id="agree" required>
-          <label for="agree"><a href="terms.html" target="_blank">利用規約</a>に同意します</label>
-        </div>
+      <label for="post">郵便番号</label>
+      <input type="text" id="post" required>
 
-        <button type="button" class="btn" onclick="submitPaid()">申し込む（購入へ進む）</button>
+      <label for="trialCourse">希望講座名（無料）</label>
+      <select id="trialCourse" required>
+        <option value="">選択してください</option>
+        <option value="kssc00">Scratch体験講座（無料）</option>
+      </select>
 
-        <p class="note">※決済完了後、案内ページ（mypage.html）へ戻ります。</p>
-      </form>
-    </div>
+      <div class="form-row terms-row">
+        <input type="checkbox" id="agree" required>
+        <label for="agree"><a href="terms.html" target="_blank">利用規約</a>に同意します</label>
+      </div>
+
+      <button type="submit" class="btn">無料体験講座に申し込む</button>
+    </form>
   </section>
+
+
 </main>
 
 <script>
 // ===============================
 // GAS URL設定
 // ===============================
-const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbxZzh8B_BVPFFVdWLPdd51HzOsg2voWkfJ06DjiW3ovoIjDKsKGjAVBqV54IV4MWbkYEg/exec";
+const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycbxzB70TlzjTtzVHniLDb3Uq4y-3sofo0F1L6LhdP7eQorRzdrXb7GK6YsIpWlvfgsom/exec";
 
 // ===============================
-// Products JSON（通常 GET）
+// 無料体験フォーム送信（no-cors）
 // ===============================
-fetch(STRIPE_GAS_URL)
-  .then(res => res.json())
-  .then(data => {
-    console.log("Products JSON:", data);
-    const select = document.getElementById("paidCourse");
-    select.innerHTML = '<option value="">選択してください</option>';
+document.getElementById("form").addEventListener("submit", function(event) {
+  event.preventDefault();
 
-    data.products.forEach(p => {
-      if (p.active) {
-        const opt = document.createElement("option");
-        opt.value = p.price_id;
-        opt.textContent = `${p.product_name}（${p.price}円）`;
-        select.appendChild(opt);
-      }
-    });
-  })
-  .catch(err => console.error("Products fetch error:", err));
+  const data = {
+    name: document.getElementById("name").value,
+    kana: document.getElementById("kana").value,
+    email: document.getElementById("email").value,
+    tel: document.getElementById("tel").value,
+    post: document.getElementById("post").value,
+    courseId: document.getElementById("trialCourse").value
+  };
 
-// ===============================
-// Stripe Checkout（POST）
-// ===============================
-function submitPaid() {
-  const priceId = document.getElementById("paidCourse").value;
-  const memberID = document.getElementById("memberID").value;
-  const name = document.getElementById("name").value;
-
-  if (!priceId || !memberID) {
-    alert("会員番号と講座を選択してください");
-    return;
-  }
-
-  fetch(STRIPE_GAS_URL, {
+fetch(MAIN_GAS_URL, {
     method: "POST",
+    mode: "no-cors",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      price_id: priceId,
-      memberID: memberID,
-      name: name
-    })
-  })
-    .then(res => res.json())
-    .then(data => {
-      if (data.url) {
-        window.location.href = data.url; // Stripe Checkoutへ遷移
-      } else {
-        alert("決済処理に失敗しました");
-      }
-    })
-    .catch(err => alert("通信エラー: " + err));
-}
+    body: JSON.stringify(data)
+  });
+
+  alert("特別会員登録＆お試し無料講座の、お申込みを受け付けました！\nあなたの会員番号はメールにてご確認願います。");
+});
+
 </script>
 
 <footer class="site-footer">

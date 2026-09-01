@@ -3,54 +3,140 @@
 <head>
 <meta charset="UTF-8">
 <title>Course List</title>
+
 <style>
 .course-list {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 20px;
-  justify-items: center;
-  align-items: center;
   padding: 20px;
 }
 .course-item {
   text-align: center;
   cursor: pointer;
+  transition: 0.2s;
 }
+
 .course-item img {
   width: 120px;
   height: 120px;
   border-radius: 12px;
+  transition: 0.2s;
+}
+
+/* ▼クリックした瞬間のポップUI */
+.course-item:active img {
+  transform: scale(0.9);
+  filter: brightness(1.3) saturate(1.4);
+  border-radius: 20px;
+  box-shadow: 0 0 12px rgba(255, 105, 180, 0.6); /* ピンク光 */
+}
+/* ▼ホバーしたときのポップUI */
+.course-item:hover img {
+  transform: scale(1.12);              /* 少し大きくなる */
+  filter: brightness(1.2) saturate(1.3); /* 色が明るくなる */
+  border-radius: 20px;                 /* 角を少し丸く */
+  box-shadow: 0 0 12px rgba(255, 105, 180, 0.6); /* ピンクの光 */
+  transition: 0.25s ease;              /* ふわっと変化 */
+}
+
+/* ▼ホバー時のタイトルも少しポップに */
+.course-item:hover div {
+  color: #ff66cc;                      /* ピンク色に変化 */
+  transform: scale(1.05);
+  transition: 0.25s ease;
 }
 </style>
 </head>
+
 <body>
 
 <div id="courseList" class="course-list"></div>
 
-<script src="data.js"></script>
 <script>
+// ▼ 日本語＋英語データ（data.js 不要）
+const data_jaen = {
+    101: { title: "Scratch", icon: "images/icon_001.png" },
+    102: { title: "ゲーム", icon: "images/icon_002.png" },
+    103: { title: "アート", icon: "images/icon_003.png" },
+    104: { title: "音楽", icon: "images/icon_004.png" },
+    105: { title: "英語", icon: "images/icon_005.png" },
+    106: { title: "ホームページ", icon: "images/icon_006.png" },
+    107: { title: "HTML", icon: "images/icon_007.png" },
+    108: { title: "CSS", icon: "images/icon_008.png" },
+    109: { title: "GAS", icon: "images/icon_009.png" },
+    110:{ title: "Vscode", icon: "images/icon_010.png" },
+    111:{ title: "GitHub", icon: "images/icon_011.png" },
+    112:{ title: "プログラミング", icon: "images/icon_012.png" },
+    113:{ title: "STEAM", icon: "images/icon_013.png" },
+    114:{ title: "SDGs", icon: "images/icon_014.png" },
+    115:{ title: "AIプロンプト", icon: "images/icon_015.png" },
+    116:{ title: "Python", icon: "images/icon_016.png" },
+    117:{ title: "YouTube", icon: "images/icon_017.png" },
+    118:{ title: "Zoom", icon: "images/icon_018.png" },
+    119:{ title: "コンピュータ", icon: "images/icon_019.png" },
+    120:{ title: "デジタルコンテンツ", icon: "images/icon_020.png" },
+    121:{ title: "コンサル", icon: "images/icon_021.png" },
+    122:{ title: "ネットビジネス", icon: "images/icon_022.png" },
+    123:{ title: "個人事業者", icon: "images/icon_023.png" },
+    124:{ title: "起業", icon: "images/icon_024.png" },
+    125:{ title: "コーチング", icon: "images/icon_025.png" },
+
+    901: { title: "Scratch", icon: "images/en/icon_901.png" },
+    902: { title: "Game", icon: "images/en/icon_902.png" },
+    903: { title: "Art", icon: "images/en/icon_903.png" },
+    904: { title: "Music", icon: "images/en/icon_904.png" },
+    905: { title: "English", icon: "images/en/icon_905.png" },
+    906: { title: "Homepage", icon: "images/en/icon_906.png" },
+    907: { title: "HTML", icon: "images/en/icon_907.png" },
+    908: { title: "CSS", icon: "images/en/icon_908.png" },
+    909: { title: "GAS", icon: "images/en/icon_909.png" },
+    910:{ title: "Vscode", icon: "images/en/icon_910.png" },
+    911:{ title: "GitHub", icon: "images/en/icon_911.png" },
+    912:{ title: "Programming", icon: "images/en/icon_912.png" },
+    913:{ title: "STEAM", icon: "images/en/icon_913.png" },
+    914:{ title: "SDGs", icon: "images/en/icon_914.png" },
+    915:{ title: "AI Prompt", icon: "images/en/icon_915.png" },
+    916:{ title: "Python", icon: "images/en/icon_916.png" },
+    917:{ title: "YouTube", icon: "images/en/icon_917.png" },
+    918:{ title: "Zoom", icon: "images/en/icon_918.png" },
+    919:{ title: "Computer", icon: "images/en/icon_919.png" },
+    920:{ title: "Digital Contents", icon: "images/en/icon_920.png" },
+    921:{ title: "Consulting", icon: "images/en/icon_921.png" },
+    922:{ title: "Online Business", icon: "images/en/icon_922.png" },
+    923:{ title: "Sole Proprietor", icon: "images/en/icon_923.png" },
+    924:{ title: "Startup", icon: "images/en/icon_924.png" },
+    925:{ title: "Coaching", icon: "images/en/icon_925.png" }
+};
+
+// ▼ 言語判定
 const lang = sessionStorage.getItem("lang") || "ja";
 const start = lang === "ja" ? 101 : 901;
 const end   = lang === "ja" ? 125 : 925;
 
+// ▼ アイコン生成
 const courseList = document.getElementById("courseList");
 
 for (let pt = start; pt <= end; pt++) {
-  const item = data_jaen[pt];
-  if (!item) continue;
+    const item = data_jaen[pt];
+    if (!item) continue;
 
-  const div = document.createElement("div");
-  div.className = "course-item";
-  div.innerHTML = `
-    <img src="${item.icon}" alt="${item.title}">
-    <div>${item.title}</div>
-  `;
-  div.addEventListener("click", () => {
-    window.location.href = `check.html?pt=${pt}`;
-  });
-  courseList.appendChild(div);
+    const div = document.createElement("div");
+    div.className = "course-item";
+
+    div.innerHTML = `
+        <img src="${item.icon}" alt="${item.title}">
+        <div>${item.title}</div>
+    `;
+
+    div.addEventListener("click", () => {
+        window.location.href = `check.html?pt=${pt}`;
+    });
+
+    courseList.appendChild(div);
 }
 </script>
 
 </body>
 </html>
+
