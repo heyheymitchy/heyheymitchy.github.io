@@ -1,9 +1,7 @@
 ﻿<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!-- わくわくプログラミング工房　平兵道　のホームページ -->
+<!-- わくわくプログラミング工房 平兵道 -->
+<!-- tryit.html（CORS対応・会員番号チェック・Stripe決済連携 完全版） -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!-- tryit.html -->
-<!-- やってみよう　の ページ -->
-<!-- 講座申し込みページ -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -136,18 +134,25 @@
 
 <script>
 // ===============================
-// GAS URL設定
+// GAS URL設定（CORS対応済み）
 // ===============================
-const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycbxzB70TlzjTtzVHniLDb3Uq4y-3sofo0F1L6LhdP7eQorRzdrXb7GK6YsIpWlvfgsom/exec";
-const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbwhtIoBUaIU-HCehXdqPxFsbqh4pHiZPEecBwf2SJH_UK8OVP_-2k9M0PEocepUWs-vjw/exec";
+const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycbyl5aRuw7zUhz60ejAY5Um1tlqdczHil4mYFZj8fQ2lbHOpvv-LrMsIBpZ47V0z0Kni/exec";
+const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbz9-P4JebVzcl-SdfMFx2_CU3ttIfHb7de4XeY03QyBT0rqxVqlCnJ09E9_huyY_BHxpQ/exec";
 
 // ===============================
-// Products JSON（通常 GET）
+// 会員番号チェック（MAIN_GAS）
+// ===============================
+function checkMember(memberID) {
+  return fetch(`${MAIN_GAS_URL}?memberID=${memberID}`)
+    .then(res => res.json());
+}
+
+// ===============================
+// Products JSON（GET）
 // ===============================
 fetch(STRIPE_GAS_URL)
   .then(res => res.json())
   .then(data => {
-    console.log("Products JSON:", data);
     const select = document.getElementById("paidCourse");
     select.innerHTML = '<option value="">選択してください</option>';
 
@@ -160,39 +165,56 @@ fetch(STRIPE_GAS_URL)
       }
     });
   })
-  .catch(err => console.error("Products fetch error:", err));
+  .catch(err => {
+    console.error("Products fetch error:", err);
+    alert("商品情報の取得に失敗しました。\n" + err);
+  });
 
 // ===============================
 // Stripe Checkout（POST）
 // ===============================
 function submitPaid() {
-  const priceId = document.getElementById("paidCourse").value;
+  const priceId  = document.getElementById("paidCourse").value;
   const memberID = document.getElementById("memberID").value;
-  const name = document.getElementById("name").value;
+  const name     = document.getElementById("name").value;
 
   if (!priceId || !memberID) {
     alert("会員番号と講座を選択してください");
     return;
   }
 
-  fetch(STRIPE_GAS_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      price_id: priceId,
-      memberID: memberID,
-      name: name
+  // ① 会員番号チェック
+  checkMember(memberID).then(result => {
+    if (!result.valid) {
+      alert("会員番号が存在しません");
+      return;
+    }
+
+    const email = result.email;
+
+    // ② Stripe決済へ進む
+    fetch(STRIPE_GAS_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        price_id: priceId,
+        memberID: memberID,
+        email: email
+      })
     })
-  })
-    .then(res => res.json())
-    .then(data => {
-      if (data.url) {
-        window.location.href = data.url; // Stripe Checkoutへ遷移
-      } else {
-        alert("決済処理に失敗しました: " + JSON.stringify(data));
-      }
-    })
-    .catch(err => alert("通信エラー: " + err));
+      .then(res => res.json())
+      .then(data => {
+        if (data.url) {
+          window.location.href = data.url; // Stripe Checkoutへ遷移
+        } else {
+          alert("決済処理に失敗しました。\n" + JSON.stringify(data));
+        }
+      })
+      .catch(err => {
+        console.error("通信エラー:", err);
+        alert("通信エラー: " + err);
+      });
+  });
 }
 </script>
 
