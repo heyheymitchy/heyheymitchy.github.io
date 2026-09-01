@@ -188,7 +188,7 @@ function submitPaid() {
       if (data.url) {
         window.location.href = data.url; // Stripe Checkoutへ遷移
       } else {
-        alert("決済処理に失敗しました");
+        alert("決済処理に失敗しました: " + JSON.stringify(data));
       }
     })
     .catch(err => alert("通信エラー: " + err));
