@@ -98,7 +98,8 @@
 // GAS URL設定（最新デプロイURL）
 // ===============================
 const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycbzRcpf8JmFAriSEJI-m53h0DQPGfJUjuynngkZmjH51BuSAeSEkSZ0KifUVx5xtdbH3/exec";
-const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbw7YG0KjD2QS6JLAACb-M_f_RCaAZZHZNwOQTvEpnZjIULuPTC7Dujd_aLcnZo50_hKNw/exec";
+const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbxKlnIub_luV3eaNhKsBfFJuKiJKCEpHzdx7tZAtdHq9df2zpsORK9IAFaIc5d7miKlQA/exec";
+
 
 // ===============================
 // 会員番号チェック（MAIN_GAS）
@@ -174,8 +175,9 @@ function submitPaid() {
     // ② Stripe決済へ進む
     fetch(STRIPE_GAS_URL, {
       method: "POST",
-      mode: "cors", // ← これを追加
-      headers: { "Content-Type": "application/json" },
+      // mode: "cors",  ← これを削除
+      // headers: { "Content-Type": "application/json" },
+      headers: {"Content-Type": "text/plain;charset=UTF-8"},
       body: JSON.stringify({
         price_id: priceId,
         memberID: memberID,
