@@ -8,6 +8,7 @@
   <meta charset="UTF-8">
   <title>やってみようのページ</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <style>
     body {
       font-family: "Rounded Mplus 1c", sans-serif;
@@ -68,15 +69,16 @@
 </head>
 
 <body>
+
   <h2>有料講座お申込みフォーム</h2>
 
   <div class="section">
     <form id="paidForm">
       <label for="memberID">会員番号</label>
-      <input type="text" id="memberID" name="memberID" required placeholder="（例）WKS0001">
+      <input type="text" id="memberID" required placeholder="（例）WKS0001">
 
       <label for="name">申込者氏名</label>
-      <input type="text" id="name" name="name" required placeholder="日本　一郎">
+      <input type="text" id="name" required placeholder="日本　一郎">
 
       <label>希望講座名（有料）</label>
       <select id="paidCourse"></select>
@@ -91,92 +93,115 @@
     </form>
   </div>
 
-  <script>
-    // ===============================
-    // GAS URL設定（最新デプロイURLを貼る）
-    // ===============================
-    const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycbzRcpf8JmFAriSEJI-m53h0DQPGfJUjuynngkZmjH51BuSAeSEkSZ0KifUVx5xtdbH3/exec";
-    const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbx3F3vOK6td_EGLPvojbjLL0ULEXLo9xkiH0H_gvzQBzLTR9eWa8ZkikML13NhkvMldDg/exec";
+<script>
+// ===============================
+// GAS URL設定（最新デプロイURL）
+// ===============================
+const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycbzRcpf8JmFAriSEJI-m53h0DQPGfJUjuynngkZmjH51BuSAeSEkSZ0KifUVx5xtdbH3/exec";
+const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbx3F3vOK6td_EGLPvojbjLL0ULEXLo9xkiH0H_gvzQBzLTR9eWa8ZkikML13NhkvMldDg/exec";
 
-
-    // ===============================
-    // 会員番号チェック（MAIN_GAS）
-    // ===============================
-    async function checkMember(memberID) {
-      const res = await fetch(`${MAIN_GAS_URL}?memberID=${memberID}`);
+// ===============================
+// 会員番号チェック（MAIN_GAS）
+// ===============================
+function checkMember(memberID) {
+  return fetch(MAIN_GAS_URL + "?memberID=" + memberID)
+    .then(res => {
+      if (!res.ok) {
+        throw new Error("HTTPエラー: " + res.status);
+      }
       return res.json();
-    }
+    })
+    .then(data => {
+      console.log("会員チェック結果:", data);
+      return data;
+    })
+    .catch(err => {
+      console.error("会員番号チェックエラー:", err);
+      alert("会員番号チェックに失敗しました。\n" + err);
+      return { valid: false };
+    });
+}
 
-    // ===============================
-    // Products JSON（STRIPE_GAS）
-    // ===============================
-    async function loadProducts() {
-      try {
-        const res = await fetch(STRIPE_GAS_URL);
-        const data = await res.json();
-        const select = document.getElementById("paidCourse");
-        select.innerHTML = '<option value="">選択してください</option>';
 
-        data.products.forEach(p => {
-          if (p.active) {
-            const opt = document.createElement("option");
-            opt.value = p.price_id;
-            opt.textContent = `${p.product_name}（${p.price}円）`;
-            select.appendChild(opt);
-          }
-        });
-      } catch (err) {
-        console.error("Products fetch error:", err);
-        alert("商品情報の取得に失敗しました。\n" + err);
-      }
-    }
+// ===============================
+// Products JSON（STRIPE_GAS）
+// ===============================
+function loadProducts() {
+  fetch(STRIPE_GAS_URL)
+    .then(res => res.json())
+    .then(data => {
+      const select = document.getElementById("paidCourse");
+      select.innerHTML = '<option value="">選択してください</option>';
 
-    // ===============================
-    // Stripe Checkout（POST）
-    // ===============================
-    async function submitPaid() {
-      const priceId  = document.getElementById("paidCourse").value;
-      const memberID = document.getElementById("memberID").value;
-      const name     = document.getElementById("name").value;
-
-      if (!priceId || !memberID) {
-        alert("会員番号と講座を選択してください");
-        return;
-      }
-
-      try {
-        const result = await checkMember(memberID);
-        if (!result.valid) {
-          alert("会員番号が存在しません");
-          return;
+      data.products.forEach(p => {
+        if (p.active) {
+          const opt = document.createElement("option");
+          opt.value = p.price_id;
+          opt.textContent = `${p.product_name}（${p.price}円）`;
+          select.appendChild(opt);
         }
+      });
+    })
+    .catch(err => {
+      console.error("Products fetch error:", err);
+      alert("商品情報の取得に失敗しました。\n" + err);
+    });
+}
 
-        const email = result.email;
 
-        const res = await fetch(STRIPE_GAS_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            price_id: priceId,
-            memberID: memberID,
-            email: email
-          })
-        });
+// ===============================
+// Stripe Checkout（POST）
+// ===============================
+function submitPaid() {
+  const priceId  = document.getElementById("paidCourse").value;
+  const memberID = document.getElementById("memberID").value;
+  const name     = document.getElementById("name").value;
 
-        const data = await res.json();
+  if (!priceId || !memberID) {
+    alert("会員番号と講座を選択してください");
+    return;
+  }
+
+  // ① 会員番号チェック
+  checkMember(memberID).then(result => {
+    if (!result.valid) {
+      alert("会員番号が存在しません");
+      return;
+    }
+
+    const email = result.email;
+
+    // ② Stripe決済へ進む
+    fetch(STRIPE_GAS_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        price_id: priceId,
+        memberID: memberID,
+        email: email
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
         if (data.url) {
           window.location.href = data.url;
         } else {
           alert("決済処理に失敗しました。\n" + JSON.stringify(data));
         }
-      } catch (err) {
+      })
+      .catch(err => {
         console.error("通信エラー:", err);
         alert("通信エラー: " + err);
-      }
-    }
+      });
+  });
+}
 
-    // 初期化
-    loadProducts();
-  </script>
+
+// ===============================
+// 初期化
+// ===============================
+loadProducts();
+
+</script>
 </body>
 </html>
