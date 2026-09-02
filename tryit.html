@@ -8,7 +8,6 @@
   <meta charset="UTF-8">
   <title>やってみようのページ</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <style>
     body {
       font-family: "Rounded Mplus 1c", sans-serif;
@@ -66,167 +65,117 @@
       color: #666;
     }
   </style>
-
-  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+  <h2>有料講座お申込みフォーム</h2>
 
-<header class="header">
-  <div class="logo-box"><img src="images/logo.png" alt="ロゴ"></div>
-  <div class="lang-switch">
-    <a href="#ja" class="lang-btn">日本語</a>
-    <a href="#en" class="lang-btn">English</a>
+  <div class="section">
+    <form id="paidForm">
+      <label for="memberID">会員番号</label>
+      <input type="text" id="memberID" name="memberID" required placeholder="（例）WKS0001">
+
+      <label for="name">申込者氏名</label>
+      <input type="text" id="name" name="name" required placeholder="日本　一郎">
+
+      <label>希望講座名（有料）</label>
+      <select id="paidCourse"></select>
+
+      <div class="form-row terms-row">
+        <input type="checkbox" id="agree" required>
+        <label for="agree"><a href="terms.html" target="_blank">利用規約</a>に同意します</label>
+      </div>
+
+      <button type="button" class="btn" onclick="submitPaid()">申し込む（購入へ進む）</button>
+      <p class="note">※決済完了後、案内ページ（mypage.html）へ戻ります。</p>
+    </form>
   </div>
 
-  <!-- 日本語メニュー -->
-  <nav class="menu ja">
-    <a href="hello.html" class="btn">はじめまして</a>
-    <a href="course.html" class="btn">なにがあるの</a>
-    <a href="tryit.html" class="btn">やってみよう</a>
-    <a href="faqans.html" class="btn">しつもんする</a>
-    <a href="check.html" class="btn">かくにんする</a>
-  </nav>
+  <script>
+    // ===============================
+    // GAS URL設定（最新デプロイURLを貼る）
+    // ===============================
+    const MAIN_GAS_URL   = "https://script.google.com/macros/s/AKfycbx53g8lNdkeuIcUavgEd1R_IMU2KtxxjQsvnemTx-BGfaeGu3C6WAlpt97oN_zEbxom/exec";
+    const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbyxCaxWmYprV2LQce3tc8j99YwMDKyl8n1qItzEXu5WkxBiWvF8ewSIu1CtPf4SMzYR0Q/exec";
 
-  <!-- 英語メニュー -->
-  <nav class="menu en">
-    <a href="hello.html#en" class="btn">Hello</a>
-    <a href="course.html#en" class="btn">Go</a>
-    <a href="tryit.html#en" class="btn">Play</a>
-    <a href="faqans.html#en" class="btn">Ask</a>
-    <a href="check.html#en" class="btn">Check</a>
-  </nav>
-</header>
-
-<main>
-  <!-- =============================== -->
-  <!-- 有料講座（Productsシート連携） -->
-  <!-- =============================== -->
-  <section class="form-section card">
-    <h2>こちらは、有料講座お申込みフォームです</h2>
-    <h2>有料講座申し込み前には［利用規約］をご確認ください</h2>
-
-    <div class="section">
-      <p>有料講座は、選択後「申し込む（購入へ進む）」ボタンを押すと料金徴収（Stripe決済）へ進みます。</p>
-
-      <form id="paidForm">
-        <label for="memberID">会員番号</label>
-        <input type="text" id="memberID" name="memberID" required placeholder="（例）WKS0001">
-
-        <label for="name">申込者氏名</label>
-        <input type="text" id="name" name="name" required placeholder="日本　一郎">
-
-        <label>希望講座名（有料）</label>
-        <select id="paidCourse"></select>
-
-        <div class="form-row terms-row">
-          <input type="checkbox" id="agree" required>
-          <label for="agree"><a href="terms.html" target="_blank">利用規約</a>に同意します</label>
-        </div>
-
-        <button type="button" class="btn" onclick="submitPaid()">申し込む（購入へ進む）</button>
-
-        <p class="note">※決済完了後、案内ページ（mypage.html）へ戻ります。</p>
-      </form>
-    </div>
-  </section>
-</main>
-
-<script>
-// ===============================
-// GAS URL設定（CORS対応済み）
-// ===============================
-const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycbwfC0NCNIOuRz8yXmA0T_t_e6LnSw51Wn6Tgpx-gYSvRXkR34gczdCezbG7jtIgbQq3/exec";
-const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbx3F3vOK6td_EGLPvojbjLL0ULEXLo9xkiH0H_gvzQBzLTR9eWa8ZkikML13NhkvMldDg/exec";
-
-// ===============================
-// 会員番号チェック（MAIN_GAS）
-// ===============================
-function checkMember(memberID) {
-  return fetch(`${MAIN_GAS_URL}?memberID=${memberID}`)
-    .then(res => res.json());
-}
-
-// ===============================
-// Products JSON（GET）
-// ===============================
-fetch(STRIPE_GAS_URL)
-  .then(res => res.json())
-  .then(data => {
-    const select = document.getElementById("paidCourse");
-    select.innerHTML = '<option value="">選択してください</option>';
-
-    data.products.forEach(p => {
-      if (p.active) {
-        const opt = document.createElement("option");
-        opt.value = p.price_id;
-        opt.textContent = `${p.product_name}（${p.price}円）`;
-        select.appendChild(opt);
-      }
-    });
-  })
-  .catch(err => {
-    console.error("Products fetch error:", err);
-    alert("商品情報の取得に失敗しました。\n" + err);
-  });
-
-// ===============================
-// Stripe Checkout（POST）
-// ===============================
-function submitPaid() {
-  const priceId  = document.getElementById("paidCourse").value;
-  const memberID = document.getElementById("memberID").value;
-  const name     = document.getElementById("name").value;
-
-  if (!priceId || !memberID) {
-    alert("会員番号と講座を選択してください");
-    return;
-  }
-
-  // ① 会員番号チェック
-  checkMember(memberID).then(result => {
-    if (!result.valid) {
-      alert("会員番号が存在しません");
-      return;
+    // ===============================
+    // 会員番号チェック（MAIN_GAS）
+    // ===============================
+    async function checkMember(memberID) {
+      const res = await fetch(`${MAIN_GAS_URL}?memberID=${memberID}`);
+      return res.json();
     }
 
-    const email = result.email;
+    // ===============================
+    // Products JSON（STRIPE_GAS）
+    // ===============================
+    async function loadProducts() {
+      try {
+        const res = await fetch(STRIPE_GAS_URL);
+        const data = await res.json();
+        const select = document.getElementById("paidCourse");
+        select.innerHTML = '<option value="">選択してください</option>';
 
-    // ② Stripe決済へ進む
-    fetch(STRIPE_GAS_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        price_id: priceId,
-        memberID: memberID,
-        email: email
-      })
-    })
-      .then(res => res.json())
-      .then(data => {
+        data.products.forEach(p => {
+          if (p.active) {
+            const opt = document.createElement("option");
+            opt.value = p.price_id;
+            opt.textContent = `${p.product_name}（${p.price}円）`;
+            select.appendChild(opt);
+          }
+        });
+      } catch (err) {
+        console.error("Products fetch error:", err);
+        alert("商品情報の取得に失敗しました。\n" + err);
+      }
+    }
+
+    // ===============================
+    // Stripe Checkout（POST）
+    // ===============================
+    async function submitPaid() {
+      const priceId  = document.getElementById("paidCourse").value;
+      const memberID = document.getElementById("memberID").value;
+      const name     = document.getElementById("name").value;
+
+      if (!priceId || !memberID) {
+        alert("会員番号と講座を選択してください");
+        return;
+      }
+
+      try {
+        const result = await checkMember(memberID);
+        if (!result.valid) {
+          alert("会員番号が存在しません");
+          return;
+        }
+
+        const email = result.email;
+
+        const res = await fetch(STRIPE_GAS_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            price_id: priceId,
+            memberID: memberID,
+            email: email
+          })
+        });
+
+        const data = await res.json();
         if (data.url) {
-          window.location.href = data.url; // Stripe Checkoutへ遷移
+          window.location.href = data.url;
         } else {
           alert("決済処理に失敗しました。\n" + JSON.stringify(data));
         }
-      })
-      .catch(err => {
+      } catch (err) {
         console.error("通信エラー:", err);
         alert("通信エラー: " + err);
-      });
-  });
-}
-</script>
+      }
+    }
 
-<footer class="site-footer">
-  <nav class="footer-nav">
-    <a href="https://heyheymitchy.github.io/">ホーム</a>
-    <a href="privacy.html">プライバシーポリシー</a>
-    <a href="terms.html">利用規約</a>
-    <a href="mailto:heymitchy347@gmail.com">お問い合わせ</a>
-  </nav>
-  <p class="copy">2026(C) わくわくプログラミング工房 平兵道</p>
-</footer>
-
+    // 初期化
+    loadProducts();
+  </script>
 </body>
 </html>
