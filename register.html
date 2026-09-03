@@ -44,21 +44,22 @@
       background: #fff7fc;
       box-sizing: border-box;
     }
-    .btn {
-      display: block;
-      width: 100%;
+    .btn2 {
+      display: flex;
+      width: 80%; /* ← 固定幅にすると完璧 */
       margin-top: 20px;
       padding: 15px;
       background: #ff66c4;
       color: white;
-      font-size: 18px;
+      font-size: 24px;
       border-radius: 12px;
       border: none;
       cursor: pointer;
       font-weight: bold;
       text-align: center;
+      justify-content:center;
     }
-    .btn:hover {
+    .btn2:hover {
       background: #ff4fb8;
     }
     .note {
@@ -67,7 +68,6 @@
       color: #666;
     }
   </style>
-
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -98,11 +98,18 @@
 </header>
 
 <main>
-
   <!-- =============================== -->
   <!-- 特別会員様登録＆無料体験講座申込-->
   <!-- =============================== -->
   <section class="form-section card">
+    <div class="container">
+    <h1>無料体験講座　お申込みのページ</h1>
+    <p><span style="color:red; font-size:18px; font-weight:bold;">［特別会員わくわくキャンペーン］特典</span>として<span style="color:red; background: yellow; font-size:18px; font-weight:bold; padding:0px;">［入会費用］［年会費］が無料となります</span><br>
+　　趣旨にご賛同頂けない場合には［前の画面に戻る］（左下ボタン）よりお戻りください
+    </div>
+    <div class="center-box">
+      <a href="campaign.html" class="btn-campaign">特別会員わくわくキャンペーンの内容確認へ</a>
+    </div>
     <h2>特別会員様登録フォーム　兼　無料体験講座お申込みフォーム</h2>
 
     <form id="form">
@@ -126,17 +133,17 @@
         <option value="">選択してください</option>
         <option value="kssc00">Scratch体験講座（無料）</option>
       </select>
-
-      <div class="form-row terms-row">
-        <input type="checkbox" id="agree" required>
-        <label for="agree"><a href="terms.html" target="_blank">利用規約</a>に同意します</label>
+      <label>利用規約の確認</label>
+      <div class="form-row terms-row"><input type="checkbox" id="agree" required>
+        <label for="agree"><b><a href="terms.html" target="_blank">利用規約</a>に同意します</b></label>
       </div>
-
-      <button type="submit" class="btn">無料体験講座に申し込む</button>
-    </form>
+      
+      <button type="submit" class="btn2"><b>無料体験講座</b>に申し込みます（兼特別会員登録）</button>
+      <button class="btn-back" onclick="history.back()">前の画面に戻る</button>
+      
+      
+   </form>
   </section>
-
-
 </main>
 
 <script>
