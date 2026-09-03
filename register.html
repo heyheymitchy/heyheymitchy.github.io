@@ -1,0 +1,186 @@
+﻿<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- わくわくプログラミング工房　平兵道　のホームページ -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!--  register.html -->
+<!-- 会員登録＆お試し無料講座申し込みのページ -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>会員登録＆お試し無料講座申込のページ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      font-family: "Rounded Mplus 1c", sans-serif;
+      background: #fdf6ff;
+      padding: 20px;
+      color: #444;
+    }
+    h2 {
+      background: #ffccf5;
+      padding: 10px 15px;
+      border-radius: 10px;
+      color: #333;
+    }
+    .section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+    label {
+      font-weight: bold;
+      margin-bottom: 8px;
+      display: block;
+    }
+    select, input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 2px solid #ff99dd;
+      font-size: 16px;
+      background: #fff7fc;
+      box-sizing: border-box;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      padding: 15px;
+      background: #ff66c4;
+      color: white;
+      font-size: 18px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      text-align: center;
+    }
+    .btn:hover {
+      background: #ff4fb8;
+    }
+    .note {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #666;
+    }
+  </style>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+  <div class="logo-box"><img src="images/logo.png" alt="ロゴ"></div>
+  <div class="lang-switch">
+    <a href="#ja" class="lang-btn">日本語</a>
+    <a href="#en" class="lang-btn">English</a>
+  </div>
+<!-- 日本語メニュー -->
+  <nav class="menu ja">
+    <a href="hello.html" class="btn">はじめまして</a>
+    <a href="course.html" class="btn">なにがあるの</a>
+    <a href="tryit.html" class="btn">やってみよう</a>
+    <a href="faqans.html" class="btn">しつもんする</a>
+    <a href="check.html" class="btn">かくにんする</a>
+  </nav>
+<!-- 英語メニュー -->
+  <nav class="menu en">
+    <a href="hello.html#en" class="btn">Hello</a>
+    <a href="course.html#en" class="btn">Go</a>
+    <a href="tryit.html#en" class="btn">Play</a>
+    <a href="faqans.html#en" class="btn">Ask</a>
+    <a href="check.html#en" class="btn">Check</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- =============================== -->
+  <!-- 特別会員様登録＆無料体験講座申込-->
+  <!-- =============================== -->
+  <section class="form-section card">
+    <h2>特別会員様登録フォーム　兼　無料体験講座お申込みフォーム</h2>
+
+    <form id="form">
+      <label for="name">申込者氏名</label>
+      <input type="text" id="name" required>
+
+      <label for="kana">ふりがな</label>
+      <input type="text" id="kana" required>
+
+      <label for="email">メールアドレス</label>
+      <input type="email" id="email" required>
+
+      <label for="tel">電話番号</label>
+      <input type="text" id="tel" required>
+
+      <label for="post">郵便番号</label>
+      <input type="text" id="post" required>
+
+      <label for="trialCourse">希望講座名（無料）</label>
+      <select id="trialCourse" required>
+        <option value="">選択してください</option>
+        <option value="kssc00">Scratch体験講座（無料）</option>
+      </select>
+
+      <div class="form-row terms-row">
+        <input type="checkbox" id="agree" required>
+        <label for="agree"><a href="terms.html" target="_blank">利用規約</a>に同意します</label>
+      </div>
+
+      <button type="submit" class="btn">無料体験講座に申し込む</button>
+    </form>
+  </section>
+
+
+</main>
+
+<script>
+// ===============================
+// MAIN_GAS_URL 設定
+// ===============================
+const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycbw_vi2faCOPfDqfewBi1EVCwUCoqilVpgtxOXzqDw8FJNNXMy3s8bvWnzLVgR8rPHb9/exec";
+
+// ===============================
+// 無料体験フォーム送信（no-cors）
+// ===============================
+document.getElementById("form").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const data = {
+    name: document.getElementById("name").value,
+    kana: document.getElementById("kana").value,
+    email: document.getElementById("email").value,
+    tel: document.getElementById("tel").value,
+    post: document.getElementById("post").value,
+    courseId: document.getElementById("trialCourse").value
+  };
+
+fetch(MAIN_GAS_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+
+  alert("特別会員登録＆お試し無料講座の、お申込みを受け付けました！\nあなたの会員番号はメールにてご確認願います。");
+});
+
+</script>
+
+<footer class="site-footer">
+  <nav class="footer-nav">
+    <a href="https://heyheymitchy.github.io/">ホーム</a>
+    <a href="privacy.html">プライバシーポリシー</a>
+    <a href="terms.html">利用規約</a>
+    <a href="mailto:heymitchy347@gmail.com">お問い合わせ</a>
+  </nav>
+  <p class="copy">2026(C) わくわくプログラミング工房 平兵道</p>
+</footer>
+
+</body>
+</html>
