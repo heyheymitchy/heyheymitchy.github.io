@@ -1,58 +1,83 @@
-﻿<!DOCTYPE html>
+﻿<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- わくわくプログラミング工房　平兵道　のホームページ -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- course.html -->
+<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Course List</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+<!-- ここからは全html共用の記述にする -->  
+<!-- 共通ヘッダー -->
+  <div id="header"></div>
+
+<!-- ここまで -->   
+
+<!-- ここからはこのページだけの内容 -->
 <style>
+/* 横方向の隙間 → 0px */
+/* 縦方向の隙間 → 0px */
+/* 外側の余白 → 0px */
+/* 画像サイズ → 120px × 120px */
+/* 5個並ぶ → 130px × 130px */
 .course-list {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
-  padding: 20px;
+  grid-template-columns: repeat(7, 130px); /* 7列,1fr で均等配置しない */
+  gap: 0;
+  padding: 0;
+  margin: 0 auto;
+  justify-content: center;
 }
+
 .course-item {
+  width: 120px;
   text-align: center;
   cursor: pointer;
   transition: 0.2s;
 }
 
 .course-item img {
+  display: block;
   width: 120px;
   height: 120px;
   border-radius: 12px;
   transition: 0.2s;
+  margin: 0;
 }
 
-/* ▼クリックした瞬間のポップUI */
+/* クリックした瞬間のポップUI */
 .course-item:active img {
   transform: scale(0.9);
   filter: brightness(1.3) saturate(1.4);
   border-radius: 20px;
-  box-shadow: 0 0 12px rgba(255, 105, 180, 0.6); /* ピンク光 */
-}
-/* ▼ホバーしたときのポップUI */
-.course-item:hover img {
-  transform: scale(1.12);              /* 少し大きくなる */
-  filter: brightness(1.2) saturate(1.3); /* 色が明るくなる */
-  border-radius: 20px;                 /* 角を少し丸く */
   box-shadow: 0 0 12px rgba(255, 105, 180, 0.6); /* ピンクの光 */
-  transition: 0.25s ease;              /* ふわっと変化 */
 }
 
-/* ▼ホバー時のタイトルも少しポップに */
+/* マウスを乗せたときのポップUI */
+.course-item:hover img {
+  transform: scale(1.12); /* 少し大きくなる */
+  filter: brightness(1.2) saturate(1.3); /* 色が明るくなる */
+  border-radius: 20px; /* 角を少し丸く */
+  box-shadow: 0 0 12px rgba(255, 105, 180, 0.6); /* ピンクの光 */
+  transition: 0.25s ease; /* ふわっと変化 */
+}
+
+/* タイトル(ホバー時のタイトルも少しポップに) */
 .course-item:hover div {
-  color: #ff66cc;                      /* ピンク色に変化 */
+  color: #ff66cc; /* ピンク色に変化 */
   transform: scale(1.05);
   transition: 0.25s ease;
 }
 </style>
-</head>
 
-<body>
+<h1 style="text-align: center;">なにがあるの　<font color="#ff66cc">気になる講座アイコンをクリックしてみてね</font></h1>
 
 <div id="courseList" class="course-list"></div>
-
 <script>
 // ▼ 日本語＋英語データ（data.js 不要）
 const data_jaen = {
@@ -75,7 +100,7 @@ const data_jaen = {
     117:{ title: "YouTube", icon: "images/icon_017.png" },
     118:{ title: "Zoom", icon: "images/icon_018.png" },
     119:{ title: "コンピュータ", icon: "images/icon_019.png" },
-    120:{ title: "デジタルコンテンツ", icon: "images/icon_020.png" },
+    120:{ title: "デジコン", icon: "images/icon_020.png" },
     121:{ title: "コンサル", icon: "images/icon_021.png" },
     122:{ title: "ネットビジネス", icon: "images/icon_022.png" },
     123:{ title: "個人事業者", icon: "images/icon_023.png" },
@@ -137,6 +162,15 @@ for (let pt = start; pt <= end; pt++) {
 }
 </script>
 
+
+<!-- ここからは全html共用の記述にする -->
+<!-- 共通フッター -->
+  <div id="footer"></div>
+
+<!-- JavaScript -->
+  <script src="script.js"></script>
+
+<!-- ここまで -->
+
 </body>
 </html>
-

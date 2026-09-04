@@ -73,29 +73,7 @@ body {
 /*******************/
 /* ▼ 言語切り替えロジック（JSなし） */
 
-/* 日本語と英語を重ねて、片方だけ表示 */
-/* 初期状態：日本語だけ表示 */
-.menu.ja { display: flex; }
-.menu.en { display: none; }
 
-.lang-ja { display: grid; }
-.lang-en { display: none; }
-
-/* 初期状態：日本語だけ表示（強制） */
-body:not(:target) .lang-en { display: none;}
-
-/* #en がターゲットなら英語表示 */
-/* 英語表示時（ハッシュ #en が付いたら切り替え） */
-#en:target ~ .header .menu.ja { display: none;}
-#en:target ~ .header .menu.en { display: flex;}
-#en:target ~ .lang-ja { display: none; }
-#en:target ~ .lang-en { display: grid; }
-
-/* #ja がターゲットなら日本語表示 */
-#ja:target ~ .header .menu.en { display: none;}
-#ja:target ~ .header .menu.ja { display: flex;}
-#ja:target ~ .lang-en { display: none; }
-#ja:target ~ .lang-ja { display: grid; }
 
 /******************************************************************************************/
 /*左             中央                  右**************************************************/
@@ -151,9 +129,18 @@ body:not(:target) .lang-en { display: none;}
   flex-wrap: nowrap;
 }
 
+.menu.ja {  display: flex;}
+.menu.en {  display: none;}
 
+.footer.ja {  display: block;}
+.footer.en {  display: none;}
 
-/*  */
+.main.ja {  display: block;}
+.main.en {  display: none;}
+
+.contact.ja {  display: block;}
+.contact.en {  display: none;}
+
 
 /* 言語切替ボタン */
 .lang-btn {
@@ -373,15 +360,6 @@ body:not(:target) .lang-en { display: none;}
 .main .en {
   background-image: url("images/main9.png");
 }
-
-/* #en がURLについたら英語版を表示 */
-#en:target ~  .main .en { display: block;}
-#en:target ~  .main .ja { display: none;}
-
-/* #ja がURLについたら日本語版を表示 */
-#ja:target ~  .main .ja { display: block;}
-#ja:target ~  .main .en { display: none;}
-
 
 /**********************************/
 /* main::before
@@ -628,18 +606,6 @@ body:not(:target) .lang-en { display: none;}
   width: 100%; /* ← 固定幅にすると完璧 */
 }
 
-/* 初期状態：日本語だけ表示 */
-.contact.en { display: none; }
-
-/* #en がURLについたら英語版を表示 */
-#en:target ~ .contact .en { display: block; }
-#en:target ~ .contact .ja { display: none; }
-
-/* #ja がURLについたら日本語版を表示 */
-#ja:target ~ .contact .ja { display: block; }
-#ja:target ~ .contact .en { display: none; }
-
-
 .btn-primary, .btn-secondary {
   display: inline-block;
   margin-top: 10px;
@@ -678,17 +644,6 @@ footer{
     background:#0066cc;               /* 背景色 */
     color:white;                      /* 文字色 */
 }
-
-/* 初期状態：日本語だけ表示 */
-.footer.en { display: none; }
-
-/* #en がURLについたら英語版を表示 */
-#en:target ~ .footer.en { display: block; }
-#en:target ~ .footer.ja { display: none; }
-
-/* #ja がURLについたら日本語版を表示 */
-#ja:target ~ .footer.ja { display: block; }
-#ja:target ~ .footer.en { display: none; }
 
 /*****************************************************/
 /*****************************************************/
