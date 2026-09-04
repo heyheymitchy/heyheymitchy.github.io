@@ -1,1045 +1,1323 @@
-﻿/*****************************************************/
-/* CSS全体設定 */
+﻿@charset "UTF-8";
 
-/* 全体イメージは以下の通り　*/
-/*　ここから　コメント↓
-サンプルイメージ図（Plain text）
-+----------------------+
-| body　               |
-| 背景と文字の設定     |
-+----------------------+
+/* =========================================================
+わくわくプログラミング工房　平兵道
+共通CSS
+style.css
+========================================================= */
 
-+----------------------+
-| header               |
-| ロゴ・タイトル       |
-+----------------------+
+/* =========================================================
+基本設定
+========================================================= */
 
-+----------------------+
-| nav(ナビゲーション)  |
-| Logo,各種紹介,他.... |
-+----------------------+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  }
 
-+----------------------+
-| main                 |
-| +----------+---------+
-| | section 　　　　　 |
-| |--------------------|
-| | div   　 |div      |
-| | 左設定　 |　右設定 |
-| +----------+---------|
-+----------------------+
+html {
+scroll-behavior: smooth;
+}
 
-+----------------------+
-| footer               |
-| コピーライト         |
-+----------------------+
-［body］ページ全体の背景
-［header］一番上（タイトルを記載）
-［nav］メニュー
-［main］メインの内容を記載する
-［section］内容毎に区切る
-［footer］一番下(コピーライトを記載)
+body {
 
-ここまで　コメント↑
+font-family:
+"Hiragino Sans",
+"Noto Sans JP",
+sans-serif;
+
+margin: 0;
+padding: 0;
+
+background: #5CE1E6;
+
+color: #000;
+
+}
+
+/* =========================================================
+共通言語表示
+========================================================= */
+
+/*
+初期状態は日本語
 */
 
-/* ここからＣＳＳ設定です　*/
-/*****************************************************/
-/* 文字コード指定 */
-
-@charset "UTF-8";
-
-/*****************************************************/
-/* 全要素の初期化 */
-*{
-    margin:0;                 /* 外側余白を0にする */
-    padding:0;                /* 内側余白を0にする */
-    box-sizing:border-box;    /* サイズ計算を簡単にする */
+.en {
+display: none;
 }
-/*****************************************************/
-/* 画面全体 */
-/*****************************************************/
 
-/*******************/
-/* ボディ */
-body {
-    font-family: "Hiragino Sans", "Noto Sans JP", sans-serif;　/* フォント指定 */
-    margin: 0;　/* 外側余白を消す */
-    padding:0;  /* 内側余白を0にする */
-    background: #5CE1E6; /* 背景色 #f7faff; */
-    color:#000;    /* 文字色 */
-  }
+/* =========================================================
+FC2カウンター
+========================================================= */
 
-/*******************/
-/* ▼ 言語切り替えロジック（JSなし） */
+.counter-area {
 
+text-align: center;
 
+padding: 5px 0;
 
-/******************************************************************************************/
-/*左             中央                  右**************************************************/
-/*┌────────┬────────────────────┬────────────┐*/
-/*│  LOGO  │ 日本語  English    │ Home About │*****************************************/
-/*└────────┴────────────────────┴────────────┘*/
-/******************************************************************************************/
-/* ヘッダー */
+background: #5CE1E6;
+
+}
+
+.counter-area img {
+
+display: inline-block;
+
+}
+
+/* =========================================================
+ヘッダー
+========================================================= */
+
 .header {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 20px;
 
-  padding: 16px;
-  background: #5CE1E6;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+display: grid;
 
-  overflow-x: auto;
+grid-template-columns:
+170px
+1fr
+auto;
+
+align-items: center;
+
+gap: 20px;
+
+padding: 16px;
+
+background: #5CE1E6;
+
+box-shadow:
+0 2px 4px rgba(0, 0, 0, 0.1);
+
+overflow-x: auto;
+
 }
-/* 左のロゴ */
+
+/* =========================================================
+ロゴ
+========================================================= */
+
 .logo-box {
-  width: 150px;
-  height: 30px;
-  /* flex-shrink: 0; */
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+width: 150px;
 
-  border-radius: 20px;
-  color: #fff;
-  font-size: 20px;
-  font-weight: bold;
+min-width: 150px;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
 }
 
-/* 言語切替 */
+.logo-box img {
+
+display: block;
+
+width: 150px;
+
+height: auto;
+
+}
+
+/* =========================================================
+言語切り替え
+========================================================= */
+
 .lang-switch {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  flex-wrap: nowrap;
-/* position: absolute; */
-/* top: 50%; */
-/* transform: translateY(-50%); */
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+gap: 16px;
+
+flex-wrap: nowrap;
 
 }
 
-/* 右メニュー */
-.menu {
-  display: flex;
-  gap: 16px;
-  flex-wrap: nowrap;
-}
+/* =========================================================
+言語ボタン
+========================================================= */
 
-.menu.ja {  display: flex;}
-.menu.en {  display: none;}
-
-.footer.ja {  display: block;}
-.footer.en {  display: none;}
-
-.main.ja {  display: block;}
-.main.en {  display: none;}
-
-.contact.ja {  display: block;}
-.contact.en {  display: none;}
-
-
-/* 言語切替ボタン */
 .lang-btn {
-  padding: 8px 16px;
-  background: #ddd;
-  border-radius: 20px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 20px;
-  color: #333;
-}
-/* 言語切替ボタン（マウス乗せる前） */
-.lang-btn:hover {
-  background: #bbb;
+
+padding: 8px 16px;
+
+background: #ddd;
+
+border: none;
+
+border-radius: 20px;
+
+text-decoration: none;
+
+font-weight: bold;
+
+font-size: 20px;
+
+color: #333;
+
+cursor: pointer;
+
+transition: 0.2s;
+
 }
 
-/* 右のボタン */
-/* ボタン（青→ピンク） */
-.btn {
-  display: inline-block;
-  padding: 8px 16px;
-  background: #4fa9ff;
-  color: #fff;
-  border-radius: 20px;
-  font-size: 20px;
-  font-weight: bold;
-  text-decoration: none;
-  transition: 0.2s;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-  width: 180px; /* ← 固定幅にすると完璧 */
-  text-align: center;
+.lang-btn:hover {
+
+background: #bbb;
+
+transform: translateY(-2px);
+
 }
-/* 右のボタンを押したとき */
+
+/* =========================================================
+メニュー
+========================================================= */
+
+.menu {
+
+display: flex;
+
+gap: 16px;
+
+flex-wrap: nowrap;
+
+}
+
+/* =========================================================
+ボタン
+========================================================= */
+
+.btn {
+
+display: inline-block;
+
+width: 180px;
+
+padding: 8px 16px;
+
+background: #4fa9ff;
+
+color: #fff;
+
+border-radius: 20px;
+
+font-size: 20px;
+
+font-weight: bold;
+
+text-decoration: none;
+
+text-align: center;
+
+transition: 0.2s;
+
+box-shadow:
+0 3px 6px rgba(0, 0, 0, 0.15);
+
+}
 
 .btn:hover {
-  background: #ff4fa3;
-  transform: translateY(-2px);
+
+background: #ff4fa3;
+
+transform: translateY(-2px);
+
 }
 
-/* 解説表示 */
-.img-info {
-  width: 800px;        /* アイコンの幅をそろえる */
-  text-align: center;  /* 文字を中央に */
-  height:50px;
-  margin: 0 auto; 
+/* =========================================================
+ヘッダー・フッター読み込みエラー
+========================================================= */
+
+.load-error {
+
+margin: 20px;
+
+padding: 20px;
+
+background: #fff;
+
+border: 3px solid red;
+
+border-radius: 10px;
+
+color: red;
+
+text-align: center;
+
+font-weight: bold;
+
 }
 
-/* 画像表示 */
-.img-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5列 */
-  gap: 20px; /* 画像の間隔 12 */
-  max-width: 900px; /* 画像の間隔 1000 */
-  margin: 0 auto; /* 画像の間隔 0 auto */
+/* =========================================================
+トップメイン
+========================================================= */
+
+main.main {
+
+position: relative;
+
+width: 100%;
+
+height: calc(100vw * 308 / 900);
+
+min-height: 250px;
+
+background-size: contain;
+
+background-position: center;
+
+background-repeat: no-repeat;
+
 }
 
-.img-grid a {
-  display: block;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  border-radius: 14px;
-  background: #fff;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+/* 日本語トップ画像 */
+
+main.main.ja {
+
+background-image:
+url("images/main.png");
+
 }
 
-.img-grid a:hover {
-  transform: scale(1.08); /* ふわっと拡大 */
-  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+/* 英語トップ画像 */
+
+main.main.en {
+
+background-image:
+url("images/main9.png");
+
 }
 
-.icon-link {
-  display: inline-block;
-  text-align: center;
-  text-decoration: none;
-  color: #000;
-  padding-bottom: 12px; /* ← これだけで下切れ完全解消 */
+/* =========================================================
+トップ画像の薄い白
+========================================================= */
+
+main.main::before {
+
+pointer-events: none;
+
+content: "";
+
+position: absolute;
+
+inset: 0;
+
+background:
+rgba(255, 255, 255, 0.20);
+
 }
 
-.icon-link img {
-  display: block;
-  width: 160px; /* 必要なら調整 */
-  margin: 0 auto;
+/* =========================================================
+メインテキスト
+========================================================= */
+
+.main-text {
+
+position: relative;
+
+z-index: 1;
+
+max-width: 999px;
+
+margin-left: 80px;
+
 }
 
-.icon-link span {
-  display: block;
-  margin-top: 0px;
-  font-size: 18px;
-  height: 20px; /* ← 文字の高さを確保 */
+.main h1 {
+
+font-size: 60px;
+
+line-height: 1.3;
+
+color: #2196f3;
+
 }
 
+.main p {
 
+font-size: 22px;
 
-/* courceの画面イメージ */
-.desc {
-    display: flex;         /* 横並びにする */
-    align-items: center;   /* 縦の位置を中央に合わせる */
-    gap: 16px;             /* アイコンと文章の間のすき間 */
-    font-size: 28px;
-    margin-top: 10px;
-    line-height: 1.8;
-  }
+line-height: 1.8;
 
-.icon {
-    width: 200px;
-    height: 200px;
-  }
-  .title {
-    font-size: 36px;
-    font-weight: bold;
-    margin-top: 20px;
-  }
-  
+}
 
-    .back-btn {
-        margin-top: 40px;
-        display: inline-block;
-        padding: 12px 24px;
-        background: #ff9de1;
-        color: white;
-        border-radius: 12px;
-        text-decoration: none;
-        font-size: 20px;
-    }
+/* =========================================================
+下部エリア
+========================================================= */
+
+.bottom-end {
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+background-size: contain;
+
+background-repeat: no-repeat;
+
+background-position: center;
+
+}
+
+.bottom-end-text {
+
+position: relative;
+
+z-index: 1;
+
+max-width: 800px;
+
+margin-left: 80px;
+
+}
+
+.bottom-end h1 {
+
+font-size: 60px;
+
+line-height: 1.3;
+
+color: #2196f3;
+
+}
+
+.bottom-end p {
+
+font-size: 22px;
+
+line-height: 1.8;
+
+}
+
+/* =========================================================
+無料体験
+========================================================= */
+
+.contact {
+
+width: 100%;
+
+padding: 10px;
+
+margin-top: 5px;
+
+text-align: center;
+
+font-size: 28px;
+
+color: red;
+
+}
+
+.contact-ja,
+.contact-en {
+
+text-align: center;
+
+}
+
+/* =========================================================
+フッター
+========================================================= */
+
+footer {
+
+width: 100%;
+
+padding: 10px;
+
+text-align: center;
+
+background: #0066cc;
+
+color: white;
+
+}
+
+/* =========================================================
+コース関連
+========================================================= */
 
 .course-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 20px;
-  justify-items: center;
-  align-items: center;
-  padding: 20px;
+
+display: grid;
+
+grid-template-columns:
+repeat(auto-fit, minmax(120px, 1fr));
+
+gap: 20px;
+
+justify-items: center;
+
+align-items: center;
+
+padding: 20px;
+
 }
 
-.course-item {
-  text-align: center;
-  cursor: pointer;
-}
-
-.course-item img {
-  width: 120px;
-  height: 120px;
-  border-radius:
- 12px;
-}
-
-    .course-box {
-      background: #fffbea;
-      border: 3px solid #ffcc00;
-      border-radius: 20px;
-      padding: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    .course-title {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: #ff4081;
-    }
-    .course-meta {
-      font-size: 14px;
-      color: #555;
-      margin-bottom: 10px;
-    }
-
-/* 横一列スクロール */
 .course-list.row {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  padding: 10px;
+
+display: flex;
+
+gap: 12px;
+
+overflow-x: auto;
+
+padding: 10px;
+
 }
 
-/* グリッド表示（3列） */
 .course-list.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 16px;
-  padding: 10px;
+
+display: grid;
+
+grid-template-columns:
+repeat(auto-fill, minmax(120px, 1fr));
+
+gap: 16px;
+
+padding: 10px;
+
 }
 
 .course-item {
-  width: 120px;
-  text-align: center;
-  cursor: pointer;
+
+width: 120px;
+
+text-align: center;
+
+cursor: pointer;
+
 }
 
 .course-item img {
-  width: 100%;
-  border-radius: 12px;
-}
 
-/*****************************************************/
-/*****************************************************/
-/* MAIN　(メインのイメージ) */
-.main{
-  position: relative;
-  height: calc(100vw * 308 / 900);  /* ← 画像の縦横比に合わせる */
-  background-size: contain;      /* ← 画像を絶対に切らない */
-  background-position: center;
-  background-repeat: no-repeat;
-}
+display: block;
 
-/* 初期状態：日本語だけ表示 */
-.main.en { display: none;}
+width: 120px;
 
+height: 120px;
 
-/* 日本語画像 */
-.main .ja {
-  background-image: url("images/main.png");
-}
+border-radius: 12px;
 
-/* 英語画像 */
-.main .en {
-  background-image: url("images/main9.png");
-}
-
-/**********************************/
-/* main::before
-(クラスを持つ要素の直前に、擬似要素を使ってコンテンツや装飾を追加する) */
-
-.main::before{
-  pointer-events: none;
-  content:""; /* 空のコンテンツを指定 */
-  position:absolute; /* 絶対配置 */
-  inset:0;
-  background:rgba(255,255,255,0.20); /* ホワイト20%濃度で半透明の設定 */
+transition:
+transform 0.2s,
+filter 0.2s;
 
 }
 
-/**********************************/
-/*main-text　(メインのテキスト) */
-.main-text{
-  position:relative;
-  z-index:1;
-  max-width:999px;
-  margin-left:80px;
+.course-item:hover img {
+
+transform: scale(1.12);
+
+filter:
+brightness(1.05)
+saturate(1.2);
+
 }
 
-.main h1{
-  font-size:60px;
-  line-height:1.3;
-  color:#2196f3;
+.course-title {
+
+font-size: 20px;
+
+font-weight: 700;
+
+margin-bottom: 10px;
+
+color: #ff4081;
+
 }
 
-/**********************************/
-/*　main p(メインのＰテキスト) */
-.main p{
-  font-size:22px;
-  line-height:1.8;
+.course-meta {
+
+font-size: 14px;
+
+color: #555;
+
+margin-bottom: 10px;
+
 }
 
-.bottom-end{
+/* =========================================================
+コース説明
+========================================================= */
 
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-/* 削除中　background-image:url("images/bottom78.png"); */
-  display:flex; /* 横,真ん中,均等に並べる　*/
-  align-items:center;
-/* position:relative; absolute（絶対配置)ではなく自由に動けます */
-  justify-content: center;  /*子要素を水平方向に中央揃えにする */
-  align-items: center;     /*子要素を垂直方向に中央揃えにする */
+.desc {
+
+display: flex;
+
+align-items: center;
+
+gap: 16px;
+
+font-size: 28px;
+
+margin-top: 10px;
+
+line-height: 1.8;
+
 }
 
+.icon {
 
-.bottom-end-text{
-  position:relative;
-  z-index:1;
-  max-width:800px;
-  margin-left:80px;
+width: 200px;
+
+height: 200px;
+
 }
 
-.bottom-end h1{
-  font-size:60px;
-  line-height:1.3;
-  color:#2196f3;
+.title {
+
+font-size: 36px;
+
+font-weight: bold;
+
+margin-top: 20px;
+
 }
 
-.bottom-end p{
-  font-size:22px;
-  line-height:1.8;
+.back-btn {
+
+margin-top: 40px;
+
+display: inline-block;
+
+padding: 12px 24px;
+
+background: #ff9de1;
+
+color: white;
+
+border-radius: 12px;
+
+text-decoration: none;
+
+font-size: 20px;
+
 }
 
-/* ヒーロー画像 */
+/* =========================================================
+ヒーロー
+========================================================= */
+
 .hero {
-  max-width: 960px;
-  margin: 1.5rem auto;
-  padding: 0 1rem;
+
+max-width: 960px;
+
+margin: 1.5rem auto;
+
+padding: 0 1rem;
+
 }
 
 .hero img {
-  width: 100%;
-  border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+
+width: 100%;
+
+border-radius: 16px;
+
+box-shadow:
+0 4px 16px rgba(0, 0, 0, 0.15);
+
 }
+
+/* =========================================================
+コンテナ
+========================================================= */
 
 .container {
-  background: rgba(255, 255, 255, 0.08);
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 0 16px;
-  text-align: center;
+
+max-width: 800px;
+
+margin: 40px auto;
+
+padding: 0 16px;
+
+text-align: center;
+
+background:
+rgba(255, 255, 255, 0.08);
+
 }
 
+/* =========================================================
+カード
+========================================================= */
 
-/* フォーム */
+.card {
+
+background:
+rgba(255, 255, 255, 0.08);
+
+border-radius: 12px;
+
+padding: 20px;
+
+margin-bottom: 20px;
+
+backdrop-filter: blur(6px);
+
+text-align: left;
+
+}
+
+/* =========================================================
+フォーム
+========================================================= */
+
 .form-section h2 {
-  margin-top: 0;
-  margin-bottom: 1rem;
+
+margin-top: 0;
+
+margin-bottom: 1rem;
+
 }
 
 .form-row {
-  margin-bottom: 1rem;
-  display: flex;
-  flex-direction: column;
+
+margin-bottom: 1rem;
+
+display: flex;
+
+flex-direction: column;
+
 }
 
 .form-row label {
-  font-weight: 600;
-  margin-bottom: 0.3rem;
-  display: block;
-  text-align: left;
+
+font-weight: 600;
+
+margin-bottom: 0.3rem;
+
+display: block;
+
+text-align: left;
+
 }
 
 .form-row input,
 .form-row select,
 .form-row textarea {
-  border-radius: 999px;
-  border: 1px solid #cfd8dc;
-  padding: 0.6rem 0.9rem;
-  font-size: 0.95rem;
-  outline: none;
-  transition: box-shadow 0.2s, border-color 0.2s;
+
+width: 100%;
+
+border-radius: 999px;
+
+border: 1px solid #cfd8dc;
+
+padding: 0.6rem 0.9rem;
+
+font-size: 0.95rem;
+
+outline: none;
+
 }
 
 .form-row textarea {
-  border-radius: 16px;
+
+border-radius: 16px;
+
 }
 
-.form-row input:focus,
-.form-row select:focus,
-.form-row textarea:focus {
-  border-color: #42a5f5;
-  box-shadow: 0 0 0 3px rgba(66,165,245,0.25);
-}
+/* =========================================================
+ラジオボタン
+========================================================= */
 
-/* ラジオボタンの表示場所 */
 .radio-group {
-  text-align: right;   /* 右寄せ */
-  margin: 20px 0;
+
+text-align: right;
+
+margin: 20px 0;
+
 }
 
 .radio-group label {
-  font-size: 18px;
+
+font-size: 18px;
+
 }
 
-/* 利用規約チェック */
+/* =========================================================
+利用規約
+========================================================= */
+
 .terms-row {
-  flex-direction: row;
-  align-items: left;
+
+flex-direction: row;
+
+align-items: center;
+
 }
 
 .terms-row input[type="checkbox"] {
-  margin-right: 0.5rem;
+
+margin-right: 0.5rem;
+
 }
 
-/* FAQタイトル */
+/* =========================================================
+FAQ
+========================================================= */
+
 .faq-title {
-  text-align: center;
-  font-size: 28px;
-  color: #ff4fa3;
-  margin: 30px 0 10px;
-  font-weight: bold;
+
+text-align: center;
+
+font-size: 28px;
+
+color: #ff4fa3;
+
+margin: 30px 0 10px;
+
+font-weight: bold;
+
 }
 
-/* FAQ一覧の箱 */
 .faq-list {
-  width: 90%;
-  max-width: 1100px;
-  margin: 0 auto 40px;
+
+width: 90%;
+
+max-width: 1100px;
+
+margin: 0 auto 40px;
+
 }
 
-/* FAQアイテム（横並び） */
 .faq-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 20px;
 
-  background: #fff4f8;
-  border: 2px solid #ffb6d9;
-  border-radius: 16px;
-  padding: 20px;
-  margin: 16px 0;
-  box-shadow: 0 4px 8px rgba(255, 150, 200, 0.3);
-  transition: 0.2s;
+display: flex;
+
+justify-content: space-between;
+
+align-items: flex-start;
+
+gap: 20px;
+
+background: #fff4f8;
+
+border: 2px solid #ffb6d9;
+
+border-radius: 16px;
+
+padding: 20px;
+
+margin: 16px 0;
+
+box-shadow:
+0 4px 8px rgba(255, 150, 200, 0.3);
+
+transition: 0.2s;
+
 }
 
-/* ホバーでふわっと浮く */
 .faq-item:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 12px rgba(255, 150, 200, 0.4);
+
+transform: translateY(-4px);
+
 }
 
-/* 左側：質問（Q） */
 .faq-q {
-  width: 40%;
-  font-size: 20px;
-  color: #ff66b3;
-  font-weight: bold;
+
+width: 40%;
+
+font-size: 20px;
+
+color: #ff66b3;
+
+font-weight: bold;
+
 }
 
-/* 右側：回答（A） */
 .faq-a {
-  width: 60%;
-  font-size: 18px;
-  line-height: 1.6;
-  color: #444;
+
+width: 60%;
+
+font-size: 18px;
+
+line-height: 1.6;
+
+color: #444;
+
 }
 
-/* FAQを追加する：フォーマット指定 */
+/* =========================================================
+FAQフォーム
+========================================================= */
 
 .faq-form {
-  width: 90%;
-  max-width: 1100px;
-  margin: 20px auto;
-  padding: 20px;
-  border-radius: 12px;
-  background: #fff4f8;
-  border: 2px solid #ffb6d9;
+
+width: 90%;
+
+max-width: 1100px;
+
+margin: 20px auto;
+
+padding: 20px;
+
+border-radius: 12px;
+
+background: #fff4f8;
+
+border: 2px solid #ffb6d9;
+
 }
 
-.faq-form input, .faq-form textarea {
-  display: flex;
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0 16px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+.faq-form input,
+.faq-form textarea {
+
+display: block;
+
+width: 100%;
+
+padding: 10px;
+
+margin: 8px 0 16px;
+
+border-radius: 8px;
+
+border: 1px solid #ccc;
+
 }
+
 .faq-form button {
-  width: 100%;
-  padding: 12px;
-  background: #ff66b3;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-}
-/**********************************/
-/* contact:hover（特別キャンペーンの確認ボタン）*/
-/* 英語版対応 */
-.contact {
-  text-align: center;  /* 中央寄せ */
-  margin-top: 5px;
-  font-size: 28px;
-  color:red;
-  padding:10px;  /* 余白 */
-  width: 100%; /* ← 固定幅にすると完璧 */
+
+width: 100%;
+
+padding: 12px;
+
+background: #ff66b3;
+
+color: white;
+
+border: none;
+
+border-radius: 8px;
+
+font-size: 16px;
+
 }
 
-.btn-primary, .btn-secondary {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 10px 10px;
-  border-radius: 999px;
-  text-decoration: none;
-  cursor: pointer;
-  text-align: center;
+/* =========================================================
+ボタン関連
+========================================================= */
+
+.btn-primary,
+.btn-secondary {
+
+display: inline-block;
+
+margin-top: 12px;
+
+padding: 10px 16px;
+
+border-radius: 999px;
+
+text-decoration: none;
+
+cursor: pointer;
+
+text-align: center;
+
 }
 
 .btn-primary {
-  background: #ffb347;
-  color: #222;
-  text-align: center;
+
+background: #ffb347;
+
+color: #222;
+
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-  text-align: center;
-}
-.btn-contact:hover {
-  opacity: 0.85;
-  transform: translateY(-2px);
-}
 
+background:
+rgba(255, 255, 255, 0.2);
 
-
-/*****************************************************/
-/* footer（ページの最後にコピーライトを記載します） */
-
-/* フッター */
-footer{
-    text-align:center;                /* 中央揃え */
-    padding:10px;                     /* 余白 */
-    background:#0066cc;               /* 背景色 */
-    color:white;                      /* 文字色 */
-}
-
-/*****************************************************/
-/*****************************************************/
-/* スマートフォン対策用　*/
-/* ここからはスマホ表示用の指定です */
-/*****************************************************/
-/* @media(max-width:900px)指定 */
-
-@media(max-width:900px){
-
-  header{
-    flex-direction:column;
-    gap:20px;
-  }
-
-  nav ul{
-    flex-wrap:wrap;
-    justify-content:center;
-  }
-
-  .hero{
-    height:auto;
-    padding:100px 20px;
-  }
-
-  .hero-text{
-    margin:0;
-    text-align:center;
-  }
-
-  .hero h1{
-    font-size:40px;
-  }
-
-  .cards{
-    grid-template-columns:1fr;
-  }
-
-  .reason-grid{
-    grid-template-columns:1fr;
-  }
-  .contents {
-    grid-template-columns: 1fr;
-  }
+color: #fff;
 
 }
 
-/*****************************************************/
-/*****************************************************/
+.btn-primary:hover {
 
-/* 無料体験申込みのページ用　ＣＳＳ　*/
-
-dl{
-
- width:200px
- border-top: 1px solid #ccc;
- border-right: 1px solid #ccc;
- border-left: 1px solid #ccc;
- 
-}
-
-dl dt{
-
- float:left;
- padding:1em;
- color:#998484;
+transform: translateY(-3px);
 
 }
 
+/* =========================================================
+戻るボタン
+========================================================= */
 
-dl dd{
-
- border-bottom:1px solid #ccc;
-margin:0;
-padding:1em 0 1em 18em;
-
-}
-
-dl dt .must {
-
- color:#d23939;
-}
-/**********************************/
-/* 申し込みボタンの設定 */
-/* 丸いボタン＋青グラデーション＋ホバーアニメーション */
-
-.form-actions {
-  text-align: center;   /* 中央寄せ */
-  margin-top: 20px;
-}
-
-/* カードUI */
-/* .card {
-  max-width: 960px;
-  margin: 1.5rem auto 2rem;
-  padding: 1.5rem;
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-}
-*/
-
-.card {
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 20px;
-  backdrop-filter: blur(6px);
-  text-align: left;
-}
-
-
-input, select {
-  width: 100%;
-  padding: 8px;
-  margin-top: 4px;
-  border-radius: 6px;
-  border: none;
-}
-
-.btn-primary, .btn-secondary {
-  display: inline-block;
-  margin-top: 12px;
-  padding: 10px 16px;
-  border-radius: 999px;
-  text-decoration: none;
-  cursor: pointer;
-  text-align: center;
-}
-
-.btn-primary {
-  background: #ffb347;
-  color: #222;
-  text-align: center;
-}
-
-.btn-secondary {
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-  text-align: center;
-}
-
-/* 戻るボタン　*/
 .btn-back {
- display: inline-block;
-  margin-top: 12px;
-  margin-left: auto;   /* 右に寄せる */
-  margin-right: 0;
-  width: 200px;
-  padding: 10px 16px;
-  background: #ccc;
-  border-radius: 8px;
-  text-align: center;
-  font-size: 18px;
+
+display: inline-block;
+
+margin-top: 12px;
+
+margin-left: auto;
+
+width: 200px;
+
+padding: 10px 16px;
+
+background: #ccc;
+
+border-radius: 8px;
+
+text-align: center;
+
+font-size: 18px;
+
 }
+
+/* =========================================================
+紹介ページ
+========================================================= */
+
 .intro {
-  padding: 30px 20px;
+
+padding: 30px 20px;
+
 }
 
 .intro-wrap {
-  display: flex;
-  gap: 40px;
-  align-items: flex-start;
+
+display: flex;
+
+gap: 40px;
+
+align-items: flex-start;
+
 }
 
 .intro-img {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+
+display: flex;
+
+flex-direction: column;
+
+align-items: flex-start;
+
 }
 
 .intro-img img {
-  width: 280px;
-  height: auto;
-  border-radius: 10px;
-}
 
+width: 280px;
+
+height: auto;
+
+border-radius: 10px;
+
+}
 
 .intro-text {
-  flex: 1;
-  font-size: 20px;
-  line-height: 1.8;
+
+flex: 1;
+
+font-size: 20px;
+
+line-height: 1.8;
+
 }
 
+/* =========================================================
+画像ホバー
+========================================================= */
+
 .img-wrap {
-    position: relative;
-    display: inline-block;
-  }
 
-  .img-wrap img {
-    display: block;
-  }
+position: relative;
 
-  .img-wrap .hover-img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;          /* ふだんは非表示 */
-    transition: opacity 0.2s;
-  }
+display: inline-block;
 
-  .img-wrap:hover .hover-img {
-    opacity: 1;          /* マウスを乗せたら表示 */
-  }
+}
 
-  .img-wrap:hover .normal-img {
-    opacity: 0;          /* 元画像を消す */
-  }
+.img-wrap img {
 
+display: block;
 
+}
+
+.img-wrap .hover-img {
+
+position: absolute;
+
+top: 0;
+
+left: 0;
+
+opacity: 0;
+
+transition: opacity 0.2s;
+
+}
+
+.img-wrap:hover .hover-img {
+
+opacity: 1;
+
+}
+
+.img-wrap:hover .normal-img {
+
+opacity: 0;
+
+}
+
+/* =========================================================
+確認画面
+========================================================= */
 
 .check-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5列 */
-  gap: 0.8rem 1rem; /* 行間・列間の余白 */
-  margin-top: 1rem;
+
+display: grid;
+
+grid-template-columns:
+repeat(5, 1fr);
+
+gap: 0.8rem 1rem;
+
+margin-top: 1rem;
+
 }
 
 .check-grid label {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem; /* チェックボックスと文字の間 */
-  font-size: 0.95rem;
-}
-/**********************************/
-/* campaign:hover（特別キャンペーンの確認ボタン）*/
 
-.center-box {
-  text-align: center;  /* 中央寄せ */
-  margin-top: 20px;
-  font-size: 24px;
-  color:red;
+display: flex;
+
+align-items: center;
+
+gap: 0.3rem;
+
+font-size: 0.95rem;
+
 }
 
-.btn-campaign {
-  border: none;
-  border-radius: 999px;
-  padding: 0.8rem 1.8rem;
-  font-size: 1rem;
-  font-weight: 700;
-  color: #fff;
-  background: linear-gradient(135deg, #42a5f5, #1e88e5);
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(33,150,243,0.4);
-  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, filter 0.15s;
-}
+/* =========================================================
+フォームメッセージ
+========================================================= */
 
-.btn-campaign:hover {
-  opacity: 0.85;
-  transform: translateY(-2px);
-}
-
-
-
-input, select {
-  width: 100%;
-  padding: 8px;
-  margin-top: 4px;
-  border-radius: 6px;
-  border: none;
-}
-
-.btn-primary, .btn-secondary {
-  display: inline-block;
-  margin-top: 12px;
-  padding: 10px 16px;
-  border-radius: 999px;
-  text-decoration: none;
-  cursor: pointer;
-  text-align: center;
-}
-
-.btn-primary {
-  background: #ffb347;
-  color: #222;
-  text-align: center;
-}
-
-.btn-secondary {
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-  text-align: center;
-}
-
-
-/**********************************/
-/* button:hover（ボタンにマウスを乗せた時）*/
-.btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 14px rgba(33,150,243,0.5);
-  filter: brightness(1.1);
-}
-
-.btn-primary:active {
-  transform: translateY(0);
-  box-shadow: 0 3px 8px rgba(33,150,243,0.4);
-}
-
-/* フォームメッセージ */
 .form-message {
-  margin-top: 20px;
-  padding: 20px;
-  background: #f0f8ff;
-  border: 3px solid #4da9ff;
-  border-radius: 15px;
-  font-size: 20px;
-  font-weight: bold;
-  color: #004a8f;
-  text-align: center;
-  line-height: 1.8;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+margin-top: 20px;
+
+padding: 20px;
+
+background: #f0f8ff;
+
+border: 3px solid #4da9ff;
+
+border-radius: 15px;
+
+font-size: 20px;
+
+font-weight: bold;
+
+color: #004a8f;
+
+text-align: center;
+
+line-height: 1.8;
+
 }
 
-/* 会員番号を大きく表示 */
 .member-id {
-  display: block;
-  font-size: 36px;
-  font-weight: 900;
-  color: #ff4081;
-  margin-top: 10px;
-  background: #fff176;
-  padding: 5px 15px;
-  border-radius: 10px;
-  animation: pop 0.6s ease-out;
+
+display: block;
+
+font-size: 36px;
+
+font-weight: 900;
+
+color: #ff4081;
+
+margin-top: 10px;
+
+background: #fff176;
+
+padding: 5px 15px;
+
+border-radius: 10px;
+
+animation: pop 0.6s ease-out;
+
 }
+
 @keyframes pop {
-  0% { transform: scale(0.5); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+
+0% {
+
+```
+transform: scale(0.5);
+
+opacity: 0;
+```
+
 }
 
+100% {
 
-/* フッター */
-.site-footer {
-  margin-top: 2rem;
-  padding: 1.2rem 1rem;
-  text-align: center;
-  background: #1e88e5;
-  font-size: 0.85rem;
+```
+transform: scale(1);
+
+opacity: 1;
+```
+
 }
 
-.footer-nav {
-  margin-bottom: 0.5rem;
 }
 
-.footer-nav a {
-  margin: 0 0.5rem;
-  color: black;
-  text-decoration: none;
-  font-weight: 600;
+/* =========================================================
+スマートフォン
+========================================================= */
+
+@media (max-width: 900px) {
+
+.header {
+
+```
+grid-template-columns: 1fr;
+
+justify-items: center;
+
+overflow-x: visible;
+```
+
 }
 
-.footer-nav a:hover {
-  text-decoration: underline;
+.logo-box {
+
+```
+width: 150px;
+```
+
 }
 
-.copy {
-  margin: 0;
+.menu {
+
+```
+justify-content: center;
+
+flex-wrap: wrap;
+```
+
 }
 
-/* レスポンシブ */
+.btn {
+
+```
+width: 160px;
+
+font-size: 18px;
+```
+
+}
+
+main.main {
+
+```
+height: calc(100vw * 308 / 900);
+
+min-height: 180px;
+```
+
+}
+
+.hero {
+
+```
+height: auto;
+
+padding: 20px;
+```
+
+}
+
+.intro-wrap {
+
+```
+flex-direction: column;
+
+text-align: center;
+```
+
+}
+
+.intro-img {
+
+```
+align-items: center;
+```
+
+}
+
+.faq-item {
+
+```
+flex-direction: column;
+```
+
+}
+
+.faq-q,
+.faq-a {
+
+```
+width: 100%;
+```
+
+}
+
+}
+
 @media (min-width: 768px) {
-  .form-row {
-    flex-direction: row;
-    align-items: center;
-  }
 
-  .form-row label {
-    width: 30%;
-    margin-bottom: 0;
-  }
+.form-row {
 
-  .form-row input,
-  .form-row select,
-  .form-row textarea {
-    width: 70%;
-  }
+```
+flex-direction: row;
 
-  .terms-row {
-    flex-direction: row;
-  }
+align-items: center;
+```
+
 }
 
-@media (min-width: 1024px) {
-  .card {
-    padding: 2rem;
-  }
+.form-row label {
+
+```
+width: 30%;
+
+margin-bottom: 0;
+```
+
 }
 
-@media(max-width:900px){
-  .intro-wrap {
-    flex-direction: column;
-    text-align: center;
-  }
+.form-row input,
+.form-row select,
+.form-row textarea {
 
-  .intro-img img {
-    margin: 0 auto;
-  }
+```
+width: 70%;
+```
+
 }
 
+.terms-row {
+
+```
+flex-direction: row;
+```
+
+}
+
+}
