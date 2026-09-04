@@ -186,24 +186,22 @@ document
 トップ画像
 ----------------------------------------- */
 
-const jaMain =
-document.querySelector("main.main.ja");
+const jaMain =document.querySelector("main.main.ja");
 
-const enMain =
-document.querySelector("main.main.en");
+const enMain =document.querySelector("main.main.en");
 
-if (jaMain) {
+ if (jaMain) {
 
-jaMain.style.display =
-  (lang === "ja") ? "" : "none";
+    jaMain.style.display =
+      (lang === "ja") ? "block" : "none";
 
-}
+ }
 
-if (enMain) {
+ if (enMain) {
 
-enMain.style.display =
-  (lang === "en") ? "" : "none";
+    enMain.style.display =
+      (lang === "en") ? "block" : "none";
 
-}
+ }
 
 }
