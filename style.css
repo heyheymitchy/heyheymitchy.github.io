@@ -1,4 +1,51 @@
-﻿@charset "UTF-8";
+﻿/*****************************************************/
+/* CSS全体設定 */
+
+/* 全体イメージは以下の通り　*/
+/*　ここから　コメント↓
+サンプルイメージ図（Plain text）
++----------------------+
+| body　               |
+| 背景と文字の設定     |
++----------------------+
+
++----------------------+
+| header               |
+| ロゴ・タイトル       |
++----------------------+
+
++----------------------+
+| nav(ナビゲーション)  |
+| Logo,各種紹介,他.... |
++----------------------+
+
++----------------------+
+| main                 |
+| +----------+---------+
+| | section 　　　　　 |
+| |--------------------|
+| | div   　 |div      |
+| | 左設定　 |　右設定 |
+| +----------+---------|
++----------------------+
+
++----------------------+
+| footer               |
+| コピーライト         |
++----------------------+
+［body］ページ全体の背景
+［header］一番上（タイトルを記載）
+［nav］メニュー
+［main］メインの内容を記載する
+［section］内容毎に区切る
+［footer］一番下(コピーライトを記載)
+ここまで　コメント↑
+*/
+
+/* ここからＣＳＳ設定です　*/
+/*****************************************************/
+/* 文字コード指定 */
+@charset "UTF-8";
 
 /* =========================================================
 わくわくプログラミング工房　平兵道
@@ -10,39 +57,40 @@ style.css
 基本設定
 ========================================================= */
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  }
+/*****************************************************/
+/* 全要素の初期化 */
+*{
+    margin:0;                 /* 外側余白を0にする */
+    padding:0;                /* 内側余白を0にする */
+    box-sizing:border-box;    /* サイズ計算を簡単にする */
+}
+/*****************************************************/
+/*****************************************************/
+/* 画面全体 */
+/*****************************************************/
 
 html {
 scroll-behavior: smooth;
 }
-
+/*******************/
+/* ボディ */
 body {
 
 font-family:
 "Hiragino Sans",
 "Noto Sans JP",
-sans-serif;
+sans-serif; /* フォント指定 */
 
-margin: 0;
-padding: 0;
-
-background: #5CE1E6;
-
-color: #000;
-
+margin: 0; /* 外側余白を消す */
+padding: 0; /* 内側余白を0にする */
+background: #5CE1E6; /* 背景色：水色 */
+color: #000; /* 文字色:display：黒 */
 }
 
 /* =========================================================
 共通言語表示
 ========================================================= */
-
-/*
-初期状態は日本語
-*/
+/*　初期状態は日本語　*/
 
 .en {
 display: none;
@@ -51,27 +99,25 @@ display: none;
 /* =========================================================
 FC2カウンター
 ========================================================= */
-
 .counter-area {
-
 text-align: center;
-
 padding: 5px 0;
-
 background: #5CE1E6;
-
 }
 
 .counter-area img {
-
 display: inline-block;
-
 }
 
+/* ******************** **/
+/* 左　／　中央　／　右　 **/
+/*┌──────┬───────────────┬────────────┐*/
+/*│ LOGO │ 日本語  English│ Home About │*/
+/*└──────┴───────────────┴────────────┘*/
+/***************************************/
 /* =========================================================
 ヘッダー
 ========================================================= */
-
 .header {
 
 display: grid;
@@ -82,1096 +128,648 @@ grid-template-columns:
 auto;
 
 align-items: center;
-
 gap: 20px;
-
 padding: 16px;
-
 background: #5CE1E6;
-
-box-shadow:
-0 2px 4px rgba(0, 0, 0, 0.1);
-
+box-shadow:0 2px 4px rgba(0, 0, 0, 0.1);
 overflow-x: auto;
-
 }
 
 /* =========================================================
 ロゴ
 ========================================================= */
-
 .logo-box {
-
 width: 150px;
-
 min-width: 150px;
-
 display: flex;
-
 align-items: center;
-
 justify-content: center;
-
 }
 
 .logo-box img {
-
 display: block;
-
 width: 150px;
-
 height: auto;
-
 }
 
 /* =========================================================
 言語切り替え
 ========================================================= */
-
 .lang-switch {
-
 display: flex;
-
 justify-content: center;
-
 align-items: center;
-
 gap: 16px;
-
 flex-wrap: nowrap;
-
 }
 
 /* =========================================================
 言語ボタン
 ========================================================= */
-
 .lang-btn {
-
 padding: 8px 16px;
-
 background: #ddd;
-
 border: none;
-
 border-radius: 20px;
-
 text-decoration: none;
-
 font-weight: bold;
-
 font-size: 20px;
-
 color: #333;
-
 cursor: pointer;
-
 transition: 0.2s;
-
 }
 
 .lang-btn:hover {
-
 background: #bbb;
-
 transform: translateY(-2px);
-
 }
 
 /* =========================================================
 メニュー
 ========================================================= */
-
 .menu {
-
 display: flex;
-
 gap: 16px;
-
 flex-wrap: nowrap;
-
 }
 
 /* =========================================================
 ボタン
 ========================================================= */
-
 .btn {
-
 display: inline-block;
-
 width: 180px;
-
 padding: 8px 16px;
-
 background: #4fa9ff;
-
 color: #fff;
-
 border-radius: 20px;
-
 font-size: 20px;
-
 font-weight: bold;
-
 text-decoration: none;
-
 text-align: center;
-
 transition: 0.2s;
-
-box-shadow:
-0 3px 6px rgba(0, 0, 0, 0.15);
-
+box-shadow:0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
 .btn:hover {
-
 background: #ff4fa3;
-
 transform: translateY(-2px);
-
 }
 
 /* =========================================================
 ヘッダー・フッター読み込みエラー
 ========================================================= */
-
 .load-error {
-
 margin: 20px;
-
 padding: 20px;
-
 background: #fff;
-
 border: 3px solid red;
-
 border-radius: 10px;
-
 color: red;
-
 text-align: center;
-
 font-weight: bold;
-
 }
 
 /* =========================================================
 トップメイン
 ========================================================= */
-
 main.main {
-
 position: relative;
-
 width: 100%;
-
 height: calc(100vw * 308 / 900);
-
 min-height: 250px;
-
 background-size: contain;
-
 background-position: center;
-
 background-repeat: no-repeat;
-
 }
 
 /* 日本語トップ画像 */
 
-main.main.ja {
-
-background-image:
-url("images/main.png");
-
-}
+main.main.ja { background-image:url("images/main.png"); }
 
 /* 英語トップ画像 */
-
-main.main.en {
-
-background-image:
-url("images/main9.png");
-
-}
+main.main.en { background-image:url("images/main9.png"); }
 
 /* =========================================================
 トップ画像の薄い白
 ========================================================= */
-
 main.main::before {
-
 pointer-events: none;
-
 content: "";
-
 position: absolute;
-
 inset: 0;
-
-background:
-rgba(255, 255, 255, 0.20);
-
+background: rgba(255, 255, 255, 0.20);
 }
 
 /* =========================================================
 メインテキスト
 ========================================================= */
-
 .main-text {
-
 position: relative;
-
 z-index: 1;
-
 max-width: 999px;
-
 margin-left: 80px;
-
 }
 
 .main h1 {
-
 font-size: 60px;
-
 line-height: 1.3;
-
 color: #2196f3;
-
 }
 
 .main p {
-
 font-size: 22px;
-
 line-height: 1.8;
-
 }
 
 /* =========================================================
 下部エリア
 ========================================================= */
-
 .bottom-end {
-
 display: flex;
-
 justify-content: center;
-
 align-items: center;
-
 background-size: contain;
-
 background-repeat: no-repeat;
-
 background-position: center;
-
 }
 
 .bottom-end-text {
-
 position: relative;
-
 z-index: 1;
-
 max-width: 800px;
-
 margin-left: 80px;
-
 }
 
 .bottom-end h1 {
-
 font-size: 60px;
-
 line-height: 1.3;
-
 color: #2196f3;
-
 }
 
 .bottom-end p {
-
 font-size: 22px;
-
 line-height: 1.8;
-
 }
 
 /* =========================================================
 無料体験
 ========================================================= */
-
 .contact {
-
 width: 100%;
-
 padding: 10px;
-
 margin-top: 5px;
-
 text-align: center;
-
 font-size: 28px;
-
 color: red;
-
 }
 
 .contact-ja,
-.contact-en {
-
-text-align: center;
-
-}
+.contact-en { text-align: center; }
 
 /* =========================================================
 フッター
 ========================================================= */
-
 footer {
-
 width: 100%;
-
 padding: 10px;
-
 text-align: center;
-
 background: #0066cc;
-
 color: white;
-
 }
 
 /* =========================================================
 コース関連
 ========================================================= */
-
 .course-list {
-
 display: grid;
-
-grid-template-columns:
-repeat(auto-fit, minmax(120px, 1fr));
-
+grid-template-columns:repeat(auto-fit, minmax(120px, 1fr));
 gap: 20px;
-
 justify-items: center;
-
 align-items: center;
-
 padding: 20px;
-
 }
 
 .course-list.row {
-
 display: flex;
-
 gap: 12px;
-
 overflow-x: auto;
-
 padding: 10px;
-
 }
 
 .course-list.grid {
-
 display: grid;
-
 grid-template-columns:
 repeat(auto-fill, minmax(120px, 1fr));
-
 gap: 16px;
-
 padding: 10px;
-
 }
 
 .course-item {
-
 width: 120px;
-
 text-align: center;
-
 cursor: pointer;
-
 }
 
 .course-item img {
-
 display: block;
-
 width: 120px;
-
 height: 120px;
-
 border-radius: 12px;
-
-transition:
-transform 0.2s,
+transition:transform 0.2s,
 filter 0.2s;
-
 }
 
 .course-item:hover img {
-
 transform: scale(1.12);
-
 filter:
 brightness(1.05)
 saturate(1.2);
-
 }
 
 .course-title {
-
 font-size: 20px;
-
 font-weight: 700;
-
 margin-bottom: 10px;
-
 color: #ff4081;
-
 }
 
 .course-meta {
-
 font-size: 14px;
-
 color: #555;
-
 margin-bottom: 10px;
-
 }
 
 /* =========================================================
 コース説明
 ========================================================= */
-
 .desc {
-
 display: flex;
-
 align-items: center;
-
 gap: 16px;
-
 font-size: 28px;
-
 margin-top: 10px;
-
 line-height: 1.8;
-
 }
 
 .icon {
-
 width: 200px;
-
 height: 200px;
-
 }
 
 .title {
-
 font-size: 36px;
-
 font-weight: bold;
-
 margin-top: 20px;
-
 }
 
 .back-btn {
-
 margin-top: 40px;
-
 display: inline-block;
-
 padding: 12px 24px;
-
 background: #ff9de1;
-
 color: white;
-
 border-radius: 12px;
-
 text-decoration: none;
-
 font-size: 20px;
-
 }
 
 /* =========================================================
 ヒーロー
 ========================================================= */
-
 .hero {
-
 max-width: 960px;
-
 margin: 1.5rem auto;
-
 padding: 0 1rem;
-
 }
 
 .hero img {
-
 width: 100%;
-
 border-radius: 16px;
-
-box-shadow:
-0 4px 16px rgba(0, 0, 0, 0.15);
-
+box-shadow:0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 /* =========================================================
 コンテナ
 ========================================================= */
-
 .container {
-
 max-width: 800px;
-
 margin: 40px auto;
-
 padding: 0 16px;
-
 text-align: center;
-
-background:
-rgba(255, 255, 255, 0.08);
-
+background:rgba(255, 255, 255, 0.08);
 }
 
 /* =========================================================
 カード
 ========================================================= */
-
 .card {
-
-background:
-rgba(255, 255, 255, 0.08);
-
+background:rgba(255, 255, 255, 0.08);
 border-radius: 12px;
-
 padding: 20px;
-
 margin-bottom: 20px;
-
 backdrop-filter: blur(6px);
-
 text-align: left;
-
 }
 
 /* =========================================================
 フォーム
 ========================================================= */
-
 .form-section h2 {
-
 margin-top: 0;
-
 margin-bottom: 1rem;
-
 }
 
 .form-row {
-
 margin-bottom: 1rem;
-
 display: flex;
-
 flex-direction: column;
-
 }
 
 .form-row label {
-
 font-weight: 600;
-
 margin-bottom: 0.3rem;
-
 display: block;
-
 text-align: left;
-
 }
 
 .form-row input,
 .form-row select,
 .form-row textarea {
-
 width: 100%;
-
 border-radius: 999px;
-
 border: 1px solid #cfd8dc;
-
 padding: 0.6rem 0.9rem;
-
 font-size: 0.95rem;
-
 outline: none;
-
 }
 
 .form-row textarea {
-
 border-radius: 16px;
-
 }
 
 /* =========================================================
 ラジオボタン
 ========================================================= */
-
 .radio-group {
-
 text-align: right;
-
 margin: 20px 0;
-
 }
 
 .radio-group label {
-
 font-size: 18px;
-
 }
 
 /* =========================================================
 利用規約
 ========================================================= */
-
 .terms-row {
-
 flex-direction: row;
-
 align-items: center;
-
 }
 
 .terms-row input[type="checkbox"] {
-
 margin-right: 0.5rem;
-
 }
 
 /* =========================================================
 FAQ
 ========================================================= */
-
 .faq-title {
-
 text-align: center;
-
 font-size: 28px;
-
 color: #ff4fa3;
-
 margin: 30px 0 10px;
-
 font-weight: bold;
-
 }
 
 .faq-list {
-
 width: 90%;
-
 max-width: 1100px;
-
 margin: 0 auto 40px;
-
 }
 
 .faq-item {
-
 display: flex;
-
 justify-content: space-between;
-
 align-items: flex-start;
-
 gap: 20px;
-
 background: #fff4f8;
-
 border: 2px solid #ffb6d9;
-
 border-radius: 16px;
-
 padding: 20px;
-
 margin: 16px 0;
-
-box-shadow:
-0 4px 8px rgba(255, 150, 200, 0.3);
-
+box-shadow:0 4px 8px rgba(255, 150, 200, 0.3);
 transition: 0.2s;
-
 }
 
-.faq-item:hover {
-
-transform: translateY(-4px);
-
-}
+.faq-item:hover {transform: translateY(-4px);}
 
 .faq-q {
-
 width: 40%;
-
 font-size: 20px;
-
 color: #ff66b3;
-
 font-weight: bold;
-
 }
 
 .faq-a {
-
 width: 60%;
-
 font-size: 18px;
-
 line-height: 1.6;
-
 color: #444;
-
 }
 
 /* =========================================================
 FAQフォーム
 ========================================================= */
-
 .faq-form {
-
 width: 90%;
-
 max-width: 1100px;
-
 margin: 20px auto;
-
 padding: 20px;
-
 border-radius: 12px;
-
 background: #fff4f8;
-
 border: 2px solid #ffb6d9;
-
 }
 
 .faq-form input,
 .faq-form textarea {
-
 display: block;
-
 width: 100%;
-
 padding: 10px;
-
 margin: 8px 0 16px;
-
 border-radius: 8px;
-
 border: 1px solid #ccc;
-
 }
 
 .faq-form button {
-
 width: 100%;
-
 padding: 12px;
-
 background: #ff66b3;
-
 color: white;
-
 border: none;
-
 border-radius: 8px;
-
 font-size: 16px;
-
 }
 
 /* =========================================================
 ボタン関連
 ========================================================= */
-
 .btn-primary,
 .btn-secondary {
-
 display: inline-block;
-
 margin-top: 12px;
-
 padding: 10px 16px;
-
 border-radius: 999px;
-
 text-decoration: none;
-
 cursor: pointer;
-
 text-align: center;
-
 }
 
 .btn-primary {
-
 background: #ffb347;
-
 color: #222;
-
 }
 
 .btn-secondary {
-
-background:
-rgba(255, 255, 255, 0.2);
-
+background:rgba(255, 255, 255, 0.2);
 color: #fff;
-
 }
 
-.btn-primary:hover {
-
-transform: translateY(-3px);
-
-}
+.btn-primary:hover {transform: translateY(-3px);}
 
 /* =========================================================
 戻るボタン
 ========================================================= */
-
 .btn-back {
-
 display: inline-block;
-
 margin-top: 12px;
-
 margin-left: auto;
-
 width: 200px;
-
 padding: 10px 16px;
-
 background: #ccc;
-
 border-radius: 8px;
-
 text-align: center;
-
 font-size: 18px;
-
 }
 
 /* =========================================================
 紹介ページ
 ========================================================= */
 
-.intro {
-
-padding: 30px 20px;
-
-}
-
+.intro {padding: 30px 20px;}
 .intro-wrap {
-
 display: flex;
-
 gap: 40px;
-
 align-items: flex-start;
-
 }
 
 .intro-img {
-
 display: flex;
-
 flex-direction: column;
-
 align-items: flex-start;
-
 }
 
 .intro-img img {
-
 width: 280px;
-
 height: auto;
-
 border-radius: 10px;
-
 }
 
 .intro-text {
-
 flex: 1;
-
 font-size: 20px;
-
 line-height: 1.8;
-
 }
 
 /* =========================================================
 画像ホバー
 ========================================================= */
-
 .img-wrap {
-
 position: relative;
-
 display: inline-block;
-
 }
 
 .img-wrap img {
-
 display: block;
-
 }
 
 .img-wrap .hover-img {
-
 position: absolute;
-
 top: 0;
-
 left: 0;
-
 opacity: 0;
-
 transition: opacity 0.2s;
-
 }
 
 .img-wrap:hover .hover-img {
-
 opacity: 1;
-
 }
 
 .img-wrap:hover .normal-img {
-
 opacity: 0;
-
 }
 
 /* =========================================================
 確認画面
 ========================================================= */
-
 .check-grid {
-
 display: grid;
-
-grid-template-columns:
-repeat(5, 1fr);
-
+grid-template-columns:repeat(5, 1fr);
 gap: 0.8rem 1rem;
-
 margin-top: 1rem;
-
 }
 
 .check-grid label {
-
 display: flex;
-
 align-items: center;
-
 gap: 0.3rem;
-
 font-size: 0.95rem;
-
 }
 
 /* =========================================================
 フォームメッセージ
 ========================================================= */
-
 .form-message {
-
 margin-top: 20px;
-
 padding: 20px;
-
 background: #f0f8ff;
-
 border: 3px solid #4da9ff;
-
 border-radius: 15px;
-
 font-size: 20px;
-
 font-weight: bold;
-
 color: #004a8f;
-
 text-align: center;
-
 line-height: 1.8;
-
 }
 
 .member-id {
-
 display: block;
-
 font-size: 36px;
-
 font-weight: 900;
-
 color: #ff4081;
-
 margin-top: 10px;
-
 background: #fff176;
-
 padding: 5px 15px;
-
 border-radius: 10px;
-
 animation: pop 0.6s ease-out;
-
 }
 
 @keyframes pop {
 
 0% {
 
-```
 transform: scale(0.5);
 
 opacity: 0;
-```
 
 }
 
 100% {
 
-```
 transform: scale(1);
 
 opacity: 1;
-```
 
 }
 
@@ -1185,96 +783,76 @@ opacity: 1;
 
 .header {
 
-```
 grid-template-columns: 1fr;
 
 justify-items: center;
 
 overflow-x: visible;
-```
 
 }
 
 .logo-box {
 
-```
 width: 150px;
-```
 
 }
 
 .menu {
 
-```
 justify-content: center;
 
 flex-wrap: wrap;
-```
 
 }
 
 .btn {
 
-```
 width: 160px;
 
 font-size: 18px;
-```
 
 }
 
 main.main {
 
-```
 height: calc(100vw * 308 / 900);
 
 min-height: 180px;
-```
 
 }
 
 .hero {
 
-```
 height: auto;
 
 padding: 20px;
-```
 
 }
 
 .intro-wrap {
 
-```
 flex-direction: column;
 
 text-align: center;
-```
 
 }
 
 .intro-img {
 
-```
 align-items: center;
-```
 
 }
 
 .faq-item {
 
-```
 flex-direction: column;
-```
 
 }
 
 .faq-q,
 .faq-a {
 
-```
 width: 100%;
-```
 
 }
 
@@ -1284,21 +862,17 @@ width: 100%;
 
 .form-row {
 
-```
 flex-direction: row;
 
 align-items: center;
-```
 
 }
 
 .form-row label {
 
-```
 width: 30%;
 
 margin-bottom: 0;
-```
 
 }
 
@@ -1306,17 +880,13 @@ margin-bottom: 0;
 .form-row select,
 .form-row textarea {
 
-```
 width: 70%;
-```
 
 }
 
 .terms-row {
 
-```
 flex-direction: row;
-```
 
 }
 

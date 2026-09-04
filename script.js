@@ -28,7 +28,6 @@ return;
 
 fetch("header.html")
 
-```
 .then(function (response) {
 
   if (!response.ok) {
@@ -63,7 +62,6 @@ fetch("header.html")
     '</div>';
 
 });
-```
 
 }
 
@@ -81,7 +79,6 @@ return;
 
 fetch("footer.html")
 
-```
 .then(function (response) {
 
   if (!response.ok) {
@@ -112,7 +109,6 @@ fetch("footer.html")
     '</div>';
 
 });
-```
 
 }
 
@@ -127,7 +123,6 @@ document.querySelectorAll(".lang-btn");
 
 buttons.forEach(function (button) {
 
-```
 button.addEventListener("click", function () {
 
   const lang =
@@ -147,7 +142,6 @@ button.addEventListener("click", function () {
   applyLanguage();
 
 });
-```
 
 });
 
@@ -170,12 +164,10 @@ document
 .querySelectorAll(".ja")
 .forEach(function (element) {
 
-```
   element.style.display =
     (lang === "ja") ? "" : "none";
 
 });
-```
 
 /* -----------------------------------------
 英語
@@ -185,12 +177,10 @@ document
 .querySelectorAll(".en")
 .forEach(function (element) {
 
-```
   element.style.display =
     (lang === "en") ? "" : "none";
 
 });
-```
 
 /* -----------------------------------------
 トップ画像
@@ -204,19 +194,15 @@ document.querySelector("main.main.en");
 
 if (jaMain) {
 
-```
 jaMain.style.display =
   (lang === "ja") ? "" : "none";
-```
 
 }
 
 if (enMain) {
 
-```
 enMain.style.display =
   (lang === "en") ? "" : "none";
-```
 
 }
 
