@@ -148,60 +148,38 @@ button.addEventListener("click", function () {
 }
 
 /* =========================================================
-言語表示
-========================================================= */
+   言語表示
+   ========================================================= */
 
 function applyLanguage() {
 
-const lang =
-sessionStorage.getItem("lang") || "ja";
+  const lang =
+    sessionStorage.getItem("lang") || "ja";
 
-/* -----------------------------------------
-日本語
------------------------------------------ */
 
-document
-.querySelectorAll(".ja")
-.forEach(function (element) {
+  /* -----------------------------------------
+     日本語
+  ----------------------------------------- */
 
-  element.style.display =
-    (lang === "ja") ? "" : "none";
+  document
+    .querySelectorAll(".ja")
+    .forEach(function (element) {
 
-});
+      element.hidden = (lang !== "ja");
 
-/* -----------------------------------------
-英語
------------------------------------------ */
+    });
 
-document
-.querySelectorAll(".en")
-.forEach(function (element) {
 
-  element.style.display =
-    (lang === "en") ? "" : "none";
+  /* -----------------------------------------
+     英語
+  ----------------------------------------- */
 
-});
+  document
+    .querySelectorAll(".en")
+    .forEach(function (element) {
 
-/* -----------------------------------------
-トップ画像
------------------------------------------ */
+      element.hidden = (lang !== "en");
 
-const jaMain =document.querySelector("main.main.ja");
-
-const enMain =document.querySelector("main.main.en");
-
- if (jaMain) {
-
-    jaMain.style.display =
-      (lang === "ja") ? "block" : "none";
-
- }
-
- if (enMain) {
-
-    enMain.style.display =
-      (lang === "en") ? "block" : "none";
-
- }
+    });
 
 }
