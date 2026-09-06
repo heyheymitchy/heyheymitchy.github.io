@@ -26,6 +26,7 @@ function loadHeader() {
     document.getElementById("header");
 
 
+  /* header が存在しない場合 */
   if (!header) {
 
     return;
@@ -33,9 +34,13 @@ function loadHeader() {
   }
 
 
+  /* header.html を読み込む */
+
   fetch("header.html")
 
     .then(function (response) {
+
+      /* 読み込みエラー確認 */
 
       if (!response.ok) {
 
@@ -45,6 +50,7 @@ function loadHeader() {
 
       }
 
+
       return response.text();
 
     })
@@ -52,19 +58,31 @@ function loadHeader() {
 
     .then(function (html) {
 
-      /* ヘッダーを表示 */
+      /* -----------------------------------------
+         header.html を表示
+         ----------------------------------------- */
+
       header.innerHTML = html;
 
 
-      /* 言語ボタン設定 */
+      /* -----------------------------------------
+         言語ボタンを設定
+         ----------------------------------------- */
+
       setupLanguageButtons();
 
 
-      /* 現在の言語を反映 */
+      /* -----------------------------------------
+         現在の言語を反映
+         ----------------------------------------- */
+
       applyLanguage();
 
 
-      /* フッター読み込み */
+      /* -----------------------------------------
+         footer.html を読み込む
+         ----------------------------------------- */
+
       loadFooter();
 
     })
@@ -95,6 +113,8 @@ function loadFooter() {
     document.getElementById("footer");
 
 
+  /* footer が存在しない場合 */
+
   if (!footer) {
 
     return;
@@ -102,9 +122,13 @@ function loadFooter() {
   }
 
 
+  /* footer.html を読み込む */
+
   fetch("footer.html")
 
     .then(function (response) {
+
+      /* 読み込みエラー確認 */
 
       if (!response.ok) {
 
@@ -114,6 +138,7 @@ function loadFooter() {
 
       }
 
+
       return response.text();
 
     })
@@ -121,11 +146,17 @@ function loadFooter() {
 
     .then(function (html) {
 
-      /* フッターを表示 */
+      /* -----------------------------------------
+         footer.html を表示
+         ----------------------------------------- */
+
       footer.innerHTML = html;
 
 
-      /* 現在の言語を反映 */
+      /* -----------------------------------------
+         現在の言語を反映
+         ----------------------------------------- */
+
       applyLanguage();
 
     })
@@ -152,9 +183,18 @@ function loadFooter() {
 
 function setupLanguageButtons() {
 
+
+  /* -----------------------------------------
+     日本語・English ボタンを取得
+     ----------------------------------------- */
+
   const buttons =
     document.querySelectorAll(".lang-btn");
 
+
+  /* -----------------------------------------
+     ボタンにクリックイベントを設定
+     ----------------------------------------- */
 
   buttons.forEach(function (button) {
 
@@ -172,6 +212,9 @@ function setupLanguageButtons() {
 
       /* -----------------------------------------
          言語を保存
+
+         ja = 日本語
+         en = English
          ----------------------------------------- */
 
       sessionStorage.setItem(
@@ -181,11 +224,10 @@ function setupLanguageButtons() {
 
 
       /* -----------------------------------------
-         表示変更
+         表示を切り替える
          ----------------------------------------- */
 
       applyLanguage();
-
 
     });
 
@@ -203,7 +245,9 @@ function applyLanguage() {
 
   /* =====================================================
      現在の言語を取得
-     保存されていなければ日本語
+
+     保存されていない場合は
+     日本語を初期値にする
      ===================================================== */
 
   const lang =
@@ -217,6 +261,14 @@ function applyLanguage() {
   document
     .querySelectorAll(".ja")
     .forEach(function (element) {
+
+      /*
+       * 日本語を選択している場合
+       * → 表示
+       *
+       * Englishを選択している場合
+       * → 非表示
+       */
 
       element.hidden =
         (lang !== "ja");
@@ -232,6 +284,14 @@ function applyLanguage() {
     .querySelectorAll(".en")
     .forEach(function (element) {
 
+      /*
+       * Englishを選択している場合
+       * → 表示
+       *
+       * 日本語を選択している場合
+       * → 非表示
+       */
+
       element.hidden =
         (lang !== "en");
 
@@ -239,31 +299,13 @@ function applyLanguage() {
 
 
   /* =====================================================
-     言語切り替えボタン
-     
-     選択した言語のボタンだけ表示する
+     注意
+
+     .lang-btn はここでは操作しない。
+
+     日本語ボタン・Englishボタンは
+     常に両方表示する。
+
      ===================================================== */
-
-  document
-    .querySelectorAll(".lang-btn")
-    .forEach(function (button) {
-
-
-      /* ボタンに設定された言語 */
-      const buttonLang =
-        button.getAttribute("data-lang");
-
-
-      /* -----------------------------------------
-         現在選択している言語だけ表示
-         それ以外は非表示
-         ----------------------------------------- */
-
-      button.hidden =
-        (buttonLang !== lang);
-
-
-    });
-
 
 }
