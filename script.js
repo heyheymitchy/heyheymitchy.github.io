@@ -26,21 +26,14 @@ function loadHeader() {
     document.getElementById("header");
 
 
-  /* header が存在しない場合 */
   if (!header) {
-
     return;
-
   }
 
-
-  /* header.html を読み込む */
 
   fetch("header.html")
 
     .then(function (response) {
-
-      /* 読み込みエラー確認 */
 
       if (!response.ok) {
 
@@ -50,7 +43,6 @@ function loadHeader() {
 
       }
 
-
       return response.text();
 
     })
@@ -58,30 +50,22 @@ function loadHeader() {
 
     .then(function (html) {
 
-      /* -----------------------------------------
-         header.html を表示
-         ----------------------------------------- */
+      /* header.html を表示 */
 
       header.innerHTML = html;
 
 
-      /* -----------------------------------------
-         言語ボタンを設定
-         ----------------------------------------- */
+      /* 言語ボタンを設定 */
 
       setupLanguageButtons();
 
 
-      /* -----------------------------------------
-         現在の言語を反映
-         ----------------------------------------- */
+      /* 言語表示を設定 */
 
       applyLanguage();
 
 
-      /* -----------------------------------------
-         footer.html を読み込む
-         ----------------------------------------- */
+      /* footer.html を読み込む */
 
       loadFooter();
 
@@ -91,7 +75,6 @@ function loadHeader() {
     .catch(function (error) {
 
       console.error(error);
-
 
       header.innerHTML =
         '<div class="load-error">' +
@@ -113,22 +96,14 @@ function loadFooter() {
     document.getElementById("footer");
 
 
-  /* footer が存在しない場合 */
-
   if (!footer) {
-
     return;
-
   }
 
-
-  /* footer.html を読み込む */
 
   fetch("footer.html")
 
     .then(function (response) {
-
-      /* 読み込みエラー確認 */
 
       if (!response.ok) {
 
@@ -138,7 +113,6 @@ function loadFooter() {
 
       }
 
-
       return response.text();
 
     })
@@ -146,16 +120,12 @@ function loadFooter() {
 
     .then(function (html) {
 
-      /* -----------------------------------------
-         footer.html を表示
-         ----------------------------------------- */
+      /* footer.html を表示 */
 
       footer.innerHTML = html;
 
 
-      /* -----------------------------------------
-         現在の言語を反映
-         ----------------------------------------- */
+      /* 言語表示を設定 */
 
       applyLanguage();
 
@@ -165,7 +135,6 @@ function loadFooter() {
     .catch(function (error) {
 
       console.error(error);
-
 
       footer.innerHTML =
         '<div class="load-error">' +
@@ -183,24 +152,13 @@ function loadFooter() {
 
 function setupLanguageButtons() {
 
-
-  /* -----------------------------------------
-     日本語・English ボタンを取得
-     ----------------------------------------- */
-
   const buttons =
     document.querySelectorAll(".lang-btn");
 
 
-  /* -----------------------------------------
-     ボタンにクリックイベントを設定
-     ----------------------------------------- */
-
   buttons.forEach(function (button) {
 
-
     button.addEventListener("click", function () {
-
 
       /* -----------------------------------------
          選択された言語を取得
@@ -212,9 +170,6 @@ function setupLanguageButtons() {
 
       /* -----------------------------------------
          言語を保存
-
-         ja = 日本語
-         en = English
          ----------------------------------------- */
 
       sessionStorage.setItem(
@@ -224,7 +179,7 @@ function setupLanguageButtons() {
 
 
       /* -----------------------------------------
-         表示を切り替える
+         言語表示を変更
          ----------------------------------------- */
 
       applyLanguage();
@@ -243,69 +198,141 @@ function setupLanguageButtons() {
 function applyLanguage() {
 
 
-  /* =====================================================
+  /* -----------------------------------------
      現在の言語を取得
 
-     保存されていない場合は
-     日本語を初期値にする
-     ===================================================== */
+     保存されていなければ日本語
+     ----------------------------------------- */
 
   const lang =
     sessionStorage.getItem("lang") || "ja";
 
 
   /* =====================================================
-     日本語コンテンツ
+     日本語
      ===================================================== */
 
   document
     .querySelectorAll(".ja")
     .forEach(function (element) {
 
-      /*
-       * 日本語を選択している場合
-       * → 表示
-       *
-       * Englishを選択している場合
-       * → 非表示
-       */
+      if (lang === "ja") {
 
-      element.hidden =
-        (lang !== "ja");
+        /*
+         * 日本語を表示
+         *
+         * style.css の影響を受けないように
+         * display を直接指定する
+         */
+
+        if (element.classList.contains("menu")) {
+
+          element.style.setProperty(
+            "display",
+            "flex",
+            "important"
+          );
+
+        } else {
+
+          element.style.setProperty(
+            "display",
+            "block",
+            "important"
+          );
+
+        }
+
+        element.removeAttribute("hidden");
+
+      } else {
+
+        /*
+         * 日本語を非表示
+         */
+
+        element.style.setProperty(
+          "display",
+          "none",
+          "important"
+        );
+
+        element.setAttribute(
+          "hidden",
+          ""
+        );
+
+      }
 
     });
 
 
   /* =====================================================
-     英語コンテンツ
+     英語
      ===================================================== */
 
   document
     .querySelectorAll(".en")
     .forEach(function (element) {
 
-      /*
-       * Englishを選択している場合
-       * → 表示
-       *
-       * 日本語を選択している場合
-       * → 非表示
-       */
+      if (lang === "en") {
 
-      element.hidden =
-        (lang !== "en");
+        /*
+         * 英語を表示
+         *
+         * .menu は flex
+         * それ以外は block
+         */
+
+        if (element.classList.contains("menu")) {
+
+          element.style.setProperty(
+            "display",
+            "flex",
+            "important"
+          );
+
+        } else {
+
+          element.style.setProperty(
+            "display",
+            "block",
+            "important"
+          );
+
+        }
+
+        element.removeAttribute("hidden");
+
+      } else {
+
+        /*
+         * 英語を非表示
+         */
+
+        element.style.setProperty(
+          "display",
+          "none",
+          "important"
+        );
+
+        element.setAttribute(
+          "hidden",
+          ""
+        );
+
+      }
 
     });
 
 
   /* =====================================================
-     注意
+     言語ボタン
 
-     .lang-btn はここでは操作しない。
+     日本語・English は
+     2つとも常に表示する
 
-     日本語ボタン・Englishボタンは
-     常に両方表示する。
-
+     ここでは変更しない
      ===================================================== */
 
 }
