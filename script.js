@@ -1,151 +1,198 @@
 ﻿/* =========================================================
-わくわくプログラミング工房　平兵道
-共通JavaScript
-script.js
-========================================================= */
+   わくわくプログラミング工房　平兵道
+   共通JavaScript
+   script.js
+   ========================================================= */
+
 
 /* =========================================================
-ページ読み込み
-========================================================= */
+   ページ読み込み
+   ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
 
-loadHeader();
+  loadHeader();
 
 });
 
+
 /* =========================================================
-ヘッダー読み込み
-========================================================= */
+   ヘッダー読み込み
+   ========================================================= */
 
 function loadHeader() {
 
-const header = document.getElementById("header");
+  const header =
+    document.getElementById("header");
 
-if (!header) {
-return;
-}
 
-fetch("header.html")
+  if (!header) {
 
-.then(function (response) {
+    return;
 
-  if (!response.ok) {
-    throw new Error(
-      "header.html の読み込みに失敗しました。"
-    );
   }
 
-  return response.text();
 
-})
+  fetch("header.html")
 
-.then(function (html) {
+    .then(function (response) {
 
-  header.innerHTML = html;
+      if (!response.ok) {
 
-  setupLanguageButtons();
+        throw new Error(
+          "header.html の読み込みに失敗しました。"
+        );
 
-  applyLanguage();
+      }
 
-  loadFooter();
+      return response.text();
 
-})
+    })
 
-.catch(function (error) {
 
-  console.error(error);
+    .then(function (html) {
 
-  header.innerHTML =
-    '<div class="load-error">' +
-    'header.html を読み込めませんでした。' +
-    '</div>';
+      /* ヘッダーを表示 */
+      header.innerHTML = html;
 
-});
+
+      /* 言語ボタン設定 */
+      setupLanguageButtons();
+
+
+      /* 現在の言語を反映 */
+      applyLanguage();
+
+
+      /* フッター読み込み */
+      loadFooter();
+
+    })
+
+
+    .catch(function (error) {
+
+      console.error(error);
+
+
+      header.innerHTML =
+        '<div class="load-error">' +
+        'header.html を読み込めませんでした。' +
+        '</div>';
+
+    });
 
 }
 
+
 /* =========================================================
-フッター読み込み
-========================================================= */
+   フッター読み込み
+   ========================================================= */
 
 function loadFooter() {
 
-const footer = document.getElementById("footer");
+  const footer =
+    document.getElementById("footer");
 
-if (!footer) {
-return;
-}
 
-fetch("footer.html")
+  if (!footer) {
 
-.then(function (response) {
+    return;
 
-  if (!response.ok) {
-    throw new Error(
-      "footer.html の読み込みに失敗しました。"
-    );
   }
 
-  return response.text();
 
-})
+  fetch("footer.html")
 
-.then(function (html) {
+    .then(function (response) {
 
-  footer.innerHTML = html;
+      if (!response.ok) {
 
-  applyLanguage();
+        throw new Error(
+          "footer.html の読み込みに失敗しました。"
+        );
 
-})
+      }
 
-.catch(function (error) {
+      return response.text();
 
-  console.error(error);
+    })
 
-  footer.innerHTML =
-    '<div class="load-error">' +
-    'footer.html を読み込めませんでした。' +
-    '</div>';
 
-});
+    .then(function (html) {
+
+      /* フッターを表示 */
+      footer.innerHTML = html;
+
+
+      /* 現在の言語を反映 */
+      applyLanguage();
+
+    })
+
+
+    .catch(function (error) {
+
+      console.error(error);
+
+
+      footer.innerHTML =
+        '<div class="load-error">' +
+        'footer.html を読み込めませんでした。' +
+        '</div>';
+
+    });
 
 }
 
+
 /* =========================================================
-言語切り替えボタン
-========================================================= */
+   言語切り替えボタン
+   ========================================================= */
 
 function setupLanguageButtons() {
 
-const buttons =
-document.querySelectorAll(".lang-btn");
-
-buttons.forEach(function (button) {
-
-button.addEventListener("click", function () {
-
-  const lang =
-    this.getAttribute("data-lang");
+  const buttons =
+    document.querySelectorAll(".lang-btn");
 
 
-  /* 言語を保存 */
-
-  sessionStorage.setItem(
-    "lang",
-    lang
-  );
+  buttons.forEach(function (button) {
 
 
-  /* 表示変更 */
+    button.addEventListener("click", function () {
 
-  applyLanguage();
 
-});
+      /* -----------------------------------------
+         選択された言語を取得
+         ----------------------------------------- */
 
-});
+      const lang =
+        this.getAttribute("data-lang");
+
+
+      /* -----------------------------------------
+         言語を保存
+         ----------------------------------------- */
+
+      sessionStorage.setItem(
+        "lang",
+        lang
+      );
+
+
+      /* -----------------------------------------
+         表示変更
+         ----------------------------------------- */
+
+      applyLanguage();
+
+
+    });
+
+  });
 
 }
+
 
 /* =========================================================
    言語表示
@@ -153,33 +200,70 @@ button.addEventListener("click", function () {
 
 function applyLanguage() {
 
+
+  /* =====================================================
+     現在の言語を取得
+     保存されていなければ日本語
+     ===================================================== */
+
   const lang =
     sessionStorage.getItem("lang") || "ja";
 
 
-  /* -----------------------------------------
-     日本語
-  ----------------------------------------- */
+  /* =====================================================
+     日本語コンテンツ
+     ===================================================== */
 
   document
     .querySelectorAll(".ja")
     .forEach(function (element) {
 
-      element.hidden = (lang !== "ja");
+      element.hidden =
+        (lang !== "ja");
 
     });
 
 
-  /* -----------------------------------------
-     英語
-  ----------------------------------------- */
+  /* =====================================================
+     英語コンテンツ
+     ===================================================== */
 
   document
     .querySelectorAll(".en")
     .forEach(function (element) {
 
-      element.hidden = (lang !== "en");
+      element.hidden =
+        (lang !== "en");
 
     });
+
+
+  /* =====================================================
+     言語切り替えボタン
+     
+     選択した言語のボタンだけ表示する
+     ===================================================== */
+
+  document
+    .querySelectorAll(".lang-btn")
+    .forEach(function (button) {
+
+
+      /* ボタンに設定された言語 */
+      const buttonLang =
+        button.getAttribute("data-lang");
+
+
+      /* -----------------------------------------
+         現在選択している言語だけ表示
+         それ以外は非表示
+         ----------------------------------------- */
+
+      button.hidden =
+        (buttonLang !== lang);
+
+
+    });
+
 
 }
