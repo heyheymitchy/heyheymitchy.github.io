@@ -1,122 +1,56 @@
 ﻿<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!-- わくわくプログラミング工房　平兵道　のホームページ -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!-- course.html -->
+<!-- Check.html -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Check List</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Check List</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ==================================================
+       このページ専用CSS
+       ================================================== */
+
+    /* 表示するアイコン */
+    .icon {
+      width: 150px;
+      display: block;
+      margin: 20px auto;
+    }
+
+    /* タイトル */
+    .title {
+      font-size: 24px;
+      text-align: center;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    /* 説明文 */
+    .desc {
+      font-size: 16px;
+      margin: 20px;
+      line-height: 1.6;
+    }
+  </style>
 </head>
+
 <body>
 <!-- ここからは全html共用の記述にする -->
-  <!-- ================================================== -->
-  <!-- 共通ヘッダー -->
-  <!-- ================================================== -->
+<!-- ================================================== -->
+<!-- 共通ヘッダー -->
+<!-- ================================================== -->
   <div id="header"></div>
 <!-- ここまで -->   
 
 <!-- ここからはこのページだけの内容 -->
-
-<style>
-.icon {
-  width: 150px;
-  display: block;
-  margin: 20px auto;
-}
-.title {
-  font-size: 24px;
-  text-align: center;
-  margin-top: 10px;
-}
-.desc {
-  font-size: 16px;
-  margin: 20px;
-  line-height: 1.6;
-}
-</style>
-
 <div id="content"></div>
 
-<script>
-// ▼ 日本語＋英語データ（説明文も含む）
-const data_jaen = {
-    101: { title: "Scratch", icon: "images/icon_001.png", desc: "Scratchは、ノーコードと呼ばれるプログラミングツールです。" },
-    102: { title: "ゲーム", icon: "images/icon_002.png", desc: "ゲーム制作は創造力と論理的思考を育てる最高の学習方法です。" },
-    103: { title: "アート", icon: "images/icon_003.png", desc: "アートは色・形・感性を自由に表現できるクリエイティブ活動です。" },
-    104: { title: "音楽", icon: "images/icon_004.png", desc: "音楽はリズムとメロディで心を豊かにする最高の表現方法です。" },
-    105: { title: "英語", icon: "images/icon_005.png", desc: "英語は世界とつながるための大切なコミュニケーションツールです。" },
-    106: { title: "ホームページ", icon: "images/icon_006.png", desc: "ホームページ制作は情報発信の基本スキルです。" },
-    107: { title: "HTML", icon: "images/icon_007.png", desc: "HTMLはWebページの骨組みを作る言語です。" },
-    108: { title: "CSS", icon: "images/icon_008.png", desc: "CSSはWebページのデザインを作るスタイル言語です。" },
-    109: { title: "GAS", icon: "images/icon_009.png", desc: "GASはGoogleサービスを自動化できる便利なスクリプトです。" },
-    110:{ title: "Vscode", icon: "images/icon_010.png", desc: "VSCodeは世界で最も使われている高機能エディタです。" },
-    111:{ title: "GitHub", icon: "images/icon_011.png", desc: "GitHubはコードを保存・公開できるサービスです。" },
-    112:{ title: "プログラミング", icon: "images/icon_012.png", desc: "プログラミングは問題解決力を育てる最強の学習です。" },
-    113:{ title: "STEAM", icon: "images/icon_013.png", desc: "STEAM教育は科学・技術・芸術を統合した新しい学びです。" },
-    114:{ title: "SDGs", icon: "images/icon_014.png", desc: "SDGsは持続可能な世界を目指す国際目標です。" },
-    115:{ title: "AIプロンプト", icon: "images/icon_015.png", desc: "AIプロンプトはAIに指示を出すための文章作成技術です。" },
-    116:{ title: "Python", icon: "images/icon_016.png", desc: "Pythonは初心者にも優しい万能プログラミング言語です。" },
-    117:{ title: "YouTube", icon: "images/icon_017.png", desc: "YouTubeは動画で学びを広げる最高のプラットフォームです。" },
-    118:{ title: "Zoom", icon: "images/icon_018.png", desc: "Zoomはオンライン授業や会議に使われる便利なツールです。" },
-    119:{ title: "コンピュータ", icon: "images/icon_019.png", desc: "コンピュータは現代の学習に欠かせない基本ツールです。" },
-    120:{ title: "デジタルコンテンツ", icon: "images/icon_020.png", desc: "デジタルコンテンツ制作は未来の必須スキルです。" },
-    121:{ title: "コンサル", icon: "images/icon_021.png", desc: "コンサルは課題を分析し解決へ導く専門スキルです。" },
-    122:{ title: "ネットビジネス", icon: "images/icon_022.png", desc: "ネットビジネスは誰でも始められる新しい働き方です。" },
-    123:{ title: "個人事業者", icon: "images/icon_023.png", desc: "個人事業は自分の力で収益を生み出す働き方です。" },
-    124:{ title: "起業", icon: "images/icon_024.png", desc: "起業はアイデアを形にして社会に価値を届ける活動です。" },
-    125:{ title: "コーチング", icon: "images/icon_025.png", desc: "コーチングは相手の可能性を引き出すコミュニケーション技術です。" },
-
-    901: { title: "Scratch", icon: "images/en/icon_901.png", desc: "Scratch is a fun programming tool where kids can create games and animations using blocks." },
-    902: { title: "Game", icon: "images/en/icon_902.png", desc: "Game creation boosts creativity and logical thinking." },
-    903: { title: "Art", icon: "images/en/icon_903.png", desc: "Art is a creative activity where you can freely express colors, shapes, and imagination." },
-    904: { title: "Music", icon: "images/en/icon_904.png", desc: "Music enriches the heart with rhythm and melody." },
-    905: { title: "English", icon: "images/en/icon_905.png", desc: "English is an important communication tool to connect with the world." },
-    906: { title: "Homepage", icon: "images/en/icon_906.png", desc: "Creating a homepage is a basic skill for sharing information." },
-    907: { title: "HTML", icon: "images/en/icon_907.png", desc: "HTML is the language that builds the structure of web pages." },
-    908: { title: "CSS", icon: "images/en/icon_908.png", desc: "CSS is the style language that designs web pages." },
-    909: { title: "GAS", icon: "images/en/icon_909.png", desc: "GAS is a useful script to automate Google services." },
-    910:{ title: "Vscode", icon: "images/en/icon_910.png", desc: "VSCode is one of the most popular code editors in the world." },
-    911:{ title: "GitHub", icon: "images/en/icon_911.png", desc: "GitHub is a service to store and publish code." },
-    912:{ title: "Programming", icon: "images/en/icon_912.png", desc: "Programming develops strong problem-solving skills." },
-    913:{ title: "STEAM", icon: "images/en/icon_913.png", desc: "STEAM integrates science, technology, engineering, arts, and math." },
-    914:{ title: "SDGs", icon: "images/en/icon_914.png", desc: "SDGs are global goals for a sustainable future." },
-    915:{ title: "AI Prompt", icon: "images/en/icon_915.png", desc: "AI prompts are instructions to communicate effectively with AI." },
-    916:{ title: "Python", icon: "images/en/icon_916.png", desc: "Python is a beginner-friendly and powerful programming language." },
-    917:{ title: "YouTube", icon: "images/en/icon_917.png", desc: "YouTube is a great platform for learning through videos." },
-    918:{ title: "Zoom", icon: "images/en/icon_918.png", desc: "Zoom is a useful tool for online classes and meetings." },
-    919:{ title: "Computer", icon: "images/en/icon_919.png", desc: "Computers are essential tools for modern learning." },
-    920:{ title: "Digital Contents", icon: "images/en/icon_920.png", desc: "Creating digital content is an important skill for the future." },
-    921:{ title: "Consulting", icon: "images/en/icon_921.png", desc: "Consulting analyzes problems and guides solutions." },
-    922:{ title: "Online Business", icon: "images/en/icon_922.png", desc: "Online business is a new way of working anyone can start." },
-    923:{ title: "Sole Proprietor", icon: "images/en/icon_923.png", desc: "A sole proprietor builds income independently." },
-    924:{ title: "Startup", icon: "images/en/icon_924.png", desc: "A startup turns ideas into value for society." },
-    925:{ title: "Coaching", icon: "images/en/icon_925.png", desc: "Coaching helps bring out a person's potential." }
-};
-
-// ▼ URLパラメータ取得
-const params = new URLSearchParams(location.search);
-const pt = Number(params.get("pt"));
-
-// ▼ 表示エリア
-const content = document.getElementById("content");
-
-// ▼ データ取得
-const item = data_jaen[pt];
-
-// ▼ 表示処理
-if (item) {
-  content.innerHTML = `
-    <img src="${item.icon}" class="icon">
-    <div class="title">${item.title}</div>
-    <div class="desc">${item.desc}</div>
-  `;
-} else {
-  content.innerHTML = `<div class="title">データがありません（pt=${pt}）</div>`;
-}
-</script>
+<!-- ここまで -->
 
 <!-- ここからは全html共用の記述にする -->
   <!-- ================================================== -->
@@ -129,6 +63,80 @@ if (item) {
   <!-- ================================================== -->
   <script src="script.js"></script>
 <!-- ここまで -->
+
+  <script>
+    /* ==================================================
+       CHECK_GASからデータを取得して表示する
+       ================================================== */
+
+    // ▼ URLパラメータ
+    const params = new URLSearchParams(location.search);
+
+    // ▼ ptを取得
+    const pt = params.get("pt") || "101";
+
+    // ▼ 言語
+    // URLに lang=ja / lang=en があればそれを使用
+    // なければ日本語
+    const lang = params.get("lang") || "ja";
+
+    // ▼ CHECK_GASのウェブアプリURL(デプロイしたらＵＲＬ上塗りすること)
+    const CHECK_GAS_URL = "https://script.google.com/macros/s/AKfycbwm2_mO5lIk6h8Ue4eA0KFbB7Z_iEEUMnxx-sd3YnaQWKw0F4brjL5uXLcWyu6gzU1Xsg/exec";
+
+    // ▼ 表示エリア
+    const content = document.getElementById("content");
+
+    // ▼ GASからデータ取得
+    fetch(
+      CHECK_GAS_URL +
+      "?pt=" + encodeURIComponent(pt) +
+      "&lang=" + encodeURIComponent(lang)
+    )
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("HTTPエラー：" + response.status);
+        }
+        return response.json();
+      })
+      .then(item => {
+
+        // ▼ データがない場合
+        if (!item || item.error) {
+          content.innerHTML =
+            `<div class="title">データがありません（pt=${pt}）</div>`;
+          return;
+        }
+
+        // ▼ HTML表示
+        content.innerHTML = `
+          <img src="${item.icon}" class="icon" alt="${item.title}">
+          <div class="title">${escapeHtml(item.title)}</div>
+          <div class="desc">${escapeHtml(item.desc)}</div>
+        `;
+      })
+      .catch(error => {
+        console.error(error);
+
+        content.innerHTML = `
+          <div class="title">データを取得できませんでした</div>
+          <div class="desc">
+            CHECK_GASのURL、GASの公開設定、スプレッドシート設定を確認してください。
+          </div>
+        `;
+      });
+
+    // ==================================================
+    // HTML特殊文字対策
+    // ==================================================
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+  </script>
 
 </body>
 </html>
