@@ -5,61 +5,22 @@
 <!-- hello.html -->
 <!DOCTYPE html >
 <html lang="ja">
-
-<!-- head -->
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>わくわくプログラミング工房　平兵道</title>
-<link rel="stylesheet" href="style.css">
+<meta name="viewport"  content="width=device-width, initial-scale=1.0">
+  <title>わくわくプログラミング工房 平兵道</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
-<!-- body --> 
 <body>
-<!-- カウンター　標示用 -->
-<div align="right">
-  <!-- FC2カウンター ここから -->
-<script language="javascript" type="text/javascript" src="//counter1.fc2.com/counter.php?id=41013370&main=1"></script><noscript><img src="//counter1.fc2.com/counter_img.php?id=41013370&main=1" /></noscript>
-<!-- FC2カウンター ここまで -->
-</div>
+<!-- ここからは全html共用の記述にする -->
+  <!-- ================================================== -->
+  <!-- 共通ヘッダー -->
+  <!-- ================================================== -->
+  <div id="header"></div>
+<!-- ここまで -->
 
-
-<!-- ▼ ここがポイント：ターゲット要素を header の「前」に置く -->
-<a id="ja"></a>
-<a id="en"></a>
-
-<!-- ヘッダー -->
-<header class="header">
-
-<!-- 左にロゴ／右にメニュー　表示させる -->
-  <div class="logo-box"><img src="images/logo.png" alt="ロゴ">
-　</div>
-
-<!-- 言語切り替えボタン -->
-  <div class="lang-switch">
-    <a href="#ja" class="lang-btn">日本語</a>
-    <a href="#en" class="lang-btn">English</a>
-  </div>
-
-<!-- 日本語メニュー -->
-  <nav class="menu ja">
-    <a href="hello.html" class="btn">はじめまして</a>
-    <a href="course.html" class="btn">なにがあるの</a>
-    <a href="tryit.html" class="btn">やってみよう</a>
-    <a href="faqans.html" class="btn">しつもんする</a>
-    <a href="check.html" class="btn">かくにんする</a>
-  </nav>
-
-<!-- 英語メニュー -->
-  <nav class="menu en">
-    <a href="hello.html#en" class="btn">Hello</a>
-    <a href="course.html#en" class="btn">Go</a>
-    <a href="tryit.html#en" class="btn">Play</a>
-    <a href="faqans.html#en" class="btn">Ask</a>
-    <a href="check.html#en" class="btn">Check</a>
-  </nav>
-
-</header>
+<!-- ここからはこのページだけの内容 -->
 
 <section class="intro">
   <div class="intro-wrap">
@@ -92,17 +53,19 @@
     </div>
   </div>
 </section>
+<!-- ここまで このページだけの内容 -->
 
-
- 
-
-</body>
-</html>
-
-  <!-- フッター -->
-  <footer>
-  わくわくプログラミング工房　平兵道　est.2026
-  </footer>
+<!-- ここからは全html共用の記述にする -->
+  <!-- ================================================== -->
+  <!-- 共通フッター -->
+  <!-- ================================================== -->
+  <div id="footer"></div>
+  
+  <!-- ================================================== -->
+  <!-- 共通JavaScript -->
+  <!-- ================================================== -->
+  <script src="script.js"></script>
+<!-- ここまで -->
 
 </body>
 </html>
