@@ -1,6 +1,5 @@
 ﻿/*****************************************************/
 /* CSS全体設定 */
-
 /* 全体イメージは以下の通り　*/
 /*　ここから　コメント↓
 サンプルイメージ図（Plain text）
@@ -91,23 +90,18 @@ color: #000; /* 文字色:display：黒 */
 共通言語表示
 ========================================================= */
 /*　初期状態は日本語　*/
-
-.en {
-display: none;
-}
+.en { display: none; }
 
 /* =========================================================
 FC2カウンター
 ========================================================= */
 .counter-area {
-text-align: center;
+text-align: right;
 padding: 5px 0;
 background: #5CE1E6;
 }
 
-.counter-area img {
-display: inline-block;
-}
+.counter-area img { display: inline-block; }
 
 /* ******************** **/
 /* 左　／　中央　／　右　 **/
@@ -121,7 +115,6 @@ display: inline-block;
 .header {
 
 display: grid;
-
 grid-template-columns:
 170px
 1fr
