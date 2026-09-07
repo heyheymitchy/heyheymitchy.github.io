@@ -216,6 +216,26 @@ background: #ff4fa3;
 transform: translateY(-2px);
 }
 
+.btn2 {
+display: inline-block;
+width: 360px;
+padding: 8px 16px;
+background: #4fa9ff;
+color: #fff;
+border-radius: 20px;
+font-size: 36px;
+font-weight: bold;
+text-decoration: none;
+text-align: center;
+transition: 0.2s;
+box-shadow:0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.btn2:hover {
+background: #ff4fa3;
+transform: translateY(-2px);
+}
+
 /* =========================================================
 ヘッダー・フッター読み込みエラー
 ========================================================= */
