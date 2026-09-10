@@ -143,6 +143,34 @@
     // なければ日本語
     const lang = params.get("lang") || "ja";
 
+
+
+// ==================================================
+// カートに講座IDを保存
+// ==================================================
+
+function addToCart(courseId) {
+
+  // 講座IDがない場合
+  if (!courseId) {
+
+    alert("講座IDがありません。");
+
+    return;
+  }
+
+
+  // ------------------------------------------
+  // カートに保存
+  // ------------------------------------------
+
+  localStorage.setItem(
+    "cart",
+    JSON.stringify({
+      courseId: String(courseId).trim()
+    })
+  );
+
 // ▼ CHECK_GASのウェブアプリURL(デプロイしたらＵＲＬ上塗りすること0910)
     const CHECK_GAS_URL = "https://script.google.com/macros/s/AKfycbwmMgJqKEp-s55UQqnIceSSTjcsKYuHyjOPkp6zPpQCEcJmgv5YmqiqvO0huLW-tQemqw/exec";
 
@@ -170,45 +198,6 @@
           return;
         }
 
-// ==================================================
-// カートに講座IDを保存
-// ==================================================
-
-function addToCart(courseId) {
-
-  // 講座IDがない場合
-  if (!courseId) {
-
-    alert("講座IDがありません。");
-
-    return;
-  }
-
-
-  // ------------------------------------------
-  // カートに保存
-  // ------------------------------------------
-
-  localStorage.setItem(
-    "cart",
-    JSON.stringify({
-
-      courseId:
-        String(courseId).trim()
-
-    })
-  );
-
-
-  // ------------------------------------------
-  // tryit.htmlへ移動
-  // ------------------------------------------
-
-  window.location.href =
-    "tryit.html?courseId=" +
-    encodeURIComponent(courseId);
-}
-
         // ▼ HTML表示
         content.innerHTML = `
         <img src="${item.icon}" class="icon" alt="${item.title}">
@@ -218,18 +207,7 @@ function addToCart(courseId) {
         <button class="cart-button" onclick="addToCart('${escapeHtml(item.courseId)}')">カートに入れる</button>
         </div>
       `;        
-
-      })
-      .catch(error => {
-        console.error(error);
-
-        content.innerHTML = `
-          <div class="title">データを取得できませんでした</div>
-          <div class="desc">
-            CHECK_GASのURL、GASの公開設定、スプレッドシート設定を確認してください。
-          </div>
-        `;
-      });
+   });
 
     // ==================================================
     // HTML特殊文字対策
