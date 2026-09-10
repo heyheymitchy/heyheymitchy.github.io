@@ -204,14 +204,15 @@ function addToCart(courseId) {
         <div class="title">［講座名］${escapeHtml(item.title)}</div>
         <div class="desc">${escapeHtml(item.desc).replace(/&lt;br&gt;/gi, "<br>")}<hr>
         <div class="course-id">［講座ID］${escapeHtml(item.courseId)}</div>
-        <button class="cart-button" onclick="addToCart('${escapeHtml(item.courseId)}')">カートに入れる</button>
+        <button class="cart-button" onclick="addToCart('${escapeHtml(item.courseId)}')"
+        >カートに入れる</button>
         </div>
       `;        
-   });
-
-    // ==================================================
-    // HTML特殊文字対策
-    // ==================================================
+    })
+  
+  // ==================================================
+  // HTML特殊文字対策
+  // ==================================================
     function escapeHtml(value) {
       return String(value)
         .replace(/&/g, "&amp;")
@@ -220,7 +221,8 @@ function addToCart(courseId) {
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
     }
-  </script>
 
+}
+  </script>
 </body>
 </html>
