@@ -1,153 +1,367 @@
 ﻿<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!-- わくわくプログラミング工房 平兵道 -->
-<!-- tryit.html（CORS対応・会員番号チェック・Stripe決済連携 完全版） -->
+<!-- tryit.html（courseId対応・会員番号チェック・Stripe決済連携 完全版） -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>有料講座お申込みフォーム｜わくわくプログラミング工房</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
+
+<title>
+  有料講座お申込みフォーム｜わくわくプログラミング工房
+</title>
+
 
 <style>
+
+/* ============================================================
+   全体
+   ============================================================ */
 
 * {
   box-sizing: border-box;
 }
 
+
 body {
+
   margin: 0;
+
   padding: 16px;
+
   font-family:
     "Yu Gothic",
     "Meiryo",
     sans-serif;
+
   background:
     linear-gradient(
       135deg,
       #fff0fb,
       #f8eaff
     );
+
   color: #222;
 }
 
+
+/* ============================================================
+   コンテナ
+   ============================================================ */
+
 .container {
+
   max-width: 720px;
+
   margin: 0 auto;
+
 }
+
+
+/* ============================================================
+   タイトル
+   ============================================================ */
 
 .title {
+
   background: #ffc8f2;
+
   border-radius: 8px;
+
   padding: 10px 14px;
+
   margin-bottom: 14px;
+
   font-size: 20px;
+
   font-weight: bold;
+
 }
+
+
+/* ============================================================
+   カード
+   ============================================================ */
 
 .card {
+
   background: #fff;
+
   border-radius: 10px;
+
   padding: 18px;
+
   box-shadow:
     0 2px 8px rgba(0,0,0,0.08);
+
 }
 
+
+/* ============================================================
+   ラベル
+   ============================================================ */
+
 label {
+
   display: block;
+
   margin-top: 12px;
+
   font-size: 14px;
+
   font-weight: bold;
+
 }
+
+
+/* ============================================================
+   入力・選択
+   ============================================================ */
 
 input,
 select {
+
   width: 100%;
+
   margin-top: 5px;
+
   padding: 10px;
+
   border: 1px solid #ff8bcf;
+
   border-radius: 8px;
+
   background: #fff;
+
   font-size: 16px;
+
 }
 
-select {
-  cursor: pointer;
-}
+
+/* ============================================================
+   ボタン
+   ============================================================ */
 
 button {
+
   border: none;
+
   border-radius: 8px;
+
   padding: 12px 18px;
+
   margin-top: 16px;
+
   font-size: 16px;
+
   font-weight: bold;
+
   cursor: pointer;
+
 }
+
 
 #checkBtn {
+
   background: #777;
+
   color: #fff;
+
 }
+
 
 #checkoutBtn {
+
   background: #e85ac0;
+
   color: #fff;
+
   width: 100%;
+
 }
+
 
 #checkoutBtn:disabled {
+
   background: #ccc;
+
   cursor: not-allowed;
+
 }
+
+
+/* ============================================================
+   ステータス
+   ============================================================ */
 
 .status {
+
   margin-top: 14px;
+
   padding: 10px;
+
   border-radius: 8px;
+
   background: #fafafa;
+
   white-space: pre-wrap;
+
 }
+
 
 .error {
+
   color: #d00000;
+
   font-weight: bold;
+
 }
+
 
 .ok {
+
   color: #087a28;
+
   font-weight: bold;
+
 }
+
+
+/* ============================================================
+   講座情報
+   ============================================================ */
+
+.courseInfo {
+
+  margin-top: 14px;
+
+  padding: 14px;
+
+  border-radius: 8px;
+
+  background: #fff8fd;
+
+  border: 1px solid #ffc8f2;
+
+}
+
+
+.courseId {
+
+  font-size: 13px;
+
+  color: #666;
+
+}
+
+
+.courseName {
+
+  margin-top: 5px;
+
+  font-size: 20px;
+
+  font-weight: bold;
+
+  color: #0000FF;
+
+}
+
 
 .price {
+
   margin-top: 10px;
-  font-size: 15px;
+
+  font-size: 17px;
+
   font-weight: bold;
+
 }
 
+
 .small {
+
   font-size: 12px;
+
   color: #666;
+
   margin-top: 8px;
+
 }
 
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="container">
 
+
+  <!-- ========================================================
+       タイトル
+       ======================================================== -->
+
   <div class="title">
+
     有料講座お申込みフォーム
+
   </div>
+
 
   <div class="card">
 
+
+    <!-- ======================================================
+         講座情報
+         ====================================================== -->
+
+    <div
+      id="courseInfo"
+      class="courseInfo"
+      style="display:none;"
+    >
+
+      <div
+        id="courseIdDisplay"
+        class="courseId"
+      ></div>
+
+
+      <div
+        id="courseNameDisplay"
+        class="courseName"
+      ></div>
+
+
+      <div
+        id="price"
+        class="price"
+      ></div>
+
+    </div>
+
+
+    <!-- ======================================================
+         会員番号
+         ====================================================== -->
+
     <label for="memberID">
+
       会員番号
+
     </label>
+
 
     <input
       id="memberID"
@@ -156,17 +370,27 @@ button {
       autocomplete="off"
     >
 
+
     <button
       type="button"
       id="checkBtn"
     >
+
       会員情報を確認
+
     </button>
 
 
+    <!-- ======================================================
+         申込者氏名
+         ====================================================== -->
+
     <label for="name">
+
       申込者氏名
+
     </label>
+
 
     <input
       id="name"
@@ -175,9 +399,16 @@ button {
     >
 
 
+    <!-- ======================================================
+         メールアドレス
+         ====================================================== -->
+
     <label for="email">
+
       メールアドレス
+
     </label>
+
 
     <input
       id="email"
@@ -186,95 +417,162 @@ button {
     >
 
 
-    <label for="courseSelect">
-      希望講座名（有料）
-    </label>
-
-    <select
-      id="courseSelect"
-    >
-      <option value="">
-        読み込み中...
-      </option>
-    </select>
-
-    <div
-      id="price"
-      class="price"
-    ></div>
-
+    <!-- ======================================================
+         Stripe決済
+         ====================================================== -->
 
     <button
       type="button"
       id="checkoutBtn"
       disabled
     >
+
       Stripeで決済へ進む
+
     </button>
 
+
+    <!-- ======================================================
+         状態表示
+         ====================================================== -->
 
     <div
       id="status"
       class="status"
     >
-      会員番号を入力して「会員情報を確認」を押してください。
+
+      講座情報を読み込んでいます...
+
     </div>
+
 
     <div class="small">
+
       ※ 決済はStripeの安全な決済画面で行います。
+
     </div>
 
+
   </div>
+
 
 </div>
 
 
 <script>
 
+
 // ============================================================
 // API設定
 // ============================================================
 //
-// MAIN_GAS_URL　は最新デプロイＵＲＬに差し替え
-// STRIPE_GAS_URLは最新デプロイＵＲＬに差し替えすること
+// MAIN_GAS_URL
+// 会員番号を確認するMAIN_GAS
+//
+// STRIPE_GAS_URL
+// Products取得・Stripe Checkout作成を行うSTRIPE_GAS
+//
+// 最新デプロイURLに差し替えること20260911
+// ============================================================
+const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycbzoVx7xtMgeWNJKXX8G3UnO22xuL1XkkegIc_A5fh2-z3cXcuoEj0_0qs-KyCVTXCg2/exec";
+const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbzgRzEHLgLRsjHv6UISPdNRhQGzyXPoGO1wxe84iniBPMuGR-qgQaqz5kkzH1dh-s_Wow/exec";
+
+// ============================================================
+// URLからcourseIdを取得
+// ============================================================
+//
+// 例：
+//
+// tryit.html?courseId=SC01
+//
+// ↓
+//
+// courseId = "SC01"
+//
 // ============================================================
 
-const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycbyLDUj9IDo2E_lNBIO14Qk4mA2ZvtEZfAlt4YfxZN72I5HEzbv1kKEI7jlX8tCeqLzy/exec";
-const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbzgRzEHLgLRsjHv6UISPdNRhQGzyXPoGO1wxe84iniBPMuGR-qgQaqz5kkzH1dh-s_Wow/exec";
+
+const urlParams =
+  new URLSearchParams(
+    window.location.search
+  );
+
+
+const courseId =
+  urlParams.get("courseId");
+
 
 
 // ============================================================
 // DOM
 // ============================================================
 
-const memberIDInput =
-  document.getElementById("memberID");
 
-const nameInput =
-  document.getElementById("name");
+const courseInfo =
+  document.getElementById(
+    "courseInfo"
+  );
 
-const emailInput =
-  document.getElementById("email");
 
-const courseSelect =
-  document.getElementById("courseSelect");
+const courseIdDisplay =
+  document.getElementById(
+    "courseIdDisplay"
+  );
+
+
+const courseNameDisplay =
+  document.getElementById(
+    "courseNameDisplay"
+  );
+
 
 const priceElement =
-  document.getElementById("price");
+  document.getElementById(
+    "price"
+  );
+
+
+const memberIDInput =
+  document.getElementById(
+    "memberID"
+  );
+
+
+const nameInput =
+  document.getElementById(
+    "name"
+  );
+
+
+const emailInput =
+  document.getElementById(
+    "email"
+  );
+
 
 const checkBtn =
-  document.getElementById("checkBtn");
+  document.getElementById(
+    "checkBtn"
+  );
+
 
 const checkoutBtn =
-  document.getElementById("checkoutBtn");
+  document.getElementById(
+    "checkoutBtn"
+  );
+
 
 const statusElement =
-  document.getElementById("status");
+  document.getElementById(
+    "status"
+  );
+
 
 
 // ============================================================
-// 商品一覧
+// 商品情報
 // ============================================================
+
 
 let products = [];
 
@@ -283,26 +581,71 @@ let selectedProduct = null;
 let memberChecked = false;
 
 
+
 // ============================================================
 // 初期処理
 // ============================================================
 
-loadProducts();
+
+init();
+
+
+
+// ============================================================
+// 初期化
+// ============================================================
+
+
+function init() {
+
+
+  // ----------------------------------------------------------
+  // courseIdがURLにない場合
+  // ----------------------------------------------------------
+
+  if (!courseId) {
+
+    setStatus(
+      "講座IDが指定されていません。\n" +
+      "URLを確認してください。",
+      true
+    );
+
+    return;
+
+  }
+
+
+  // ----------------------------------------------------------
+  // courseIdを画面に表示
+  // ----------------------------------------------------------
+
+  courseIdDisplay.textContent =
+    "講座ID：" + courseId;
+
+
+  // ----------------------------------------------------------
+  // Products取得
+  // ----------------------------------------------------------
+
+  loadProducts();
+
+}
+
 
 
 // ============================================================
 // Products取得
 // ============================================================
 
+
 function loadProducts() {
+
 
   if (
     !STRIPE_GAS_URL ||
     STRIPE_GAS_URL.indexOf("ここに") !== -1
   ) {
-
-    courseSelect.innerHTML =
-      '<option value="">STRIPE_GAS URLを設定してください</option>';
 
     setStatus(
       "STRIPE_GASのウェブアプリURLを設定してください。",
@@ -324,36 +667,42 @@ function loadProducts() {
     "?getProducts=1"
   )
 
+
   .then(
     async response => {
+
 
       const text =
         await response.text();
 
+
       let json;
+
 
       try {
 
         json =
           JSON.parse(text);
 
-      } catch (error) {
+      }
+
+
+      catch (error) {
 
         console.error(
           "Products RAW:",
           text
         );
 
+
         throw new Error(
-          "商品情報の取得先がJSONを返していません。"
+          "Products情報がJSONを返していません。"
         );
 
       }
 
 
-      if (
-        !response.ok
-      ) {
+      if (!response.ok) {
 
         throw new Error(
           "HTTPエラー: " +
@@ -368,8 +717,10 @@ function loadProducts() {
     }
   )
 
+
   .then(
     json => {
+
 
       console.log(
         "Products:",
@@ -377,9 +728,7 @@ function loadProducts() {
       );
 
 
-      if (
-        !json.success
-      ) {
+      if (!json.success) {
 
         throw new Error(
           json.error ||
@@ -397,41 +746,90 @@ function loadProducts() {
           : [];
 
 
-      // activeだけ表示
+      // ------------------------------------------------------
+      // activeの商品だけを対象にする
+      // ------------------------------------------------------
+
       products =
         products.filter(
           product =>
-            isActive(product.active)
+            isActive(
+              product.active
+            )
         );
 
 
-      renderProducts();
+      // ------------------------------------------------------
+      // URLのcourseIdと一致する商品を検索
+      //
+      // Productsシートのcourse_idを使用
+      // ------------------------------------------------------
 
+      selectedProduct =
+        products.find(
+          product =>
+            String(
+              product.course_id || ""
+            ).trim() ===
+            String(
+              courseId
+            ).trim()
+        )
+        || null;
+
+
+      // ------------------------------------------------------
+      // 講座が見つからない場合
+      // ------------------------------------------------------
+
+      if (!selectedProduct) {
+
+        courseInfo.style.display =
+          "none";
+
+
+        throw new Error(
+          "指定された講座がProductsシートにありません。\n" +
+          "courseId：" +
+          courseId
+        );
+
+      }
+
+
+      // ------------------------------------------------------
+      // 講座情報を表示
+      // ------------------------------------------------------
+
+      displayCourse();
+
+
+      // ------------------------------------------------------
+      // 会員番号入力を促す
+      // ------------------------------------------------------
 
       setStatus(
-        products.length > 0
-          ? "講座を選択してください。"
-          : "販売中の講座がありません。"
+        "講座情報を確認しました。\n" +
+        "会員番号を入力して「会員情報を確認」を押してください。",
+        false
       );
 
     }
   )
 
+
   .catch(
     error => {
 
+
       console.error(
-        "商品情報取得エラー:",
+        "Products取得エラー:",
         error
       );
 
 
-      courseSelect.innerHTML =
-        '<option value="">取得できませんでした</option>';
-
-
       setStatus(
-        "商品情報の取得に失敗しました。\n" +
+        "講座情報の取得に失敗しました。\n" +
         error.message,
         true
       );
@@ -442,66 +840,55 @@ function loadProducts() {
 }
 
 
+
 // ============================================================
-// 商品表示
+// 講座情報表示
 // ============================================================
 
-function renderProducts() {
 
-  courseSelect.innerHTML =
-    "";
+function displayCourse() {
 
 
-  const first =
-    document.createElement(
-      "option"
+  if (!selectedProduct) {
+
+    return;
+
+  }
+
+
+  courseInfo.style.display =
+    "block";
+
+
+  courseIdDisplay.textContent =
+    "講座ID：" +
+    (
+      selectedProduct.course_id ||
+      courseId
     );
 
-  first.value = "";
 
-  first.textContent =
-    "選択してください";
-
-  courseSelect.appendChild(
-    first
-  );
+  courseNameDisplay.textContent =
+    selectedProduct.product_name ||
+    selectedProduct.course_name ||
+    "講座名未設定";
 
 
-  products.forEach(
-    product => {
-
-      const option =
-        document.createElement(
-          "option"
-        );
-
-
-      option.value =
-        product.price_id;
-
-
-      option.textContent =
-        product.product_name +
-        "（" +
-        formatPrice(
-          product.price
-        ) +
-        "円）";
-
-
-      courseSelect.appendChild(
-        option
-      );
-
-    }
-  );
+  priceElement.textContent =
+    "料金：" +
+    formatPrice(
+      selectedProduct.price
+    ) +
+    "円";
 
 }
+
 
 
 // ============================================================
 // 会員情報確認
 // ============================================================
+
 
 checkBtn.addEventListener(
   "click",
@@ -509,7 +896,9 @@ checkBtn.addEventListener(
 );
 
 
+
 function checkMember() {
+
 
   const memberID =
     memberIDInput.value
@@ -536,6 +925,7 @@ function checkMember() {
   memberChecked =
     false;
 
+
   checkoutBtn.disabled =
     true;
 
@@ -548,8 +938,10 @@ function checkMember() {
     )
   )
 
+
   .then(
     async response => {
+
 
       const text =
         await response.text();
@@ -557,20 +949,35 @@ function checkMember() {
 
       let json;
 
+
       try {
 
         json =
           JSON.parse(text);
 
-      } catch (error) {
+      }
+
+
+      catch (error) {
 
         console.error(
           "MAIN RAW:",
           text
         );
 
+
         throw new Error(
           "会員情報APIがJSONを返していません。"
+        );
+
+      }
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          "HTTPエラー: " +
+          response.status
         );
 
       }
@@ -581,8 +988,10 @@ function checkMember() {
     }
   )
 
+
   .then(
     json => {
+
 
       console.log(
         "Member:",
@@ -590,9 +999,7 @@ function checkMember() {
       );
 
 
-      if (
-        !json.valid
-      ) {
+      if (!json.valid) {
 
         throw new Error(
           json.error ||
@@ -602,10 +1009,11 @@ function checkMember() {
       }
 
 
+      // ------------------------------------------------------
       // 名前
-      if (
-        json.name
-      ) {
+      // ------------------------------------------------------
+
+      if (json.name) {
 
         nameInput.value =
           json.name;
@@ -613,10 +1021,11 @@ function checkMember() {
       }
 
 
+      // ------------------------------------------------------
       // メール
-      if (
-        json.email
-      ) {
+      // ------------------------------------------------------
+
+      if (json.email) {
 
         emailInput.value =
           json.email;
@@ -624,14 +1033,22 @@ function checkMember() {
       }
 
 
+      // ------------------------------------------------------
+      // 会員確認済み
+      // ------------------------------------------------------
+
       memberChecked =
         true;
 
 
+      // ------------------------------------------------------
+      // 決済ボタン
+      // ------------------------------------------------------
+
       checkoutBtn.disabled =
         !(
           memberChecked &&
-          courseSelect.value
+          selectedProduct
         );
 
 
@@ -643,7 +1060,7 @@ function checkMember() {
         "メール：" +
         (json.email || "") +
         "\n\n" +
-        "希望講座を選択してください。",
+        "内容を確認して「Stripeで決済へ進む」を押してください。",
         false,
         true
       );
@@ -651,13 +1068,19 @@ function checkMember() {
     }
   )
 
+
   .catch(
     error => {
+
 
       console.error(
         "会員情報確認エラー:",
         error
       );
+
+
+      checkoutBtn.disabled =
+        true;
 
 
       setStatus(
@@ -671,61 +1094,11 @@ function checkMember() {
 }
 
 
-// ============================================================
-// 講座選択
-// ============================================================
-
-courseSelect.addEventListener(
-  "change",
-  () => {
-
-    const priceId =
-      courseSelect.value;
-
-
-    selectedProduct =
-      products.find(
-        product =>
-          String(
-            product.price_id
-          ) ===
-          String(priceId)
-      ) ||
-      null;
-
-
-    if (
-      selectedProduct
-    ) {
-
-      priceElement.textContent =
-        "料金：" +
-        formatPrice(
-          selectedProduct.price
-        ) +
-        "円";
-
-    } else {
-
-      priceElement.textContent =
-        "";
-
-    }
-
-
-    checkoutBtn.disabled =
-      !(
-        memberChecked &&
-        selectedProduct
-      );
-
-  }
-);
-
 
 // ============================================================
 // Checkout
 // ============================================================
+
 
 checkoutBtn.addEventListener(
   "click",
@@ -733,11 +1106,15 @@ checkoutBtn.addEventListener(
 );
 
 
+
 function startCheckout() {
 
-  if (
-    !memberChecked
-  ) {
+
+  // ----------------------------------------------------------
+  // 会員確認チェック
+  // ----------------------------------------------------------
+
+  if (!memberChecked) {
 
     alert(
       "先に会員情報を確認してください。"
@@ -748,12 +1125,14 @@ function startCheckout() {
   }
 
 
-  if (
-    !selectedProduct
-  ) {
+  // ----------------------------------------------------------
+  // 商品チェック
+  // ----------------------------------------------------------
+
+  if (!selectedProduct) {
 
     alert(
-      "希望講座を選択してください。"
+      "講座情報が取得できていません。"
     );
 
     return;
@@ -761,9 +1140,18 @@ function startCheckout() {
   }
 
 
+  // ----------------------------------------------------------
+  // 会員番号
+  // ----------------------------------------------------------
+
   const memberID =
     memberIDInput.value
       .trim();
+
+
+  // ----------------------------------------------------------
+  // メール
+  // ----------------------------------------------------------
 
   const email =
     emailInput.value
@@ -784,6 +1172,10 @@ function startCheckout() {
   }
 
 
+  // ----------------------------------------------------------
+  // ボタン無効化
+  // ----------------------------------------------------------
+
   checkoutBtn.disabled =
     true;
 
@@ -793,41 +1185,71 @@ function startCheckout() {
   );
 
 
-  // ----------------------------------------------------------
-  // JSONを text/plain で送信
+  // ==========================================================
+  // STRIPE_GASへ送信するデータ
+  // ==========================================================
   //
-  // application/jsonにするとブラウザのCORS preflightが
-  // 発生しやすいため、Apps Script Webアプリでは
-  // text/plain + JSON文字列を使用します。
-  // Apps Script側は e.postData.contents をJSON.parseします。
-  // ----------------------------------------------------------
+  // 今回から courseId も送信します。
+  //
+  // STEP 4のSTRIPE_GAS変更時に
+  // このデータ構造と合わせます。
+  //
+  // ==========================================================
+
 
   const requestData = {
 
+
+    // 講座ID
+    course_id:
+      courseId,
+
+
+    // Stripe Price ID
     price_id:
       selectedProduct.price_id,
 
+
+    // 会員番号
     memberID:
       memberID,
 
+
+    // メールアドレス
     email:
       email
 
   };
 
 
+
+  console.log(
+    "Checkout REQUEST:",
+    requestData
+  );
+
+
+
+  // ==========================================================
+  // STRIPE_GASへPOST
+  // ==========================================================
+
+
   fetch(
     STRIPE_GAS_URL,
-
     {
 
       method:
         "POST",
 
+
       headers: {
+
         "Content-Type":
           "text/plain;charset=utf-8"
+
       },
+
 
       body:
         JSON.stringify(
@@ -835,11 +1257,12 @@ function startCheckout() {
         )
 
     }
-
   )
+
 
   .then(
     async response => {
+
 
       const text =
         await response.text();
@@ -853,15 +1276,29 @@ function startCheckout() {
 
       let json;
 
+
       try {
 
         json =
           JSON.parse(text);
 
-      } catch (error) {
+      }
+
+
+      catch (error) {
 
         throw new Error(
           "Checkout APIがJSONを返していません。"
+        );
+
+      }
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          "HTTPエラー: " +
+          response.status
         );
 
       }
@@ -872,8 +1309,10 @@ function startCheckout() {
     }
   )
 
+
   .then(
     json => {
+
 
       console.log(
         "Checkout:",
@@ -881,9 +1320,7 @@ function startCheckout() {
       );
 
 
-      if (
-        !json.success
-      ) {
+      if (!json.success) {
 
         throw new Error(
           json.error ||
@@ -893,9 +1330,7 @@ function startCheckout() {
       }
 
 
-      if (
-        !json.url
-      ) {
+      if (!json.url) {
 
         throw new Error(
           "Stripe Checkout URLがありません。"
@@ -915,8 +1350,10 @@ function startCheckout() {
     }
   )
 
+
   .catch(
     error => {
+
 
       console.error(
         "Checkout ERROR:",
@@ -940,11 +1377,14 @@ function startCheckout() {
 }
 
 
+
 // ============================================================
 // active判定
 // ============================================================
 
+
 function isActive(value) {
+
 
   if (
     value === true
@@ -964,23 +1404,30 @@ function isActive(value) {
 
 
   return (
+
     s === "true" ||
+
     s === "1" ||
+
     s === "yes" ||
+
     s === "販売中" ||
+
     s === "有効"
+
   );
 
 }
+
 
 
 // ============================================================
 // 金額表示
 // ============================================================
 
-function formatPrice(
-  value
-) {
+
+function formatPrice(value) {
+
 
   const n =
     Number(value);
@@ -1001,9 +1448,11 @@ function formatPrice(
 }
 
 
+
 // ============================================================
-// ステータス
+// ステータス表示
 // ============================================================
+
 
 function setStatus(
   message,
@@ -1011,17 +1460,20 @@ function setStatus(
   isOk = false
 ) {
 
+
   statusElement.textContent =
     message;
 
 
   statusElement.className =
     "status" +
+
     (
       isError
         ? " error"
         : ""
     ) +
+
     (
       isOk
         ? " ok"
@@ -1029,12 +1481,6 @@ function setStatus(
     );
 
 }
-
-// ===============================
-// 初期化
-// ===============================
-// loadProducts();
-
 </script>
 </body>
 </html>
