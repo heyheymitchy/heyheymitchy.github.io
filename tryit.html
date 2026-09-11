@@ -741,18 +741,17 @@ function loadProducts() {
       // ------------------------------------------------------
 
       selectedProduct =
-        products.find(
-          product =>
-            String(
-              product.course_id || ""
-            ).trim() ===
-            String(
-              courseId
-            ).trim()
-        )
-        || null;
-
-
+  products.find(
+    product =>
+      String(
+        product.courseId || ""
+      ).trim() ===
+      String(
+        courseId
+      ).trim()
+  )
+  || null;
+  
       // ------------------------------------------------------
       // 講座が見つからない場合
       // ------------------------------------------------------
@@ -836,11 +835,11 @@ function displayCourse() {
 
 
   courseIdDisplay.textContent =
-    "講座ID：" +
-    (
-      selectedProduct.course_id ||
-      courseId
-    );
+  "講座ID：" +
+  (
+    selectedProduct.courseId ||
+    courseId
+  );
 
 
   courseNameDisplay.textContent =
