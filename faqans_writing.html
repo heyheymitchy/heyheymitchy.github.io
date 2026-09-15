@@ -13,30 +13,42 @@
 <link rel="stylesheet" href="style.css">
 </head>
 
+<!-- body --> 
 <body>
-<!-- ここからは全html共用の記述にする -->
-  <!-- ================================================== -->
-  <!-- 共通ヘッダー -->
-  <!-- ================================================== -->
-  <div id="header"></div>
-<!-- ここまで -->
-
-<!-- ここからはこのページだけの内容 -->
-
-<!-- FAQ一覧（ポップデザイン） -->
-<div id="faq" class="faq-list">
-  <h1 class="faq-title">ＦＡＱ（しつもん と こたえ）</h1>
+<!-- カウンター　標示用 -->
+<div align="right">
+  <!-- FC2カウンター ここから -->
+<script language="javascript" type="text/javascript" src="//counter1.fc2.com/counter.php?id=41013370&main=1"></script><noscript><img src="//counter1.fc2.com/counter_img.php?id=41013370&main=1" /></noscript>
+<!-- FC2カウンター ここまで -->
 </div>
 
 
+<!--削除中 
+ <img src="images/qr.png" alt="QRコード" width="200">
+ -->
+
+<!-- 自作フォーム（HTML → GAS）で質問回答を手動で送信します -->
+<!-- ＳＴＥＰ２では全自動反映されるようにコード修正予定です -->
+
+<div id="faq"><h1>※ここは、スタッフの管理用のページです（触らないでね）</h1>
+              <h2>ＦＡＱの追加情報をスタッフが日々管理しています</h2>
+</div>
+
 <!-- FAQ追加フォーム（HTML → GAS） -->
-<!-- FAQ追加は、別ＨＴＭＬにて管理中writte -->
+<!-- ※管理者コードのヒントはここには書きません８ -->
+<div class="faq-form">
+  <h2>FAQを追加する</h2>
 
+  <form id="faqForm">
+　　<label>※管理者コード</label><input type="password" name="code" required placeholder="管理者コードを入力">
+    <label>質問（Q）</label><input type="text" name="q" required placeholder="質問を入力してください">
+    <label>回答（A）</label><textarea name="a" required placeholder="回答を入力してください"></textarea>
+    <button type="submit">FAQを追加する</button>
+  </form>
 
-  <!-- ================================================== -->
-  <!-- 共通JavaScript -->
-  <!-- ================================================== -->
-<script src="script.js"></script>
+  <p id="result"></p>
+</div>
+
 
 <script>
 // GASが返すJSONで一覧表を作成する
@@ -77,16 +89,5 @@ document.getElementById("faqForm").onsubmit = async (e) => {
 };
 
 </script>
-<!-- ここまで このページだけの内容 -->
-
-
-<!-- ここからは全html共用の記述にする -->
-  <!-- ================================================== -->
-  <!-- 共通フッター -->
-  <!-- ================================================== -->
-  <div id="footer"></div>
-<!-- ここまで -->
-
-
 </body>
 </html>
