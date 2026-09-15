@@ -579,14 +579,14 @@ transition: 0.2s;
 .faq-item:hover {transform: translateY(-4px);}
 
 .faq-q {
-width: 40%;
+width: 30%;
 font-size: 20px;
 color: #ff66b3;
 font-weight: bold;
 }
 
 .faq-a {
-width: 60%;
+width: 70%;
 font-size: 18px;
 line-height: 1.6;
 color: #444;
@@ -698,30 +698,31 @@ line-height: 1.8;
 /* =========================================================
 画像ホバー
 ========================================================= */
+/* 画像を重ねる親要素 */
 .img-wrap {
-position: relative;
-display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
+/* 通常画像・マウスオーバー画像 共通 */
 .img-wrap img {
-display: block;
+  display: block;
 }
 
+/* マウスオーバー画像 */
 .img-wrap .hover-img {
-position: absolute;
-top: 0;
-left: 0;
-opacity: 0;
-transition: opacity 0.2s;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.2s;
 }
 
-.img-wrap:hover .hover-img {
-opacity: 1;
-}
+/* マウスを乗せたとき */
+.img-wrap:hover .hover-img {  opacity: 1; }
 
-.img-wrap:hover .normal-img {
-opacity: 0;
-}
+/* マウスを乗せたとき通常画像を消す */
+.img-wrap:hover .normal-img { opacity: 0; }
 
 /* =========================================================
 確認画面
