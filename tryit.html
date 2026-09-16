@@ -464,30 +464,6 @@ button {
     >
 
 
-    <label for="authKey">
-
-      マイページ認証キー
-
-    </label>
-
-    <input
-      id="authKey"
-      type="password"
-      placeholder="登録完了メールに記載された認証キー"
-      autocomplete="off"
-    >
-
-
-    <button
-      type="button"
-      id="checkBtn"
-    >
-
-      会員情報を確認
-
-    </button>
-
-
     <!-- ======================================================
          申込者氏名
          ====================================================== -->
@@ -522,6 +498,20 @@ button {
       type="email"
       placeholder="example@gmail.com"
     >
+
+
+    <!-- ======================================================
+         会員情報確認
+         ====================================================== -->
+
+    <button
+      type="button"
+      id="checkBtn"
+    >
+
+      会員情報を確認
+
+    </button>
 
 
     <!-- ======================================================
@@ -580,8 +570,10 @@ button {
 // Products取得・Stripe Checkout作成を行うSTRIPE_GAS
 // 2026/09/16　確認　現在使用中のURL
 // ============================================================
-const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycbxsYo44C-UV1TDIIOx_HcwdW7PAWgoC0BxLr9_oC62nPxPiEWKGBuxEzGxM97arIyzW/exec";
+const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycbzJsZ2br-mwM5EuNvI4I_4ZJyUjBZbWqoofOTLhNTdtXtlUo05iDvBQ8YGTY5uuzMRE/exec";
+
 const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbyKtjnINR7G_YnfkcDQLW2vcpsGXacBe-DucndtZnfh8SIYsXMWHfNYb3eAyEHgM9TQlw/exec";
+
 
 // ============================================================
 // STEP 4
@@ -685,12 +677,6 @@ const priceElement =
 const memberIDInput =
   document.getElementById(
     "memberID"
-  );
-
-
-const authKeyInput =
-  document.getElementById(
-    "authKey"
   );
 
 
@@ -1419,11 +1405,6 @@ function checkMember() {
       .trim();
 
 
-  const authKey =
-    authKeyInput.value
-      .trim();
-
-
   // ----------------------------------------------------------
   // 会員番号入力確認
   // ----------------------------------------------------------
@@ -1443,14 +1424,34 @@ function checkMember() {
   }
 
 
-  if (!authKey) {
+  // STEP 2で、会員番号＋氏名＋メールアドレスを
+  // MAIN_GASへ送信して本人確認します。
+  const name =
+    nameInput.value
+      .trim();
+
+  const email =
+    emailInput.value
+      .trim();
+
+
+  if (!name) {
 
     setStatus(
-
-      "マイページ認証キーを入力してください。",
-
+      "申込者氏名を入力してください。",
       true
+    );
 
+    return;
+
+  }
+
+
+  if (!email) {
+
+    setStatus(
+      "メールアドレスを入力してください。",
+      true
     );
 
     return;
@@ -1459,7 +1460,7 @@ function checkMember() {
 
 
   setStatus(
-    "会員番号と認証キーを確認しています..."
+    "会員情報を確認しています..."
   );
 
 
@@ -1472,11 +1473,12 @@ function checkMember() {
 
 
   // ==========================================================
-  // MAIN_GASへ会員番号＋authKeyを送信
+  // MAIN_GASへ会員情報を送信
   // ==========================================================
   //
-  // memberIDだけでは本人確認しません。
-  // B列のmemberIDとL列のauthKeyを両方確認します。
+  // STEP 2でMAIN_GAS側を、
+  // 会員番号＋氏名＋メールアドレスで確認する方式へ変更します。
+  // 認証キーはtryit.htmlから送信しません。
   // ==========================================================
 
   fetch(
@@ -1485,8 +1487,10 @@ function checkMember() {
     "?verifyPurchase=1" +
     "&memberID=" +
     encodeURIComponent(memberID) +
-    "&key=" +
-    encodeURIComponent(authKey)
+    "&name=" +
+    encodeURIComponent(name) +
+    "&email=" +
+    encodeURIComponent(email)
 
   )
 
@@ -1562,7 +1566,7 @@ function checkMember() {
 
           json.error ||
 
-          "会員番号またはマイページ認証キーが正しくありません。"
+          "会員番号・氏名・メールアドレスが正しくありません。"
 
         );
 
@@ -1908,7 +1912,7 @@ function startCheckout() {
   //
   // STRIPE_GAS側では、
   // course_id + product_id
-  // を使ってProductsシートを確認できます。
+  // を使ってProductsシートを確認します。
   // ==========================================================
 
   const requestData = {
@@ -1968,14 +1972,6 @@ function startCheckout() {
 
     email:
       email,
-
-    // --------------------------------------------------------
-    // マイページ認証キー
-    // STRIPE_GASで再度本人確認する。
-    // --------------------------------------------------------
-
-    authKey:
-      authKey
 
   };
 
@@ -2281,7 +2277,5 @@ function setStatus(
 
 </script>
 
-
 </body>
-
 </html>
