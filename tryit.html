@@ -464,6 +464,20 @@ button {
     >
 
 
+    <label for="authKey">
+
+      マイページ認証キー
+
+    </label>
+
+    <input
+      id="authKey"
+      type="password"
+      placeholder="登録完了メールに記載された認証キー"
+      autocomplete="off"
+    >
+
+
     <button
       type="button"
       id="checkBtn"
@@ -566,11 +580,8 @@ button {
 // Products取得・Stripe Checkout作成を行うSTRIPE_GAS
 // 2026/09/16　確認　現在使用中のURL
 // ============================================================
-const MAIN_GAS_URL =
-  "https://script.google.com/macros/s/AKfycbz0yOo4gU4amN7e9CLYp4qafcnuHd3dqNV7-0D9387UKX7b0zsq9IcL5eb2G5f8ngkG/exec";
-
-const STRIPE_GAS_URL =
-  "https://script.google.com/macros/s/AKfycbwCpfRDO5Wsp2cZ946fvvDzxnkTEddZvVlEENPo1ZDAFcPUiUmTxoqZ03u8_sLymqULhg/exec";
+const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycbxsYo44C-UV1TDIIOx_HcwdW7PAWgoC0BxLr9_oC62nPxPiEWKGBuxEzGxM97arIyzW/exec";
+const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbyKtjnINR7G_YnfkcDQLW2vcpsGXacBe-DucndtZnfh8SIYsXMWHfNYb3eAyEHgM9TQlw/exec";
 
 // ============================================================
 // STEP 4
@@ -674,6 +685,12 @@ const priceElement =
 const memberIDInput =
   document.getElementById(
     "memberID"
+  );
+
+
+const authKeyInput =
+  document.getElementById(
+    "authKey"
   );
 
 
@@ -1402,6 +1419,11 @@ function checkMember() {
       .trim();
 
 
+  const authKey =
+    authKeyInput.value
+      .trim();
+
+
   // ----------------------------------------------------------
   // 会員番号入力確認
   // ----------------------------------------------------------
@@ -1421,8 +1443,23 @@ function checkMember() {
   }
 
 
+  if (!authKey) {
+
+    setStatus(
+
+      "マイページ認証キーを入力してください。",
+
+      true
+
+    );
+
+    return;
+
+  }
+
+
   setStatus(
-    "会員情報を確認しています..."
+    "会員番号と認証キーを確認しています..."
   );
 
 
@@ -1435,18 +1472,21 @@ function checkMember() {
 
 
   // ==========================================================
-  // MAIN_GASへ会員番号を送信
+  // MAIN_GASへ会員番号＋authKeyを送信
+  // ==========================================================
+  //
+  // memberIDだけでは本人確認しません。
+  // B列のmemberIDとL列のauthKeyを両方確認します。
   // ==========================================================
 
   fetch(
 
     MAIN_GAS_URL +
-
-    "?memberID=" +
-
-    encodeURIComponent(
-      memberID
-    )
+    "?verifyPurchase=1" +
+    "&memberID=" +
+    encodeURIComponent(memberID) +
+    "&key=" +
+    encodeURIComponent(authKey)
 
   )
 
@@ -1516,13 +1556,13 @@ function checkMember() {
       // 会員番号が存在しない
       // ------------------------------------------------------
 
-      if (!json.valid) {
+      if (!json.valid || json.authenticated === false) {
 
         throw new Error(
 
           json.error ||
 
-          "会員番号が見つかりません。"
+          "会員番号またはマイページ認証キーが正しくありません。"
 
         );
 
@@ -1927,7 +1967,15 @@ function startCheckout() {
     // --------------------------------------------------------
 
     email:
-      email
+      email,
+
+    // --------------------------------------------------------
+    // マイページ認証キー
+    // STRIPE_GASで再度本人確認する。
+    // --------------------------------------------------------
+
+    authKey:
+      authKey
 
   };
 
