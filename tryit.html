@@ -1,28 +1,34 @@
 ﻿<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!-- わくわくプログラミング工房 平兵道 -->
-<!-- tryit.html（courseId対応・会員番号チェック・Stripe決済連携 完全版） -->
+<!-- わくわくプログラミング工房　平兵道 -->
+<!-- tryit.html -->
+<!-- STEP 4 -->
+<!-- courseId + productId + price 対応 -->
+<!-- 会員番号確認 + Stripe決済連携 -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1"
->
-<title>有料講座お申込みフォーム｜わくわくプログラミング工房</title>
-<style>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
+<title>有料講座お申込みフォーム｜わくわくプログラミング工房</title>
+
+<style>
 /* ============================================================
    全体
    ============================================================ */
+
 * {
   box-sizing: border-box;
 }
 
+
 body {
+
   margin: 0;
+
   padding: 16px;
+
   font-family:
     "Yu Gothic",
     "Meiryo",
@@ -36,27 +42,39 @@ body {
     );
 
   color: #222;
+
 }
 
 
 /* ============================================================
    コンテナ
    ============================================================ */
+
 .container {
+
   max-width: 720px;
+
   margin: 0 auto;
+
 }
 
 
 /* ============================================================
    タイトル
    ============================================================ */
+
 .title {
+
   background: #ffc8f2;
+
   border-radius: 8px;
+
   padding: 10px 14px;
+
   margin-bottom: 14px;
+
   font-size: 20px;
+
   font-weight: bold;
 
 }
@@ -98,11 +116,10 @@ label {
 
 
 /* ============================================================
-   入力・選択
+   入力
    ============================================================ */
 
-input,
-select {
+input {
 
   width: 100%;
 
@@ -110,7 +127,8 @@ select {
 
   padding: 10px;
 
-  border: 1px solid #ff8bcf;
+  border:
+    1px solid #ff8bcf;
 
   border-radius: 8px;
 
@@ -174,6 +192,88 @@ button {
 
 
 /* ============================================================
+   講座情報
+   ============================================================ */
+
+.courseInfo {
+
+  margin-top: 14px;
+
+  padding: 14px;
+
+  border-radius: 8px;
+
+  background: #fff8fd;
+
+  border:
+    1px solid #ffc8f2;
+
+}
+
+
+/* ============================================================
+   講座ID
+   ============================================================ */
+
+.courseId {
+
+  font-size: 14px;
+
+  color: #666;
+
+}
+
+
+/* ============================================================
+   商品ID
+   ============================================================ */
+
+.productId {
+
+  margin-top: 5px;
+
+  font-size: 16px;
+
+  font-weight: bold;
+
+  color: #333;
+
+}
+
+
+/* ============================================================
+   商品名
+   ============================================================ */
+
+.courseName {
+
+  margin-top: 8px;
+
+  font-size: 20px;
+
+  font-weight: bold;
+
+  color: #0000FF;
+
+}
+
+
+/* ============================================================
+   料金
+   ============================================================ */
+
+.price {
+
+  margin-top: 10px;
+
+  font-size: 20px;
+
+  font-weight: bold;
+
+}
+
+
+/* ============================================================
    ステータス
    ============================================================ */
 
@@ -192,6 +292,10 @@ button {
 }
 
 
+/* ============================================================
+   エラー
+   ============================================================ */
+
 .error {
 
   color: #d00000;
@@ -200,6 +304,10 @@ button {
 
 }
 
+
+/* ============================================================
+   OK
+   ============================================================ */
 
 .ok {
 
@@ -211,56 +319,8 @@ button {
 
 
 /* ============================================================
-   講座情報
+   小さい説明
    ============================================================ */
-
-.courseInfo {
-
-  margin-top: 14px;
-
-  padding: 14px;
-
-  border-radius: 8px;
-
-  background: #fff8fd;
-
-  border: 1px solid #ffc8f2;
-
-}
-
-
-.courseId {
-
-  font-size: 13px;
-
-  color: #666;
-
-}
-
-
-.courseName {
-
-  margin-top: 5px;
-
-  font-size: 20px;
-
-  font-weight: bold;
-
-  color: #0000FF;
-
-}
-
-
-.price {
-
-  margin-top: 10px;
-
-  font-size: 17px;
-
-  font-weight: bold;
-
-}
-
 
 .small {
 
@@ -269,6 +329,30 @@ button {
   color: #666;
 
   margin-top: 8px;
+
+}
+
+
+/* ============================================================
+   商品内容
+   ============================================================ */
+
+.productDetail {
+
+  margin-top: 12px;
+
+  padding: 10px;
+
+  background: #ffffff;
+
+  border-radius: 8px;
+
+  border:
+    1px solid #dddddd;
+
+  font-size: 14px;
+
+  line-height: 1.7;
 
 }
 
@@ -298,7 +382,7 @@ button {
 
 
     <!-- ======================================================
-         講座情報
+         選択された講座情報
          ====================================================== -->
 
     <div
@@ -307,11 +391,30 @@ button {
       style="display:none;"
     >
 
+
+      <!-- ----------------------------------------------
+           講座ID
+           ---------------------------------------------- -->
+
       <div
         id="courseIdDisplay"
         class="courseId"
       ></div>
 
+
+      <!-- ----------------------------------------------
+           商品ID
+           ---------------------------------------------- -->
+
+      <div
+        id="productIdDisplay"
+        class="productId"
+      ></div>
+
+
+      <!-- ----------------------------------------------
+           商品名
+           ---------------------------------------------- -->
 
       <div
         id="courseNameDisplay"
@@ -319,10 +422,25 @@ button {
       ></div>
 
 
+      <!-- ----------------------------------------------
+           商品内容
+           ---------------------------------------------- -->
+
+      <div
+        id="productDetail"
+        class="productDetail"
+      ></div>
+
+
+      <!-- ----------------------------------------------
+           料金
+           ---------------------------------------------- -->
+
       <div
         id="price"
         class="price"
       ></div>
+
 
     </div>
 
@@ -446,26 +564,32 @@ button {
 //
 // STRIPE_GAS_URL
 // Products取得・Stripe Checkout作成を行うSTRIPE_GAS
-//
-// 最新デプロイURLに差し替えること20260911
+// 2026/09/16　確認　現在使用中のURL
 // ============================================================
-const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycbz0yOo4gU4amN7e9CLYp4qafcnuHd3dqNV7-0D9387UKX7b0zsq9IcL5eb2G5f8ngkG/exec";
-const STRIPE_GAS_URL = "https://script.google.com/macros/s/AKfycbwCpfRDO5Wsp2cZ946fvvDzxnkTEddZvVlEENPo1ZDAFcPUiUmTxoqZ03u8_sLymqULhg/exec";
+const MAIN_GAS_URL =
+  "https://script.google.com/macros/s/AKfycbz0yOo4gU4amN7e9CLYp4qafcnuHd3dqNV7-0D9387UKX7b0zsq9IcL5eb2G5f8ngkG/exec";
+
+const STRIPE_GAS_URL =
+  "https://script.google.com/macros/s/AKfycbwCpfRDO5Wsp2cZ946fvvDzxnkTEddZvVlEENPo1ZDAFcPUiUmTxoqZ03u8_sLymqULhg/exec";
 
 // ============================================================
-// URLからcourseIdを取得
+// STEP 4
+// URLパラメータ取得
 // ============================================================
 //
-// 例：
+// 例:
 //
-// tryit.html?courseId=SC01
+// tryit.html
+// ?courseId=SC01
+// &productId=KS
+// &price=1200
 //
 // ↓
 //
-// courseId = "SC01"
-//
+// courseId  = SC01
+// productId = KS
+// price     = 1200
 // ============================================================
-
 
 const urlParams =
   new URLSearchParams(
@@ -473,15 +597,43 @@ const urlParams =
   );
 
 
-const courseId =
-  urlParams.get("courseId");
+// ------------------------------------------------------------
+// 講座ID
+// ------------------------------------------------------------
 
+const courseId =
+  String(
+    urlParams.get("courseId") || ""
+  )
+  .trim()
+  .toUpperCase();
+
+
+// ------------------------------------------------------------
+// 商品ID
+// ------------------------------------------------------------
+
+const productId =
+  String(
+    urlParams.get("productId") || ""
+  )
+  .trim()
+  .toUpperCase();
+
+
+// ------------------------------------------------------------
+// URLから渡された価格
+// ------------------------------------------------------------
+
+const urlPrice =
+  Number(
+    urlParams.get("price")
+  );
 
 
 // ============================================================
 // DOM
 // ============================================================
-
 
 const courseInfo =
   document.getElementById(
@@ -495,9 +647,21 @@ const courseIdDisplay =
   );
 
 
+const productIdDisplay =
+  document.getElementById(
+    "productIdDisplay"
+  );
+
+
 const courseNameDisplay =
   document.getElementById(
     "courseNameDisplay"
+  );
+
+
+const productDetail =
+  document.getElementById(
+    "productDetail"
   );
 
 
@@ -543,47 +707,54 @@ const statusElement =
   );
 
 
-
 // ============================================================
 // 商品情報
 // ============================================================
 
-
 let products = [];
+
+
+// ------------------------------------------------------------
+// 選択された商品
+// ------------------------------------------------------------
 
 let selectedProduct = null;
 
-let memberChecked = false;
 
+// ------------------------------------------------------------
+// 会員確認済み
+// ------------------------------------------------------------
+
+let memberChecked = false;
 
 
 // ============================================================
 // 初期処理
 // ============================================================
 
-
 init();
-
 
 
 // ============================================================
 // 初期化
 // ============================================================
 
-
 function init() {
 
 
   // ----------------------------------------------------------
-  // courseIdがURLにない場合
+  // courseId確認
   // ----------------------------------------------------------
 
   if (!courseId) {
 
     setStatus(
+
       "講座IDが指定されていません。\n" +
       "URLを確認してください。",
+
       true
+
     );
 
     return;
@@ -592,11 +763,92 @@ function init() {
 
 
   // ----------------------------------------------------------
-  // courseIdを画面に表示
+  // productId確認
+  // ----------------------------------------------------------
+
+  if (!productId) {
+
+    setStatus(
+
+      "販売商品IDが指定されていません。\n" +
+      "KS / PS / KP のいずれかを選択してください。",
+
+      true
+
+    );
+
+    return;
+
+  }
+
+
+  // ----------------------------------------------------------
+  // productId確認
+  // ----------------------------------------------------------
+
+  if (
+    productId !== "KS" &&
+    productId !== "PS" &&
+    productId !== "KP"
+  ) {
+
+    setStatus(
+
+      "販売商品IDが正しくありません。\n" +
+      "productId：" +
+      productId,
+
+      true
+
+    );
+
+    return;
+
+  }
+
+
+  // ----------------------------------------------------------
+  // price確認
+  // ----------------------------------------------------------
+
+  if (
+    !Number.isFinite(urlPrice) ||
+    urlPrice <= 0
+  ) {
+
+    setStatus(
+
+      "料金情報が正しくありません。\n" +
+      "price：" +
+      urlParams.get("price"),
+
+      true
+
+    );
+
+    return;
+
+  }
+
+
+  // ----------------------------------------------------------
+  // URLから受け取った情報を一旦表示
   // ----------------------------------------------------------
 
   courseIdDisplay.textContent =
-    "講座ID：" + courseId;
+    "講座ID：" +
+    courseId;
+
+
+  productIdDisplay.textContent =
+    "販売商品ID：" +
+    productId;
+
+
+  priceElement.textContent =
+    "料金：" +
+    formatPrice(urlPrice) +
+    "円";
 
 
   // ----------------------------------------------------------
@@ -608,14 +860,16 @@ function init() {
 }
 
 
-
 // ============================================================
 // Products取得
 // ============================================================
 
-
 function loadProducts() {
 
+
+  // ----------------------------------------------------------
+  // URL確認
+  // ----------------------------------------------------------
 
   if (
     !STRIPE_GAS_URL ||
@@ -623,8 +877,11 @@ function loadProducts() {
   ) {
 
     setStatus(
+
       "STRIPE_GASのウェブアプリURLを設定してください。",
+
       true
+
     );
 
     return;
@@ -633,13 +890,19 @@ function loadProducts() {
 
 
   setStatus(
-    "講座情報を読み込み中..."
+    "選択された講座の商品情報を確認しています..."
   );
 
 
+  // ==========================================================
+  // STRIPE_GASからProducts取得
+  // ==========================================================
+
   fetch(
+
     STRIPE_GAS_URL +
     "?getProducts=1"
+
   )
 
 
@@ -649,6 +912,12 @@ function loadProducts() {
 
       const text =
         await response.text();
+
+
+      console.log(
+        "Products RAW:",
+        text
+      );
 
 
       let json;
@@ -664,12 +933,6 @@ function loadProducts() {
 
       catch (error) {
 
-        console.error(
-          "Products RAW:",
-          text
-        );
-
-
         throw new Error(
           "Products情報がJSONを返していません。"
         );
@@ -680,7 +943,7 @@ function loadProducts() {
       if (!response.ok) {
 
         throw new Error(
-          "HTTPエラー: " +
+          "HTTPエラー：" +
           response.status
         );
 
@@ -690,6 +953,7 @@ function loadProducts() {
       return json;
 
     }
+
   )
 
 
@@ -703,26 +967,40 @@ function loadProducts() {
       );
 
 
+      // ------------------------------------------------------
+      // APIエラー
+      // ------------------------------------------------------
+
       if (!json.success) {
 
         throw new Error(
+
           json.error ||
+
           "商品情報を取得できませんでした。"
+
         );
 
       }
 
 
+      // ------------------------------------------------------
+      // Products配列
+      // ------------------------------------------------------
+
       products =
+
         Array.isArray(
           json.products
         )
+
           ? json.products
+
           : [];
 
 
       // ------------------------------------------------------
-      // activeの商品だけを対象にする
+      // active商品のみ
       // ------------------------------------------------------
 
       products =
@@ -734,26 +1012,69 @@ function loadProducts() {
         );
 
 
-      // ------------------------------------------------------
-      // URLのcourseIdと一致する商品を検索
+      // ======================================================
+      // STEP 4
+      // courseId + productId の両方で検索
+      // ======================================================
       //
-      // Productsシートのcourse_idを使用
-      // ------------------------------------------------------
+      // ここが今回の重要な変更です。
+      //
+      // SC01だけではなく、
+      //
+      // SC01 + KS
+      // SC01 + PS
+      // SC01 + KP
+      //
+      // を区別します。
+      // ======================================================
 
       selectedProduct =
-  products.find(
-    product =>
-      String(
-        product.courseId || ""
-      ).trim() ===
-      String(
-        courseId
-      ).trim()
-  )
-  || null;
-  
+        products.find(
+          product => {
+
+
+            const productCourseId =
+
+              String(
+                product.courseId ||
+                product.course_id ||
+                ""
+              )
+              .trim()
+              .toUpperCase();
+
+
+            const productProductId =
+
+              String(
+                product.productId ||
+                product.product_id ||
+                ""
+              )
+              .trim()
+              .toUpperCase();
+
+
+            return (
+
+              productCourseId ===
+              courseId
+
+              &&
+
+              productProductId ===
+              productId
+
+            );
+
+          }
+
+        )
+        || null;
+
+
       // ------------------------------------------------------
-      // 講座が見つからない場合
+      // 該当商品がない
       // ------------------------------------------------------
 
       if (!selectedProduct) {
@@ -763,16 +1084,102 @@ function loadProducts() {
 
 
         throw new Error(
-          "指定された講座がProductsシートにありません。\n" +
+
+          "指定された商品がProductsシートにありません。\n" +
+
           "courseId：" +
-          courseId
+          courseId +
+
+          "\n" +
+
+          "productId：" +
+          productId
+
+        );
+
+      }
+
+
+      // ======================================================
+      // Productsシートの価格
+      // ======================================================
+
+      const sheetPrice =
+
+        Number(
+          selectedProduct.price
+        );
+
+
+      // ------------------------------------------------------
+      // Productsの価格確認
+      // ------------------------------------------------------
+
+      if (
+        !Number.isFinite(sheetPrice) ||
+        sheetPrice <= 0
+      ) {
+
+        throw new Error(
+
+          "Productsシートの価格が正しくありません。\n" +
+
+          "courseId：" +
+          courseId +
+
+          "\n" +
+
+          "productId：" +
+          productId
+
+        );
+
+      }
+
+
+      // ======================================================
+      // URLのpriceとProductsのpriceを比較
+      // ======================================================
+      //
+      // URLを書き換えて料金を変更されることを防ぐため、
+      // Productsシートの価格を正式な価格として使用します。
+      // ======================================================
+
+      if (
+        sheetPrice !== urlPrice
+      ) {
+
+        console.error(
+          "価格不一致",
+          {
+            urlPrice:
+              urlPrice,
+
+            sheetPrice:
+              sheetPrice
+          }
+        );
+
+
+        throw new Error(
+
+          "料金情報が一致しません。\n" +
+
+          "URL料金：" +
+          formatPrice(urlPrice) +
+          "円\n" +
+
+          "Products料金：" +
+          formatPrice(sheetPrice) +
+          "円"
+
         );
 
       }
 
 
       // ------------------------------------------------------
-      // 講座情報を表示
+      // 講座情報表示
       // ------------------------------------------------------
 
       displayCourse();
@@ -783,12 +1190,15 @@ function loadProducts() {
       // ------------------------------------------------------
 
       setStatus(
+
         "講座情報を確認しました。\n" +
-        "会員番号を入力して「会員情報を確認」を押してください。",
-        false
+
+        "会員番号を入力して「会員情報を確認」を押してください。"
+
       );
 
     }
+
   )
 
 
@@ -797,28 +1207,31 @@ function loadProducts() {
 
 
       console.error(
-        "Products取得エラー:",
+        "Products取得エラー：",
         error
       );
 
 
       setStatus(
+
         "講座情報の取得に失敗しました。\n" +
+
         error.message,
+
         true
+
       );
 
     }
+
   );
 
 }
 
 
-
 // ============================================================
 // 講座情報表示
 // ============================================================
-
 
 function displayCourse() {
 
@@ -834,35 +1247,142 @@ function displayCourse() {
     "block";
 
 
-  courseIdDisplay.textContent =
-  "講座ID：" +
-  (
-    selectedProduct.courseId ||
-    courseId
-  );
+  // ----------------------------------------------------------
+  // 講座ID
+  // ----------------------------------------------------------
 
+  courseIdDisplay.textContent =
+
+    "講座ID：" +
+
+    (
+
+      selectedProduct.courseId ||
+
+      selectedProduct.course_id ||
+
+      courseId
+
+    );
+
+
+  // ----------------------------------------------------------
+  // 商品ID
+  // ----------------------------------------------------------
+
+  productIdDisplay.textContent =
+
+    "販売商品ID：" +
+
+    (
+
+      selectedProduct.productId ||
+
+      selectedProduct.product_id ||
+
+      productId
+
+    );
+
+
+  // ----------------------------------------------------------
+  // 商品名
+  // ----------------------------------------------------------
 
   courseNameDisplay.textContent =
-    selectedProduct.product_name ||
-    selectedProduct.course_name ||
-    "講座名未設定";
 
+    selectedProduct.product_name ||
+
+    selectedProduct.productName ||
+
+    "商品名未設定";
+
+
+  // ----------------------------------------------------------
+  // 商品タイプ
+  // ----------------------------------------------------------
+
+  const productType =
+
+    selectedProduct.product_type ||
+
+    selectedProduct.productType ||
+
+    "";
+
+
+  let typeText = "";
+
+
+  if (productType === "video") {
+
+    typeText =
+      "動画教材";
+
+  }
+
+
+  else if (productType === "pdf") {
+
+    typeText =
+      "PDF教材";
+
+  }
+
+
+  else if (productType === "both") {
+
+    typeText =
+      "動画＋PDF教材";
+
+  }
+
+
+  else if (productType) {
+
+    typeText =
+      productType;
+
+  }
+
+
+  if (typeText) {
+
+    productDetail.textContent =
+      "教材：" +
+      typeText;
+
+  }
+
+  else {
+
+    productDetail.textContent =
+      "";
+
+  }
+
+
+  // ----------------------------------------------------------
+  // Productsシートの価格を表示
+  // ----------------------------------------------------------
 
   priceElement.textContent =
+
     "料金：" +
+
     formatPrice(
       selectedProduct.price
     ) +
+
     "円";
+
 
 }
 
 
-
 // ============================================================
-// 会員情報確認
+// 会員情報確認ボタン
 // ============================================================
-
 
 checkBtn.addEventListener(
   "click",
@@ -870,6 +1390,9 @@ checkBtn.addEventListener(
 );
 
 
+// ============================================================
+// 会員情報確認
+// ============================================================
 
 function checkMember() {
 
@@ -879,11 +1402,18 @@ function checkMember() {
       .trim();
 
 
+  // ----------------------------------------------------------
+  // 会員番号入力確認
+  // ----------------------------------------------------------
+
   if (!memberID) {
 
     setStatus(
+
       "会員番号を入力してください。",
+
       true
+
     );
 
     return;
@@ -904,12 +1434,20 @@ function checkMember() {
     true;
 
 
+  // ==========================================================
+  // MAIN_GASへ会員番号を送信
+  // ==========================================================
+
   fetch(
+
     MAIN_GAS_URL +
+
     "?memberID=" +
+
     encodeURIComponent(
       memberID
     )
+
   )
 
 
@@ -919,6 +1457,12 @@ function checkMember() {
 
       const text =
         await response.text();
+
+
+      console.log(
+        "MAIN RAW:",
+        text
+      );
 
 
       let json;
@@ -934,12 +1478,6 @@ function checkMember() {
 
       catch (error) {
 
-        console.error(
-          "MAIN RAW:",
-          text
-        );
-
-
         throw new Error(
           "会員情報APIがJSONを返していません。"
         );
@@ -950,7 +1488,7 @@ function checkMember() {
       if (!response.ok) {
 
         throw new Error(
-          "HTTPエラー: " +
+          "HTTPエラー：" +
           response.status
         );
 
@@ -960,6 +1498,7 @@ function checkMember() {
       return json;
 
     }
+
   )
 
 
@@ -973,11 +1512,18 @@ function checkMember() {
       );
 
 
+      // ------------------------------------------------------
+      // 会員番号が存在しない
+      // ------------------------------------------------------
+
       if (!json.valid) {
 
         throw new Error(
+
           json.error ||
+
           "会員番号が見つかりません。"
+
         );
 
       }
@@ -1016,7 +1562,7 @@ function checkMember() {
 
 
       // ------------------------------------------------------
-      // 決済ボタン
+      // Stripe決済ボタンを有効化
       // ------------------------------------------------------
 
       checkoutBtn.disabled =
@@ -1026,20 +1572,52 @@ function checkMember() {
         );
 
 
+      // ------------------------------------------------------
+      // 確認結果表示
+      // ------------------------------------------------------
+
       setStatus(
+
         "会員情報を確認しました。\n" +
+
         "お名前：" +
         (json.name || "") +
+
         "\n" +
+
         "メール：" +
         (json.email || "") +
+
         "\n\n" +
+
+        "講座ID：" +
+        courseId +
+
+        "\n" +
+
+        "販売商品ID：" +
+        productId +
+
+        "\n" +
+
+        "料金：" +
+        formatPrice(
+          selectedProduct.price
+        ) +
+        "円" +
+
+        "\n\n" +
+
         "内容を確認して「Stripeで決済へ進む」を押してください。",
+
         false,
+
         true
+
       );
 
     }
+
   )
 
 
@@ -1048,7 +1626,7 @@ function checkMember() {
 
 
       console.error(
-        "会員情報確認エラー:",
+        "会員情報確認エラー：",
         error
       );
 
@@ -1058,21 +1636,23 @@ function checkMember() {
 
 
       setStatus(
+
         error.message,
+
         true
+
       );
 
     }
+
   );
 
 }
 
 
-
 // ============================================================
-// Checkout
+// Stripe Checkoutボタン
 // ============================================================
-
 
 checkoutBtn.addEventListener(
   "click",
@@ -1080,6 +1660,9 @@ checkoutBtn.addEventListener(
 );
 
 
+// ============================================================
+// Stripe Checkout開始
+// ============================================================
 
 function startCheckout() {
 
@@ -1119,7 +1702,18 @@ function startCheckout() {
   // ----------------------------------------------------------
 
   const memberID =
+
     memberIDInput.value
+      .trim();
+
+
+  // ----------------------------------------------------------
+  // 名前
+  // ----------------------------------------------------------
+
+  const name =
+
+    nameInput.value
       .trim();
 
 
@@ -1128,9 +1722,14 @@ function startCheckout() {
   // ----------------------------------------------------------
 
   const email =
+
     emailInput.value
       .trim();
 
+
+  // ----------------------------------------------------------
+  // 必須チェック
+  // ----------------------------------------------------------
 
   if (
     !memberID ||
@@ -1139,6 +1738,98 @@ function startCheckout() {
 
     alert(
       "会員番号とメールアドレスを確認してください。"
+    );
+
+    return;
+
+  }
+
+
+  // ==========================================================
+  // Productsシートの正式な情報を取得
+  // ==========================================================
+
+  const finalCourseId =
+
+    String(
+
+      selectedProduct.courseId ||
+
+      selectedProduct.course_id ||
+
+      courseId
+
+    )
+    .trim()
+    .toUpperCase();
+
+
+  const finalProductId =
+
+    String(
+
+      selectedProduct.productId ||
+
+      selectedProduct.product_id ||
+
+      productId
+
+    )
+    .trim()
+    .toUpperCase();
+
+
+  const finalPrice =
+
+    Number(
+      selectedProduct.price
+    );
+
+
+  const finalPriceId =
+
+    String(
+
+      selectedProduct.price_id ||
+
+      selectedProduct.priceId ||
+
+      ""
+
+    )
+    .trim();
+
+
+  // ----------------------------------------------------------
+  // price_id確認
+  // ----------------------------------------------------------
+
+  if (!finalPriceId) {
+
+    alert(
+
+      "Stripe Price IDが取得できません。\n" +
+
+      "Productsシートを確認してください。"
+
+    );
+
+    return;
+
+  }
+
+
+  // ----------------------------------------------------------
+  // 金額確認
+  // ----------------------------------------------------------
+
+  if (
+    !Number.isFinite(finalPrice) ||
+    finalPrice <= 0
+  ) {
+
+    alert(
+      "料金情報が正しくありません。"
     );
 
     return;
@@ -1160,41 +1851,85 @@ function startCheckout() {
 
 
   // ==========================================================
-  // STRIPE_GASへ送信するデータ
+  // STRIPE_GASへ送信
   // ==========================================================
   //
-  // 今回から courseId も送信します。
+  // STEP 4では、
   //
-  // STEP 4のSTRIPE_GAS変更時に
-  // このデータ構造と合わせます。
+  // course_id
+  // product_id
+  // price
+  // price_id
+  // memberID
+  // name
+  // email
   //
+  // を送信します。
+  //
+  // STRIPE_GAS側では、
+  // course_id + product_id
+  // を使ってProductsシートを確認できます。
   // ==========================================================
-
 
   const requestData = {
 
 
+    // --------------------------------------------------------
     // 講座ID
+    // --------------------------------------------------------
+
     course_id:
-      courseId,
+      finalCourseId,
 
 
+    // --------------------------------------------------------
+    // 販売商品ID
+    // --------------------------------------------------------
+
+    product_id:
+      finalProductId,
+
+
+    // --------------------------------------------------------
+    // 税込価格
+    // --------------------------------------------------------
+
+    price:
+      finalPrice,
+
+
+    // --------------------------------------------------------
     // Stripe Price ID
+    // --------------------------------------------------------
+
     price_id:
-      selectedProduct.price_id,
+      finalPriceId,
 
 
+    // --------------------------------------------------------
     // 会員番号
+    // --------------------------------------------------------
+
     memberID:
       memberID,
 
 
+    // --------------------------------------------------------
+    // 申込者氏名
+    // --------------------------------------------------------
+
+    name:
+      name,
+
+
+    // --------------------------------------------------------
     // メールアドレス
+    // --------------------------------------------------------
+
     email:
       email
 
   };
-
 
 
   console.log(
@@ -1203,14 +1938,14 @@ function startCheckout() {
   );
 
 
-
   // ==========================================================
   // STRIPE_GASへPOST
   // ==========================================================
 
-
   fetch(
+
     STRIPE_GAS_URL,
+
     {
 
       method:
@@ -1226,11 +1961,13 @@ function startCheckout() {
 
 
       body:
+
         JSON.stringify(
           requestData
         )
 
     }
+
   )
 
 
@@ -1271,8 +2008,11 @@ function startCheckout() {
       if (!response.ok) {
 
         throw new Error(
-          "HTTPエラー: " +
+
+          "HTTPエラー：" +
+
           response.status
+
         );
 
       }
@@ -1281,6 +2021,7 @@ function startCheckout() {
       return json;
 
     }
+
   )
 
 
@@ -1294,15 +2035,26 @@ function startCheckout() {
       );
 
 
+      // ------------------------------------------------------
+      // API成功確認
+      // ------------------------------------------------------
+
       if (!json.success) {
 
         throw new Error(
+
           json.error ||
+
           "決済画面を作成できませんでした。"
+
         );
 
       }
 
+
+      // ------------------------------------------------------
+      // Stripe URL確認
+      // ------------------------------------------------------
 
       if (!json.url) {
 
@@ -1318,10 +2070,15 @@ function startCheckout() {
       );
 
 
+      // ------------------------------------------------------
+      // Stripe Checkoutへ移動
+      // ------------------------------------------------------
+
       window.location.href =
         json.url;
 
     }
+
   )
 
 
@@ -1340,22 +2097,25 @@ function startCheckout() {
 
 
       setStatus(
+
         "決済画面の作成に失敗しました。\n" +
+
         error.message,
+
         true
+
       );
 
     }
+
   );
 
 }
 
 
-
 // ============================================================
 // active判定
 // ============================================================
-
 
 function isActive(value) {
 
@@ -1370,11 +2130,12 @@ function isActive(value) {
 
 
   const s =
+
     String(
       value || ""
     )
-      .trim()
-      .toLowerCase();
+    .trim()
+    .toLowerCase();
 
 
   return (
@@ -1394,11 +2155,9 @@ function isActive(value) {
 }
 
 
-
 // ============================================================
 // 金額表示
 // ============================================================
-
 
 function formatPrice(value) {
 
@@ -1422,16 +2181,18 @@ function formatPrice(value) {
 }
 
 
-
 // ============================================================
 // ステータス表示
 // ============================================================
 
-
 function setStatus(
+
   message,
+
   isError = false,
+
   isOk = false
+
 ) {
 
 
@@ -1440,21 +2201,39 @@ function setStatus(
 
 
   statusElement.className =
-    "status" +
+    "status"
+
+
+    +
 
     (
+
       isError
+
         ? " error"
+
         : ""
-    ) +
+
+    )
+
+
+    +
 
     (
+
       isOk
+
         ? " ok"
+
         : ""
+
     );
 
 }
+
 </script>
+
+
 </body>
+
 </html>
