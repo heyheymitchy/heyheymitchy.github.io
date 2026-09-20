@@ -5,175 +5,656 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Course List</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course List</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<!-- ここからは全html共用の記述にする -->
-  <!-- ================================================== -->
-  <!-- 共通ヘッダー -->
-  <!-- ================================================== -->
-  <div id="header"></div>
-<!-- ここまで -->   
 
-<!-- ここからはこのページだけの内容 -->
+<body>
+
+<!-- ================================================== -->
+<!-- 共通ヘッダー -->
+<!-- ================================================== -->
+
+<div id="header"></div>
+
+
+<!-- ================================================== -->
+<!-- このページだけの内容 -->
+<!-- ================================================== -->
 <style>
+
 /* 横方向の隙間 → 0px */
 /* 縦方向の隙間 → 0px */
 /* 外側の余白 → 0px */
 /* 画像サイズ → 120px × 120px */
-/* 5個並ぶ → 130px × 130px */
+/* 7個並ぶ → 130px × 130px */
+
 .course-list {
+
   display: grid;
-  grid-template-columns: repeat(7, 130px); /* 7列,1fr で均等配置しない */
+
+  grid-template-columns:
+    repeat(7, 130px);
+
   gap: 0;
+
   padding: 0;
+
   margin: 0 auto;
+
   justify-content: center;
+
 }
+
 
 .course-item {
+
   width: 120px;
+
   text-align: center;
+
   cursor: pointer;
+
   transition: 0.2s;
+
 }
+
 
 .course-item img {
+
   display: block;
+
   width: 120px;
+
   height: 120px;
+
   border-radius: 12px;
+
   transition: 0.2s;
+
   margin: 0;
+
 }
 
-/* クリックした瞬間のポップUI */
+
+/* ==================================================
+   クリックした瞬間のポップUI
+   ================================================== */
+
 .course-item:active img {
+
   transform: scale(0.9);
-  filter: brightness(1.3) saturate(1.4);
+
+  filter:
+    brightness(1.3)
+    saturate(1.4);
+
   border-radius: 20px;
-  box-shadow: 0 0 12px rgba(255, 105, 180, 0.6); /* ピンクの光 */
+
+  box-shadow:
+    0 0 12px
+    rgba(255, 105, 180, 0.6);
+
 }
 
-/* マウスを乗せたときのポップUI */
+
+/* ==================================================
+   マウスを乗せたときのポップUI
+   ================================================== */
+
 .course-item:hover img {
-  transform: scale(1.12); /* 少し大きくなる */
-  filter: brightness(1.2) saturate(1.3); /* 色が明るくなる */
-  border-radius: 20px; /* 角を少し丸く */
-  box-shadow: 0 0 12px rgba(255, 105, 180, 0.6); /* ピンクの光 */
-  transition: 0.25s ease; /* ふわっと変化 */
+
+  transform: scale(1.12);
+
+  filter:
+    brightness(1.2)
+    saturate(1.3);
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 0 12px
+    rgba(255, 105, 180, 0.6);
+
+  transition:
+    0.25s ease;
+
 }
 
-/* タイトル(ホバー時のタイトルも少しポップに) */
+
+/* ==================================================
+   タイトル
+   ================================================== */
+
 .course-item:hover div {
-  color: #ff66cc; /* ピンク色に変化 */
+
+  color: #ff66cc;
+
   transform: scale(1.05);
-  transition: 0.25s ease;
+
+  transition:
+    0.25s ease;
+
 }
+
 </style>
 
-<h1 style="text-align: center;">なにがあるの　<font color="#ff66cc">気になる講座アイコンをクリックしてみてね</font></h1>
 
-<div id="courseList" class="course-list"></div>
+<!-- ================================================== -->
+<!-- タイトル -->
+<!-- ================================================== -->
+
+<h1 style="text-align: center;">
+
+  なにがあるの　
+
+  <font color="#ff66cc">
+
+    気になる講座アイコンをクリックしてみてね
+
+  </font>
+
+</h1>
+
+
+<!-- ================================================== -->
+<!-- 講座一覧 -->
+<!-- ================================================== -->
+
+<div
+  id="courseList"
+  class="course-list"
+></div>
+
+
 <script>
-// ▼ 日本語＋英語データ（data.js 不要）
-const data_jaen = {
-    101: { title: "Scratch", icon: "images/icon_001.png" },
-    102: { title: "ゲーム", icon: "images/icon_002.png" },
-    103: { title: "アート", icon: "images/icon_003.png" },
-    104: { title: "音楽", icon: "images/icon_004.png" },
-    105: { title: "英語", icon: "images/icon_005.png" },
-    106: { title: "ホームページ", icon: "images/icon_006.png" },
-    107: { title: "HTML", icon: "images/icon_007.png" },
-    108: { title: "CSS", icon: "images/icon_008.png" },
-    109: { title: "GAS", icon: "images/icon_009.png" },
-    110:{ title: "Vscode", icon: "images/icon_010.png" },
-    111:{ title: "GitHub", icon: "images/icon_011.png" },
-    112:{ title: "プログラミング", icon: "images/icon_012.png" },
-    113:{ title: "STEAM", icon: "images/icon_013.png" },
-    114:{ title: "SDGs", icon: "images/icon_014.png" },
-    115:{ title: "AIプロンプト", icon: "images/icon_015.png" },
-    116:{ title: "Python", icon: "images/icon_016.png" },
-    117:{ title: "YouTube", icon: "images/icon_017.png" },
-    118:{ title: "Zoom", icon: "images/icon_018.png" },
-    119:{ title: "コンピュータ", icon: "images/icon_019.png" },
-    120:{ title: "デジコン", icon: "images/icon_020.png" },
-    121:{ title: "コンサル", icon: "images/icon_021.png" },
-    122:{ title: "ネットビジネス", icon: "images/icon_022.png" },
-    123:{ title: "個人事業者", icon: "images/icon_023.png" },
-    124:{ title: "起業", icon: "images/icon_024.png" },
-    125:{ title: "コーチング", icon: "images/icon_025.png" },
 
-    901: { title: "Scratch", icon: "images/en/icon_901.png" },
-    902: { title: "Game", icon: "images/en/icon_902.png" },
-    903: { title: "Art", icon: "images/en/icon_903.png" },
-    904: { title: "Music", icon: "images/en/icon_904.png" },
-    905: { title: "English", icon: "images/en/icon_905.png" },
-    906: { title: "Homepage", icon: "images/en/icon_906.png" },
-    907: { title: "HTML", icon: "images/en/icon_907.png" },
-    908: { title: "CSS", icon: "images/en/icon_908.png" },
-    909: { title: "GAS", icon: "images/en/icon_909.png" },
-    910:{ title: "Vscode", icon: "images/en/icon_910.png" },
-    911:{ title: "GitHub", icon: "images/en/icon_911.png" },
-    912:{ title: "Programming", icon: "images/en/icon_912.png" },
-    913:{ title: "STEAM", icon: "images/en/icon_913.png" },
-    914:{ title: "SDGs", icon: "images/en/icon_914.png" },
-    915:{ title: "AI Prompt", icon: "images/en/icon_915.png" },
-    916:{ title: "Python", icon: "images/en/icon_916.png" },
-    917:{ title: "YouTube", icon: "images/en/icon_917.png" },
-    918:{ title: "Zoom", icon: "images/en/icon_918.png" },
-    919:{ title: "Computer", icon: "images/en/icon_919.png" },
-    920:{ title: "Digital Contents", icon: "images/en/icon_920.png" },
-    921:{ title: "Consulting", icon: "images/en/icon_921.png" },
-    922:{ title: "Online Business", icon: "images/en/icon_922.png" },
-    923:{ title: "Sole Proprietor", icon: "images/en/icon_923.png" },
-    924:{ title: "Startup", icon: "images/en/icon_924.png" },
-    925:{ title: "Coaching", icon: "images/en/icon_925.png" }
+
+/* ==================================================
+   日本語＋英語データ
+   ================================================== */
+
+const data_jaen = {
+
+
+  /* ==================================================
+     日本語
+     ================================================== */
+
+  101: {
+    title: "Scratch",
+    icon: "images/icon_001.png",
+    courseId: "SC"
+  },
+
+  102: {
+    title: "ゲーム",
+    icon: "images/icon_002.png",
+    courseId: "GM"
+  },
+
+  103: {
+    title: "アート",
+    icon: "images/icon_003.png",
+    courseId: "AR"
+  },
+
+  104: {
+    title: "音楽",
+    icon: "images/icon_004.png",
+    courseId: "MU"
+  },
+
+  105: {
+    title: "英語",
+    icon: "images/icon_005.png",
+    courseId: "EN"
+  },
+
+  106: {
+    title: "ホームページ",
+    icon: "images/icon_006.png",
+    courseId: "HP"
+  },
+
+  107: {
+    title: "HTML",
+    icon: "images/icon_007.png",
+    courseId: "HT"
+  },
+
+  108: {
+    title: "CSS",
+    icon: "images/icon_008.png",
+    courseId: "CS"
+  },
+
+  109: {
+    title: "GAS",
+    icon: "images/icon_009.png",
+    courseId: "GS"
+  },
+
+  110: {
+    title: "Vscode",
+    icon: "images/icon_010.png",
+    courseId: "VS"
+  },
+
+  111: {
+    title: "GitHub",
+    icon: "images/icon_011.png",
+    courseId: "GH"
+  },
+
+  112: {
+    title: "プログラミング",
+    icon: "images/icon_012.png",
+    courseId: "PG"
+  },
+
+  113: {
+    title: "STEAM",
+    icon: "images/icon_013.png",
+    courseId: "ST"
+  },
+
+  114: {
+    title: "SDGs",
+    icon: "images/icon_014.png",
+    courseId: "SD"
+  },
+
+  115: {
+    title: "AIプロンプト",
+    icon: "images/icon_015.png",
+    courseId: "AI"
+  },
+
+  116: {
+    title: "Python",
+    icon: "images/icon_016.png",
+    courseId: "PY"
+  },
+
+  117: {
+    title: "YouTube",
+    icon: "images/icon_017.png",
+    courseId: "YT"
+  },
+
+  118: {
+    title: "Zoom",
+    icon: "images/icon_018.png",
+    courseId: "ZM"
+  },
+
+  119: {
+    title: "コンピュータ",
+    icon: "images/icon_019.png",
+    courseId: "PC"
+  },
+
+  120: {
+    title: "デジコン",
+    icon: "images/icon_020.png",
+    courseId: "DC"
+  },
+
+  121: {
+    title: "コンサル",
+    icon: "images/icon_021.png",
+    courseId: "CO"
+  },
+
+  122: {
+    title: "ネットビジネス",
+    icon: "images/icon_022.png",
+    courseId: "NB"
+  },
+
+  123: {
+    title: "個人事業者",
+    icon: "images/icon_023.png",
+    courseId: "KO"
+  },
+
+  124: {
+    title: "起業",
+    icon: "images/icon_024.png",
+    courseId: "KI"
+  },
+
+  125: {
+    title: "コーチング",
+    icon: "images/icon_025.png",
+    courseId: "CT"
+  },
+
+
+  /* ==================================================
+     英語
+     
+     英語側も同じcourseIdを使用します。
+     ================================================== */
+
+  901: {
+    title: "Scratch",
+    icon: "images/en/icon_901.png",
+    courseId: "SC"
+  },
+
+  902: {
+    title: "Game",
+    icon: "images/en/icon_902.png",
+    courseId: "GM"
+  },
+
+  903: {
+    title: "Art",
+    icon: "images/en/icon_903.png",
+    courseId: "AR"
+  },
+
+  904: {
+    title: "Music",
+    icon: "images/en/icon_904.png",
+    courseId: "MU"
+  },
+
+  905: {
+    title: "English",
+    icon: "images/en/icon_905.png",
+    courseId: "EN"
+  },
+
+  906: {
+    title: "Homepage",
+    icon: "images/en/icon_906.png",
+    courseId: "HP"
+  },
+
+  907: {
+    title: "HTML",
+    icon: "images/en/icon_907.png",
+    courseId: "HT"
+  },
+
+  908: {
+    title: "CSS",
+    icon: "images/en/icon_908.png",
+    courseId: "CS"
+  },
+
+  909: {
+    title: "GAS",
+    icon: "images/en/icon_909.png",
+    courseId: "GS"
+  },
+
+  910: {
+    title: "Vscode",
+    icon: "images/en/icon_910.png",
+    courseId: "VS"
+  },
+
+  911: {
+    title: "GitHub",
+    icon: "images/en/icon_911.png",
+    courseId: "GH"
+  },
+
+  912: {
+    title: "Programming",
+    icon: "images/en/icon_912.png",
+    courseId: "PG"
+  },
+
+  913: {
+    title: "STEAM",
+    icon: "images/en/icon_913.png",
+    courseId: "ST"
+  },
+
+  914: {
+    title: "SDGs",
+    icon: "images/en/icon_914.png",
+    courseId: "SD"
+  },
+
+  915: {
+    title: "AI Prompt",
+    icon: "images/en/icon_915.png",
+    courseId: "AI"
+  },
+
+  916: {
+    title: "Python",
+    icon: "images/en/icon_916.png",
+    courseId: "PY"
+  },
+
+  917: {
+    title: "YouTube",
+    icon: "images/en/icon_917.png",
+    courseId: "YT"
+  },
+
+  918: {
+    title: "Zoom",
+    icon: "images/en/icon_918.png",
+    courseId: "ZM"
+  },
+
+  919: {
+    title: "Computer",
+    icon: "images/en/icon_919.png",
+    courseId: "PC"
+  },
+
+  920: {
+    title: "Digital Contents",
+    icon: "images/en/icon_920.png",
+    courseId: "DC"
+  },
+
+  921: {
+    title: "Consulting",
+    icon: "images/en/icon_921.png",
+    courseId: "CO"
+  },
+
+  922: {
+    title: "Online Business",
+    icon: "images/en/icon_922.png",
+    courseId: "NB"
+  },
+
+  923: {
+    title: "Sole Proprietor",
+    icon: "images/en/icon_923.png",
+    courseId: "KO"
+  },
+
+  924: {
+    title: "Startup",
+    icon: "images/en/icon_924.png",
+    courseId: "KI"
+  },
+
+  925: {
+    title: "Coaching",
+    icon: "images/en/icon_925.png",
+    courseId: "CT"
+  }
+
 };
 
-// ▼ 言語判定
-const lang = sessionStorage.getItem("lang") || "ja";
-const start = lang === "ja" ? 101 : 901;
-const end   = lang === "ja" ? 125 : 925;
 
-// ▼ アイコン生成
-const courseList = document.getElementById("courseList");
+/* ==================================================
+   言語判定
+   ================================================== */
 
-for (let pt = start; pt <= end; pt++) {
-    const item = data_jaen[pt];
-    if (!item) continue;
+const lang =
+  sessionStorage.getItem("lang")
+  || "ja";
 
-    const div = document.createElement("div");
-    div.className = "course-item";
 
-    div.innerHTML = `
-        <img src="${item.icon}" alt="${item.title}">
-        <div>${item.title}</div>
-    `;
+const start =
+  lang === "ja"
+    ? 101
+    : 901;
 
-    div.addEventListener("click", () => {
-        window.location.href = `check.html?pt=${pt}`;
-    });
 
-    courseList.appendChild(div);
+const end =
+  lang === "ja"
+    ? 125
+    : 925;
+
+
+/* ==================================================
+   アイコン生成
+   ================================================== */
+
+const courseList =
+  document.getElementById(
+    "courseList"
+  );
+
+
+/* ==================================================
+   25講座を表示
+   ================================================== */
+
+for (
+  let pt = start;
+  pt <= end;
+  pt++
+) {
+
+
+  const item =
+    data_jaen[pt];
+
+
+  if (!item) {
+
+    continue;
+
+  }
+
+
+  /* ==================================================
+     講座アイテム作成
+     ================================================== */
+
+  const div =
+    document.createElement(
+      "div"
+    );
+
+
+  div.className =
+    "course-item";
+
+
+  /* ==================================================
+     アイコン＋タイトル
+     ================================================== */
+
+  div.innerHTML = `
+
+    <img
+      src="${item.icon}"
+      alt="${item.title}"
+    >
+
+    <div>
+      ${item.title}
+    </div>
+
+  `;
+
+
+  /* ==================================================
+     クリック処理
+     
+     重要：
+     
+     以前：
+     check.html?pt=101
+     
+     今回：
+     check.html?courseId=SC
+     
+     25講座それぞれのcourseIdを
+     check.htmlへ渡します。
+     ================================================== */
+
+  div.addEventListener(
+    "click",
+    function() {
+
+
+      /* ==================================================
+         courseId確認
+         ================================================== */
+
+      if (!item.courseId) {
+
+        alert(
+          "講座IDが設定されていません。"
+        );
+
+        return;
+
+      }
+
+
+      /* ==================================================
+         check.htmlへ移動
+         ================================================== */
+
+      window.location.href =
+
+        "check.html"
+
+        + "?courseId="
+
+        + encodeURIComponent(
+            item.courseId
+          );
+
+    }
+  );
+
+
+  /* ==================================================
+     講座一覧へ追加
+     ================================================== */
+
+  courseList.appendChild(
+    div
+  );
+
 }
+
 </script>
 
 
-<!-- ここからは全html共用の記述にする -->
-  <!-- ================================================== -->
-  <!-- 共通フッター -->
-  <!-- ================================================== -->
-  <div id="footer"></div>
-  
-  <!-- ================================================== -->
-  <!-- 共通JavaScript -->
-  <!-- ================================================== -->
-  <script src="script.js"></script>
-<!-- ここまで -->
+<!-- ================================================== -->
+<!-- 共通フッター -->
+<!-- ================================================== -->
+
+<div id="footer"></div>
+
+
+<!-- ================================================== -->
+<!-- 共通JavaScript -->
+<!-- ================================================== -->
+<script src="script.js"></script>
 
 </body>
 </html>
