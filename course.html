@@ -615,17 +615,49 @@ for (
 
       /* ==================================================
          check.htmlへ移動
+
+         重要：
+         25講座すべてで、クリックした講座の情報を
+         動的にcheck.htmlへ渡します。
+
+         固定値「SC」は使用しません。
+
+         渡す情報：
+           courseId = SC / GM / AR / MU / ... / CT
+           title    = 講座名
+           icon     = アイコン画像
+           pt       = 101～125
+
+         check.html側では、まずcourseIdを使って
+         その講座の子講座を取得します。
          ================================================== */
 
+      const params =
+        new URLSearchParams();
+
+      params.set(
+        "courseId",
+        item.courseId
+      );
+
+      params.set(
+        "title",
+        item.title
+      );
+
+      params.set(
+        "icon",
+        item.icon
+      );
+
+      params.set(
+        "pt",
+        String(pt)
+      );
+
       window.location.href =
-
-        "check.html"
-
-        + "?courseId="
-
-        + encodeURIComponent(
-            item.courseId
-          );
+        "check.html?" +
+        params.toString();
 
     }
   );
