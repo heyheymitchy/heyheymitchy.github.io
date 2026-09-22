@@ -1,874 +1,673 @@
 ﻿<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!-- わくわくプログラミング工房　平兵道　のホームページ -->
-<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- わくわくプログラミング工房　平兵道 -->
 <!-- check.html -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
-  <title>講座一覧｜わくわくプログラミング工房</title>
-  <!-- ==================================================
-       共通CSS
-       ================================================== -->
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>講座一覧｜わくわくプログラミング工房</title>
+<link rel="stylesheet" href="style.css" >
 
-  <style>
-    /* ==================================================
-       このページ専用CSS
-       ================================================== */
-    /* ==================================================
-       講座グループの上段説明
-       ================================================== */
-    .course-header {
-      margin: 20px;
-      padding: 20px 30px;
-      border-radius: 15px;
-      background-color: #ffffff;
-      border: 2px solid #dddddd;
-      box-shadow:
-        0 3px 8px rgba(0, 0, 0, 0.10);
-    }
+<style>
+/* ==================================================
+   共通
+   ================================================== */
+body {
+  margin: 0;
+}
 
-    /* ==================================================
-       講座グループタイトル部分
-       ================================================== */
-    .course-header-title-area {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 10px;
-    }
+/* ==================================================
+   グループ説明
+   ================================================== */
+.course-header {
 
-    /* ==================================================
-       講座グループアイコン
-       個別カードには表示しない
-       ================================================== */
+  margin: 20px;
 
-    .course-header-icon {
+  padding: 20px 30px;
 
-      width: 80px;
+  border-radius: 15px;
 
-      height: 80px;
+  background-color: #ffffff;
 
-      object-fit: contain;
+  border: 2px solid #dddddd;
 
-      flex-shrink: 0;
+  box-shadow:
+    0 3px 8px rgba(0,0,0,0.10);
 
-    }
+}
 
 
-    /* ==================================================
-       講座グループタイトル
-       ================================================== */
+.course-header-title-area {
 
-    .course-header-title {
+  display: flex;
 
-      font-size: 32px;
+  align-items: center;
 
-      color: #0000FF;
+  gap: 15px;
 
-      font-weight: bold;
+  margin-bottom: 10px;
 
-      line-height: 1.3;
+}
 
-    }
 
+.course-header-icon {
 
-    /* ==================================================
-       講座グループ説明
-       ================================================== */
+  width: 80px;
 
-    .course-header-desc {
+  height: 80px;
 
-      font-size: 20px;
+  object-fit: contain;
 
-      line-height: 1.6;
+  flex-shrink: 0;
 
-    }
+}
 
 
-    /* ==================================================
-       選択状況表示
-       ================================================== */
+.course-header-title {
 
-    .selected-course-area {
+  font-size: 32px;
 
-      display: none;
+  color: #0000ff;
 
-      margin: 20px;
+  font-weight: bold;
 
-      padding: 18px 22px;
+  line-height: 1.3;
 
-      border-radius: 15px;
+}
 
-      background-color: #fffbe6;
 
-      border: 2px solid #ffcc00;
+.course-header-desc {
 
-    }
+  font-size: 20px;
 
+  line-height: 1.6;
 
-    .selected-course-area.show {
+}
 
-      display: block;
 
-    }
+/* ==================================================
+   選択した講座
+   ================================================== */
 
+.selected-course-area {
 
-    .selected-course-title {
+  display: none;
 
-      font-size: 22px;
+  margin: 20px;
 
-      font-weight: bold;
+  padding: 18px 22px;
 
-      color: #0000FF;
+  border-radius: 15px;
 
-      margin-bottom: 10px;
+  background-color: #fffbe6;
 
-    }
+  border: 2px solid #ffcc00;
 
+}
 
-    .selected-course-info {
 
-      font-size: 17px;
+.selected-course-area.show {
 
-      line-height: 1.7;
+  display: block;
 
-    }
+}
 
 
-    /* ==================================================
-       講座一覧
-       ================================================== */
+.selected-course-title {
 
-    #content {
+  font-size: 22px;
 
-      display: grid;
+  font-weight: bold;
 
-      grid-template-columns:
-        repeat(5, minmax(0, 1fr));
+  color: #0000ff;
 
-      gap: 18px;
+  margin-bottom: 10px;
 
-      margin: 20px;
+}
 
-      align-items: stretch;
 
-    }
+.selected-course-info {
 
+  font-size: 17px;
 
-    /* ==================================================
-       講座カード
-       ================================================== */
+  line-height: 1.7;
 
-    .course-card {
+}
 
-      border: 2px solid #dddddd;
 
-      border-radius: 12px;
+/* ==================================================
+   講座一覧
+   ================================================== */
 
-      padding: 15px;
+#content {
 
-      background-color: #ffffff;
+  display: grid;
 
-      box-shadow:
-        0 3px 8px rgba(0, 0, 0, 0.10);
+  grid-template-columns:
+    repeat(5, minmax(0, 1fr));
 
-      min-width: 0;
+  gap: 18px;
 
-      display: flex;
+  margin: 20px;
 
-      flex-direction: column;
+  align-items: stretch;
 
-    }
+}
 
 
-    /* ==================================================
-       選択された講座カード
-       ================================================== */
+/* ==================================================
+   講座カード
+   ================================================== */
 
-    .course-card.selected {
+.course-card {
 
-      border: 3px solid #ff9900;
+  border: 2px solid #dddddd;
 
-      background-color: #fffbe6;
+  border-radius: 12px;
 
-      box-shadow:
-        0 4px 12px rgba(255, 153, 0, 0.25);
+  padding: 15px;
 
-    }
+  background-color: #ffffff;
 
+  box-shadow:
+    0 3px 8px rgba(0,0,0,0.10);
 
-    /* ==================================================
-       講座名
-       ================================================== */
+  min-width: 0;
 
-    .title {
+  display: flex;
 
-      font-size: 18px;
+  flex-direction: column;
 
-      color: #0000FF;
+}
 
-      font-weight: bold;
 
-      line-height: 1.35;
+.course-card.selected {
 
-      margin-bottom: 8px;
+  border: 3px solid #ff9900;
 
-      word-break: break-word;
+  background-color: #fffbe6;
 
-    }
+}
 
 
-    /* ==================================================
-       説明文
-       ================================================== */
+.title {
 
-    .desc {
+  font-size: 18px;
 
-      font-size: 13px;
+  color: #0000ff;
 
-      line-height: 1.5;
+  font-weight: bold;
 
-      margin-bottom: 8px;
+  line-height: 1.35;
 
-      word-break: break-word;
+  margin-bottom: 8px;
 
-      flex-grow: 1;
+  word-break: break-word;
 
-    }
+}
 
 
-    /* ==================================================
-       講座ID
-       ================================================== */
+.desc {
 
-    .course-id {
+  font-size: 13px;
 
-      font-size: 14px;
+  line-height: 1.5;
 
-      font-weight: bold;
+  margin-bottom: 8px;
 
-      margin-top: 5px;
+  word-break: break-word;
 
-      margin-bottom: 10px;
+  flex-grow: 1;
 
-    }
+}
 
 
-    /* ==================================================
-       講座選択ボタン
-       ================================================== */
+.course-id {
 
-    .course-select-button {
+  font-size: 14px;
 
-      width: 100%;
+  font-weight: bold;
 
-      font-size: 14px;
+  margin-top: 5px;
 
-      font-weight: bold;
+  margin-bottom: 10px;
 
-      padding: 9px 5px;
+}
 
-      border: none;
 
-      border-radius: 8px;
+.course-select-button {
 
-      cursor: pointer;
+  width: 100%;
 
-      background-color: #ffcc00;
+  font-size: 14px;
 
-      color: #000000;
+  font-weight: bold;
 
-      margin-top: auto;
+  padding: 9px 5px;
 
-    }
+  border: none;
 
+  border-radius: 8px;
 
-    .course-select-button:hover {
+  cursor: pointer;
 
-      opacity: 0.8;
+  background-color: #ffcc00;
 
-    }
+  color: #000000;
 
+  margin-top: auto;
 
-    /* ==================================================
-       選択済みボタン
-       ================================================== */
+}
 
-    .course-card.selected
-    .course-select-button {
 
-      background-color: #66cc66;
+.course-select-button:hover {
 
-      color: #ffffff;
+  opacity: 0.8;
 
-    }
+}
 
 
-    /* ==================================================
-       教材選択エリア
-       ================================================== */
+.course-card.selected
+.course-select-button {
 
-    .product-area {
+  background-color: #66cc66;
 
-      display: none;
+  color: #ffffff;
 
-      margin: 20px;
+}
 
-      padding: 20px;
 
-      border-radius: 15px;
+/* ==================================================
+   商品選択
+   ================================================== */
 
-      background-color: #ffffff;
+.product-area {
 
-      border: 2px solid #dddddd;
+  display: none;
 
-      box-shadow:
-        0 3px 8px rgba(0, 0, 0, 0.10);
+  margin: 20px;
 
-    }
+  padding: 20px;
 
+  border-radius: 15px;
 
-    .product-area.show {
+  background-color: #ffffff;
 
-      display: block;
+  border: 2px solid #dddddd;
 
-    }
+  box-shadow:
+    0 3px 8px rgba(0,0,0,0.10);
 
+}
 
-    /* ==================================================
-       教材選択タイトル
-       ================================================== */
 
-    .product-title {
+.product-area.show {
 
-      font-size: 24px;
+  display: block;
 
-      font-weight: bold;
+}
 
-      color: #0000FF;
 
-      margin-bottom: 15px;
+.product-title {
 
-    }
+  font-size: 24px;
 
+  font-weight: bold;
 
-    /* ==================================================
-       教材選択説明
-       ================================================== */
+  color: #0000ff;
 
-    .product-description {
+  margin-bottom: 15px;
 
-      font-size: 16px;
+}
 
-      margin-bottom: 15px;
 
-      line-height: 1.6;
+.product-description {
 
-    }
+  font-size: 16px;
 
+  margin-bottom: 15px;
 
-    /* ==================================================
-       商品選択
-       ================================================== */
+  line-height: 1.6;
 
-    .product-options {
+}
 
-      display: grid;
 
-      grid-template-columns:
-        repeat(3, minmax(0, 1fr));
+.product-options {
 
-      gap: 15px;
+  display: grid;
 
-    }
+  grid-template-columns:
+    repeat(3, minmax(0,1fr));
 
+  gap: 15px;
 
-    /* ==================================================
-       商品選択カード
-       ================================================== */
+}
 
-    .product-option {
 
-      display: block;
+.product-option {
 
-      border: 2px solid #dddddd;
+  display: block;
 
-      border-radius: 12px;
+  border: 2px solid #dddddd;
 
-      padding: 15px;
+  border-radius: 12px;
 
-      cursor: pointer;
+  padding: 15px;
 
-      background-color: #ffffff;
+  cursor: pointer;
 
-      transition: 0.2s;
+  background-color: #ffffff;
 
-    }
+  transition: 0.2s;
 
+}
 
-    .product-option:hover {
 
-      border-color: #ffcc00;
+.product-option:hover {
 
-      background-color: #fffbe6;
+  border-color: #ffcc00;
 
-    }
+  background-color: #fffbe6;
 
+}
 
-    /* ==================================================
-       選択された商品
-       ================================================== */
 
-    .product-option.selected {
+.product-option.selected {
 
-      border: 3px solid #ff9900;
+  border: 3px solid #ff9900;
 
-      background-color: #fffbe6;
+  background-color: #fffbe6;
 
-    }
+}
 
 
-    /* ==================================================
-       商品上段
-       ================================================== */
+.product-option-top {
 
-    .product-option-top {
+  display: flex;
 
-      display: flex;
+  align-items: center;
 
-      align-items: center;
+  gap: 8px;
 
-      gap: 8px;
+  margin-bottom: 8px;
 
-      margin-bottom: 8px;
+}
 
-    }
 
+.product-id {
 
-    .product-option input {
+  font-size: 20px;
 
-      cursor: pointer;
+  font-weight: bold;
 
-    }
+  color: #0000ff;
 
+}
 
-    /* ==================================================
-       商品ID
-       ================================================== */
 
-    .product-id {
+.product-name {
 
-      font-size: 20px;
+  font-size: 17px;
 
-      font-weight: bold;
+  font-weight: bold;
 
-      color: #0000FF;
+  margin-bottom: 5px;
 
-    }
+}
 
 
-    /* ==================================================
-       商品名
-       ================================================== */
+.product-price {
 
-    .product-name {
+  font-size: 18px;
 
-      font-size: 17px;
+  font-weight: bold;
 
-      font-weight: bold;
+  color: #cc0000;
 
-      margin-bottom: 5px;
+}
 
-    }
 
+/* ==================================================
+   確認
+   ================================================== */
 
-    /* ==================================================
-       商品価格
-       ================================================== */
+.confirm-area {
 
-    .product-price {
+  display: none;
 
-      font-size: 18px;
+  margin: 20px;
 
-      font-weight: bold;
+  padding: 20px;
 
-      color: #cc0000;
+  border-radius: 15px;
 
-    }
+  background-color: #f5f9ff;
 
+  border: 2px solid #6699cc;
 
-    /* ==================================================
-       確認エリア
-       ================================================== */
+}
 
-    .confirm-area {
 
-      display: none;
+.confirm-area.show {
 
-      margin: 20px;
+  display: block;
 
-      padding: 20px;
+}
 
-      border-radius: 15px;
 
-      background-color: #f5f9ff;
+.confirm-title {
 
-      border: 2px solid #6699cc;
+  font-size: 24px;
 
-    }
+  font-weight: bold;
 
+  color: #0000ff;
 
-    .confirm-area.show {
+  margin-bottom: 15px;
 
-      display: block;
+}
 
-    }
 
+.confirm-table {
 
-    .confirm-title {
+  width: 100%;
 
-      font-size: 24px;
+  border-collapse: collapse;
 
-      font-weight: bold;
+  margin-bottom: 20px;
 
-      color: #0000FF;
+}
 
-      margin-bottom: 15px;
 
-    }
+.confirm-table th,
+.confirm-table td {
 
+  border: 1px solid #cccccc;
 
-    /* ==================================================
-       確認内容
-       ================================================== */
+  padding: 10px;
 
-    .confirm-table {
+  text-align: left;
 
-      width: 100%;
+}
 
-      border-collapse: collapse;
 
-      margin-bottom: 20px;
+.confirm-table th {
 
-    }
+  width: 160px;
 
+  background-color: #eeeeee;
 
-    .confirm-table th,
-    .confirm-table td {
+}
 
-      border: 1px solid #cccccc;
 
-      padding: 10px;
+.confirm-table td {
 
-      text-align: left;
+  background-color: #ffffff;
 
-    }
+}
 
 
-    .confirm-table th {
+.confirm-price {
 
-      width: 160px;
+  font-size: 22px;
 
-      background-color: #eeeeee;
+  font-weight: bold;
 
-      font-weight: bold;
+  color: #cc0000;
 
-    }
+}
 
 
-    .confirm-table td {
+.apply-button {
 
-      background-color: #ffffff;
+  width: 100%;
 
-    }
+  max-width: 500px;
 
+  display: block;
 
-    .confirm-price {
+  margin: 0 auto;
 
-      font-size: 22px;
+  padding: 14px;
 
-      font-weight: bold;
+  border: none;
 
-      color: #cc0000;
+  border-radius: 10px;
 
-    }
+  cursor: pointer;
 
+  background-color: #ff9900;
 
-    /* ==================================================
-       申し込みボタン
-       ================================================== */
+  color: #ffffff;
 
-    .apply-button {
+  font-size: 20px;
 
-      width: 100%;
+  font-weight: bold;
 
-      max-width: 500px;
+}
 
-      display: block;
 
-      margin: 0 auto;
+/* ==================================================
+   メッセージ
+   ================================================== */
 
-      padding: 14px;
+.message {
 
-      border: none;
+  margin: 40px 20px;
 
-      border-radius: 10px;
+  padding: 25px;
 
-      cursor: pointer;
+  border-radius: 15px;
 
-      background-color: #ff9900;
+  background-color: #fffbe6;
 
-      color: #ffffff;
+  border: 2px solid #ffcc00;
 
-      font-size: 20px;
+  font-size: 20px;
 
-      font-weight: bold;
+  line-height: 1.7;
 
-    }
+}
 
 
-    .apply-button:hover {
+/* ==================================================
+   スマホ
+   ================================================== */
 
-      opacity: 0.85;
+@media (max-width:1100px) {
 
-    }
+  #content {
 
+    grid-template-columns:
+      repeat(3,minmax(0,1fr));
 
-    /* ==================================================
-       データなし表示
-       ================================================== */
+  }
 
-    .message {
+}
 
-      font-size: 26px;
 
-      font-weight: bold;
+@media (max-width:700px) {
 
-      margin: 40px;
+  #content {
 
-    }
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
 
+    gap: 12px;
 
-    /* ==================================================
-       タブレット表示
-       ================================================== */
+    margin: 12px;
 
-    @media (max-width: 1100px) {
+  }
 
-      #content {
+  .course-header {
 
-        grid-template-columns:
-          repeat(3, minmax(0, 1fr));
+    margin: 12px;
 
-      }
+    padding: 15px 18px;
 
+  }
 
-      .product-options {
+  .course-header-icon {
 
-        grid-template-columns:
-          repeat(3, minmax(0, 1fr));
+    width: 60px;
 
-      }
+    height: 60px;
 
-    }
+  }
 
+  .course-header-title {
 
-    /* ==================================================
-       スマートフォン表示
-       ================================================== */
+    font-size: 24px;
 
-    @media (max-width: 700px) {
+  }
 
-      #content {
+  .course-header-desc {
 
-        grid-template-columns:
-          repeat(2, minmax(0, 1fr));
+    font-size: 16px;
 
-        gap: 12px;
+  }
 
-        margin: 12px;
+  .course-card {
 
-      }
+    padding: 9px;
 
+  }
 
-      .course-header {
+  .title {
 
-        margin: 12px;
+    font-size: 16px;
 
-        padding: 15px 18px;
+  }
 
-      }
+  .desc {
 
+    font-size: 12px;
 
-      .course-header-title-area {
+  }
 
-        gap: 10px;
+  .course-id {
 
-      }
+    font-size: 12px;
 
+  }
 
-      .course-header-icon {
+  .course-select-button {
 
-        width: 60px;
+    font-size: 12px;
 
-        height: 60px;
+  }
 
-      }
+  .product-options {
 
+    grid-template-columns: 1fr;
 
-      .course-header-title {
+  }
 
-        font-size: 24px;
+}
 
-      }
-
-
-      .course-header-desc {
-
-        font-size: 16px;
-
-      }
-
-
-      .course-card {
-
-        padding: 9px;
-
-      }
-
-
-      .title {
-
-        font-size: 16px;
-
-      }
-
-
-      .desc {
-
-        font-size: 12px;
-
-      }
-
-
-      .course-id {
-
-        font-size: 12px;
-
-      }
-
-
-      .course-select-button {
-
-        font-size: 12px;
-
-        padding: 8px 4px;
-
-      }
-
-
-      .selected-course-area {
-
-        margin: 12px;
-
-        padding: 15px;
-
-      }
-
-
-      .selected-course-title {
-
-        font-size: 20px;
-
-      }
-
-
-      .selected-course-info {
-
-        font-size: 15px;
-
-      }
-
-
-      .product-area {
-
-        margin: 12px;
-
-        padding: 15px;
-
-      }
-
-
-      .product-title {
-
-        font-size: 20px;
-
-      }
-
-
-      .product-options {
-
-        grid-template-columns:
-          1fr;
-
-        gap: 10px;
-
-      }
-
-
-      .confirm-area {
-
-        margin: 12px;
-
-        padding: 15px;
-
-      }
-
-
-      .confirm-title {
-
-        font-size: 20px;
-
-      }
-
-
-      .confirm-table th {
-
-        width: 100px;
-
-      }
-
-
-      .confirm-table th,
-      .confirm-table td {
-
-        padding: 8px;
-
-        font-size: 14px;
-
-      }
-
-
-      .confirm-price {
-
-        font-size: 20px;
-
-      }
-
-
-      .apply-button {
-
-        font-size: 18px;
-
-      }
-
-    }
-
-  </style>
+</style>
 
 </head>
 
@@ -876,1106 +675,602 @@
 <body>
 
 
-  <!-- ==================================================
-       共通ヘッダー
-       ================================================== -->
+<!-- ==================================================
+     共通ヘッダー
+     ================================================== -->
 
-  <div id="header"></div>
+<div id="header"></div>
 
 
-  <!-- ==================================================
-       SC講座の説明
-       ================================================== -->
+<!-- ==================================================
+     グループ情報
+     ================================================== -->
 
-  <div class="course-header">
+<div class="course-header">
 
-    <div class="course-header-title-area">
+  <div class="course-header-title-area">
 
-      <!--
-        CHECK_GASから取得した講座グループの
-        アイコンを表示します。
+    <img
+      id="courseHeaderIcon"
+      class="course-header-icon"
+      style="display:none;"
+      alt="講座アイコン"
+    >
 
-        SC / GM / AT / MC / CG ... など、
-        25グループをSC固定にせず処理します。
-      -->
+    <div
+      id="courseHeaderTitle"
+      class="course-header-title"
+    >
+      講座一覧
+    </div>
 
-      <img
-        id="courseHeaderIcon"
-        class="course-header-icon"
-        src=" "
-        alt="講座アイコン"
-      >
+  </div>
 
-      <div
-        id="courseHeaderTitle"
-        class="course-header-title"
-      >
-        講座一覧
+
+  <div
+    id="courseHeaderDesc"
+    class="course-header-desc"
+  >
+    講座を選択してください。
+  </div>
+
+</div>
+
+
+<!-- ==================================================
+     選択講座
+     ================================================== -->
+
+<div
+  id="selectedCourseArea"
+  class="selected-course-area"
+>
+
+  <div class="selected-course-title">
+
+    ① 選択した講座
+
+  </div>
+
+  <div
+    id="selectedCourseInfo"
+    class="selected-course-info"
+  ></div>
+
+</div>
+
+
+<!-- ==================================================
+     講座一覧
+     ================================================== -->
+
+<div id="content"></div>
+
+
+<!-- ==================================================
+     商品選択
+     ================================================== -->
+
+<div
+  id="productArea"
+  class="product-area"
+>
+
+  <div class="product-title">
+
+    ② 教材を選択してください
+
+  </div>
+
+  <div class="product-description">
+
+    選択した講座で利用する教材を
+    1つ選択してください。
+
+  </div>
+
+
+  <div class="product-options">
+
+
+    <!-- KS -->
+
+    <label
+      id="productOptionKS"
+      class="product-option"
+    >
+
+      <div class="product-option-top">
+
+        <input
+          type="radio"
+          name="product"
+          value="KS"
+          onchange="selectProduct('KS')"
+        >
+
+        <span class="product-id">
+          KS
+        </span>
+
       </div>
 
-    </div>
+      <div class="product-name">
+        動画教材
+      </div>
+
+      <div class="product-price">
+        1,200円
+      </div>
+
+    </label>
 
 
-    <div
-      id="courseHeaderDesc"
-      class="course-header-desc"
+    <!-- PS -->
+
+    <label
+      id="productOptionPS"
+      class="product-option"
     >
-      講座を選択してください。
-    </div>
 
-  </div>
+      <div class="product-option-top">
 
-
-  <!-- ==================================================
-       選択した講座
-       ================================================== -->
-
-  <div
-    id="selectedCourseArea"
-    class="selected-course-area"
-  >
-
-    <div class="selected-course-title">
-
-      ① 選択した講座
-
-    </div>
-
-
-    <div
-      id="selectedCourseInfo"
-      class="selected-course-info"
-    ></div>
-
-  </div>
-
-
-  <!-- ==================================================
-       選択した講座グループの講座一覧
-       ================================================== -->
-
-  <div id="content"></div>
-
-
-  <!-- ==================================================
-       教材選択
-       ================================================== -->
-
-  <div
-    id="productArea"
-    class="product-area"
-  >
-
-    <div class="product-title">
-
-      ② 教材を選択してください
-
-    </div>
-
-
-    <div class="product-description">
-
-      選択した講座で利用する教材を
-      1つ選択してください。
-
-    </div>
-
-
-    <div class="product-options">
-
-
-      <!-- ==================================================
-           KS
-           ================================================== -->
-
-      <label
-        id="productOptionKS"
-        class="product-option"
-      >
-
-        <div class="product-option-top">
-
-          <input
-            type="radio"
-            name="product"
-            value="KS"
-            onchange="selectProduct('KS')"
-          >
-
-          <span class="product-id">
-
-            KS
-
-          </span>
-
-        </div>
-
-
-        <div class="product-name">
-
-          動画教材
-
-        </div>
-
-
-        <div class="product-price">
-
-          1,200円
-
-        </div>
-
-      </label>
-
-
-      <!-- ==================================================
-           PS
-           ================================================== -->
-
-      <label
-        id="productOptionPS"
-        class="product-option"
-      >
-
-        <div class="product-option-top">
-
-          <input
-            type="radio"
-            name="product"
-            value="PS"
-            onchange="selectProduct('PS')"
-          >
-
-          <span class="product-id">
-
-            PS
-
-          </span>
-
-        </div>
-
-
-        <div class="product-name">
-
-          PDF教材
-
-        </div>
-
-
-        <div class="product-price">
-
-          2,400円
-
-        </div>
-
-      </label>
-
-
-      <!-- ==================================================
-           KP
-           ================================================== -->
-
-      <label
-        id="productOptionKP"
-        class="product-option"
-      >
-
-        <div class="product-option-top">
-
-          <input
-            type="radio"
-            name="product"
-            value="KP"
-            onchange="selectProduct('KP')"
-          >
-
-          <span class="product-id">
-
-            KP
-
-          </span>
-
-        </div>
-
-
-        <div class="product-name">
-
-          動画＋PDF
-
-        </div>
-
-
-        <div class="product-price">
-
-          2,400円
-
-        </div>
-
-      </label>
-
-
-    </div>
-
-  </div>
-
-
-  <!-- ==================================================
-       最終確認
-       ================================================== -->
-
-  <div
-    id="confirmArea"
-    class="confirm-area"
-  >
-
-    <div class="confirm-title">
-
-      ③ お申し込み内容の確認
-
-    </div>
-
-
-    <table class="confirm-table">
-
-      <tr>
-
-        <th>
-          講座ID
-        </th>
-
-        <td id="confirmCourseId">
-        </td>
-
-      </tr>
-
-
-      <tr>
-
-        <th>
-          講座名
-        </th>
-
-        <td id="confirmCourseName">
-        </td>
-
-      </tr>
-
-
-      <tr>
-
-        <th>
-          販売商品ID
-        </th>
-
-        <td id="confirmProductId">
-        </td>
-
-      </tr>
-
-
-      <tr>
-
-        <th>
-          教材
-        </th>
-
-        <td id="confirmProductName">
-        </td>
-
-      </tr>
-
-
-      <tr>
-
-        <th>
-          料金
-        </th>
-
-        <td
-          id="confirmPrice"
-          class="confirm-price"
+        <input
+          type="radio"
+          name="product"
+          value="PS"
+          onchange="selectProduct('PS')"
         >
-        </td>
 
-      </tr>
+        <span class="product-id">
+          PS
+        </span>
 
-    </table>
+      </div>
+
+      <div class="product-name">
+        PDF教材
+      </div>
+
+      <div class="product-price">
+        2,400円
+      </div>
+
+    </label>
 
 
-    <button
-      id="applyButton"
-      class="apply-button"
-      onclick="applyCourse()"
+    <!-- KP -->
+
+    <label
+      id="productOptionKP"
+      class="product-option"
     >
 
-      ④ この内容で申し込む
+      <div class="product-option-top">
 
-    </button>
+        <input
+          type="radio"
+          name="product"
+          value="KP"
+          onchange="selectProduct('KP')"
+        >
+
+        <span class="product-id">
+          KP
+        </span>
+
+      </div>
+
+      <div class="product-name">
+        動画＋PDF
+      </div>
+
+      <div class="product-price">
+        2,400円
+      </div>
+
+    </label>
+
+  </div>
+
+</div>
+
+
+<!-- ==================================================
+     最終確認
+     ================================================== -->
+
+<div
+  id="confirmArea"
+  class="confirm-area"
+>
+
+  <div class="confirm-title">
+
+    ③ お申し込み内容の確認
 
   </div>
 
 
-  <!-- ==================================================
-       共通フッター
-       ================================================== -->
+  <table class="confirm-table">
 
-  <div id="footer"></div>
+    <tr>
+      <th>講座ID</th>
+      <td id="confirmCourseId"></td>
+    </tr>
+
+    <tr>
+      <th>講座名</th>
+      <td id="confirmCourseName"></td>
+    </tr>
+
+    <tr>
+      <th>販売商品ID</th>
+      <td id="confirmProductId"></td>
+    </tr>
+
+    <tr>
+      <th>教材</th>
+      <td id="confirmProductName"></td>
+    </tr>
+
+    <tr>
+      <th>料金</th>
+      <td
+        id="confirmPrice"
+        class="confirm-price"
+      ></td>
+    </tr>
+
+  </table>
 
 
-  <!-- ==================================================
-       共通JavaScript
-       ================================================== -->
+  <button
+    id="applyButton"
+    class="apply-button"
+    onclick="applyCourse()"
+  >
 
-  <script src="script.js"></script>
+    ④ この内容で申し込む
+
+  </button>
+
+</div>
 
 
-  <!-- ==================================================
-       このページ専用JavaScript
-       ================================================== -->
+<!-- ==================================================
+     共通フッター
+     ================================================== -->
 
-  <script>
+<div id="footer"></div>
 
 
-    /* ==================================================
-       URLパラメータ
-       ================================================== */
+<script src="script.js"></script>
 
-    const params =
-      new URLSearchParams(
-        location.search
+
+<script>
+
+/* ==================================================
+   URLパラメータ
+   ================================================== */
+
+const params =
+  new URLSearchParams(
+    location.search
+  );
+
+
+/* ==================================================
+   ★重要
+   courseIdをSC固定しない
+   ================================================== */
+
+const courseId =
+  (
+    params.get("courseId") || ""
+  )
+  .trim()
+  .toUpperCase();
+
+
+/* ==================================================
+   言語
+   ================================================== */
+
+const lang =
+  (
+    params.get("lang") || "ja"
+  )
+  .trim()
+  .toLowerCase();
+
+
+/* ==================================================
+   CHECK_GAS
+   ================================================== */
+
+const CHECK_GAS_URL = "https://script.google.com/macros/s/AKfycbwQ3SNqsIAovU7ZJc_KX4BXodZYrGaGQ_zMBWX0CsD4aklcjZ9eUGL4GQqn3wSdOeIdAQ/exec";
+
+
+/* ==================================================
+   表示場所
+   ================================================== */
+
+const content =
+  document.getElementById(
+    "content"
+  );
+
+
+/* ==================================================
+   選択状態
+   ================================================== */
+
+let selectedCourse = null;
+
+let selectedProductId = null;
+
+let selectedPrice = 0;
+
+
+/* ==================================================
+   courseIdがない場合
+   ================================================== */
+
+if (!courseId) {
+
+  content.innerHTML = `
+
+    <div class="message">
+
+      <strong>
+        講座IDが指定されていません。
+      </strong>
+
+      <br><br>
+
+      course.htmlから講座を選択してください。
+
+    </div>
+
+  `;
+
+}
+
+
+/* ==================================================
+   CHECK_GAS呼び出し
+   ================================================== */
+
+else {
+
+  const requestUrl =
+    CHECK_GAS_URL
+    + "?courseId="
+    + encodeURIComponent(courseId)
+    + "&lang="
+    + encodeURIComponent(lang);
+
+
+  console.log(
+    "CHECK_GAS URL：",
+    requestUrl
+  );
+
+
+  fetch(requestUrl)
+
+
+  /* ==================================================
+     HTTP確認
+     ================================================== */
+
+  .then(
+    function(response) {
+
+      if (!response.ok) {
+
+        throw new Error(
+          "HTTPエラー：" +
+          response.status
+        );
+
+      }
+
+      return response.json();
+
+    }
+  )
+
+
+  /* ==================================================
+     GAS結果
+     ================================================== */
+
+  .then(
+    function(data) {
+
+      console.log(
+        "CHECK_GAS response：",
+        data
       );
 
 
-    /* ==================================================
-       大分類courseId
-       
-       例：
-       check.html?courseId=SC
-       
-       → SC
-       ================================================== */
+      /* ==================================================
+         親グループ情報
+         ================================================== */
 
-    const courseId =
-      (
-        params.get("courseId") || "SC"
-      )
-      .trim()
-      .toUpperCase();
+      const headerTitle =
+        document.getElementById(
+          "courseHeaderTitle"
+        );
 
+      const headerDesc =
+        document.getElementById(
+          "courseHeaderDesc"
+        );
 
-    /* ==================================================
-       言語
-       ================================================== */
-
-    const lang =
-      (
-        params.get("lang") || "ja"
-      )
-      .trim()
-      .toLowerCase();
+      const headerIcon =
+        document.getElementById(
+          "courseHeaderIcon"
+        );
 
 
-    /* ==================================================
-       CHECK_GAS URL 2026/09/22
-       ================================================== */
-
-    const CHECK_GAS_URL =
-      "https://script.google.com/macros/s/AKfycbzSHCJhOtUCb9YVt3FtPISXWC-2xPSaOHOYG0JmkhafCkz8Wf-4akq41jhmnrlx0778Ew/exec";
-
-
-    /* ==================================================
-       HTML表示エリア
-       ================================================== */
-
-    const content =
-      document.getElementById(
-        "content"
-      );
-
-
-    /* ==================================================
-       選択状態
-       ================================================== */
-
-    let selectedCourse = null;
-
-    let selectedProductId = null;
-
-    let selectedPrice = 0;
-
-
-    /* ==================================================
-       CHECK_GASから講座データ取得
-       ================================================== */
-
-    fetch(
-
-      CHECK_GAS_URL
-
-      + "?courseId="
-
-      + encodeURIComponent(
-          courseId
+      const parentTitle =
+        String(
+          data.parentTitle || ""
         )
+        .trim();
 
-      + "&lang="
 
-      + encodeURIComponent(
-          lang
+      const parentDesc =
+        String(
+          data.parentDesc || ""
         )
+        .trim();
 
-    )
+
+      const parentIcon =
+        String(
+          data.parentIcon || ""
+        )
+        .trim();
 
 
       /* ==================================================
-         HTTP確認
+         グループ名
          ================================================== */
 
-      .then(response => {
+      headerTitle.textContent =
 
-        if (!response.ok) {
+        "［講座］" +
 
-          throw new Error(
-            "HTTPエラー：" +
-            response.status
-          );
-
-        }
-
-        return response.json();
-
-      })
-
-
-      /* ==================================================
-         GASデータ処理
-         ================================================== */
-
-      .then(data => {
-
-
-        /* ==================================================
-           GASエラー
-           ================================================== */
-
-        if (
-          !data ||
-          data.error
-        ) {
-
-          content.innerHTML = `
-
-            <div class="message">
-
-              データがありません
-
-              <br><br>
-
-              （courseId=${escapeHtml(
-                courseId
-              )}）
-
-              <br><br>
-
-              ${
-                data && data.error
-                  ? escapeHtml(
-                      data.error
-                    )
-                  : ""
-              }
-
-            </div>
-
-          `;
-
-          return;
-
-        }
-
-
-        /* ==================================================
-           items確認
-           ================================================== */
-
-        if (
-          !Array.isArray(data.items) ||
-          data.items.length === 0
-        ) {
-
-          content.innerHTML = `
-
-            <div class="message">
-
-              講座データがありません。
-
-            </div>
-
-          `;
-
-          return;
-
-        }
-
-
-        /* ==================================================
-           講座グループ情報を動的に設定
-
-           ★今回の重要変更
-           以前はScratch（SC）がHTMLに固定されていました。
-
-           今回はURLのcourseIdとCHECK_GASの返却データから
-           動的に表示します。
-
-           そのため、
-             SC / GM / AT / MC / CG ...
-           など25グループを同じcheck.htmlで処理できます。
-
-           CHECK_GASが将来、
-             parentTitle
-             parentDesc
-             parentIcon
-           を返す場合にも対応します。
-           ================================================== */
-
-        const firstItem =
-          data.items[0] || {};
-
-        const headerIcon =
-          document.getElementById(
-            "courseHeaderIcon"
-          );
-
-        const headerTitle =
-          document.getElementById(
-            "courseHeaderTitle"
-          );
-
-        const headerDesc =
-          document.getElementById(
-            "courseHeaderDesc"
-          );
-
-
-        /* --------------------------------------------------
-           親講座名
-           -------------------------------------------------- */
-
-        const parentTitle =
-          String(
-            data.parentTitle ||
-            data.categoryTitle ||
-            data.groupTitle ||
-            firstItem.parentTitle ||
-            firstItem.categoryTitle ||
-            firstItem.groupTitle ||
-            ""
-          ).trim();
-
-
-        const displayGroupName =
+        (
           parentTitle ||
-          (courseId + "講座");
+          courseId + "講座"
+        )
 
+        +
 
-        headerTitle.textContent =
-          "［講座］" +
-          displayGroupName +
-          "（" +
-          courseId +
-          "）";
+        "（" +
 
+        courseId +
 
-        /* --------------------------------------------------
-           親講座説明
-           -------------------------------------------------- */
-
-        const parentDesc =
-          String(
-            data.parentDesc ||
-            data.categoryDesc ||
-            data.groupDesc ||
-            firstItem.parentDesc ||
-            firstItem.categoryDesc ||
-            firstItem.groupDesc ||
-            ""
-          ).trim();
-
-
-        if (parentDesc) {
-
-          headerDesc.innerHTML =
-            escapeHtml(
-              parentDesc
-            ).replace(
-              /&lt;br&gt;/gi,
-              "<br>"
-            );
-
-        }
-
-        else {
-
-          headerDesc.textContent =
-            "「" +
-            displayGroupName +
-            "」の講座から、" +
-            data.items.length +
-            "講座を選択できます。";
-
-        }
-
-
-        /* --------------------------------------------------
-           親講座アイコン
-           -------------------------------------------------- */
-
-        const headerIconUrl =
-          String(
-            data.parentIcon ||
-            data.categoryIcon ||
-            data.groupIcon ||
-            firstItem.parentIcon ||
-            firstItem.categoryIcon ||
-            firstItem.groupIcon ||
-            firstItem.icon ||
-            ""
-          ).trim();
-
-
-        if (headerIconUrl) {
-
-          headerIcon.src =
-            headerIconUrl;
-
-          headerIcon.alt =
-            displayGroupName;
-
-          headerIcon.style.display =
-            "block";
-
-        }
-
-        else {
-
-          headerIcon.style.display =
-            "none";
-
-        }
-
-
-        /* ==================================================
-           講座一覧作成
-           ================================================== */
-
-        let html = "";
-
-
-        data.items.forEach(
-          function(item) {
-
-
-            /* ==================================================
-               講座カード
-               
-               ★アイコンは表示しない
-               ================================================== */
-
-            html += `
-
-              <div
-                class="course-card"
-                id="course-card-${escapeHtml(
-                  item.courseId
-                )}"
-              >
-
-
-                <!-- ==========================================
-                     講座名
-                     ========================================== -->
-
-                <div class="title">
-
-                  ［講座名］
-                  ${escapeHtml(
-                    item.title
-                  )}
-
-                </div>
-
-
-                <!-- ==========================================
-                     説明
-                     ========================================== -->
-
-                <div class="desc">
-
-                  ${
-                    escapeHtml(
-                      item.desc
-                    )
-                    .replace(
-                      /&lt;br&gt;/gi,
-                      "<br>"
-                    )
-                  }
-
-                </div>
-
-
-                <!-- ==========================================
-                     講座ID
-                     ========================================== -->
-
-                <div class="course-id">
-
-                  ［講座ID］
-                  ${escapeHtml(
-                    item.courseId
-                  )}
-
-                </div>
-
-
-                <!-- ==========================================
-                     講座選択ボタン
-                     ========================================== -->
-
-                <button
-
-                  type="button"
-
-                  class="course-select-button"
-
-                  onclick="selectCourse(
-                    '${escapeJs(
-                      item.courseId
-                    )}'
-                  )"
-
-                >
-
-                  この講座を選択
-
-                </button>
-
-
-              </div>
-
-            `;
-
-          }
-        );
-
-
-        /* ==================================================
-           一覧を画面表示
-           ================================================== */
-
-        content.innerHTML =
-          html;
-
-
-        /* ==================================================
-           講座データを保存
-           ================================================== */
-
-        window.courseItems =
-          data.items;
-
-
-      })
+        "）";
 
 
       /* ==================================================
-         通信エラー
+         グループ説明
          ================================================== */
 
-      .catch(error => {
+      if (parentDesc) {
+
+        headerDesc.innerHTML =
+          escapeHtml(
+            parentDesc
+          )
+          .replace(
+            /&lt;br&gt;/gi,
+            "<br>"
+          );
+
+      }
+
+      else {
+
+        headerDesc.textContent =
+
+          "「" +
+          courseId +
+          "」の講座を選択してください。";
+
+      }
 
 
-        console.error(
-          "CHECK_GAS通信エラー：",
-          error
-        );
+      /* ==================================================
+         グループアイコン
+         ================================================== */
 
+      if (parentIcon) {
+
+        headerIcon.src =
+          parentIcon;
+
+        headerIcon.alt =
+          parentTitle ||
+          courseId;
+
+        headerIcon.style.display =
+          "block";
+
+      }
+
+      else {
+
+        headerIcon.style.display =
+          "none";
+
+      }
+
+
+      /* ==================================================
+         GASエラー
+         ================================================== */
+
+      if (
+        !data ||
+        data.ok === false
+      ) {
 
         content.innerHTML = `
 
           <div class="message">
 
-            データを取得できませんでした
-
-          </div>
-
-
-          <div class="desc">
-
-            CHECK_GASとの通信で
-            エラーが発生しました。
+            <strong>
+              講座データを取得できませんでした。
+            </strong>
 
             <br><br>
 
-            ブラウザの再読み込みを
-            試してください。
+            ［グループID］
+            ${escapeHtml(courseId)}
+
+            <br><br>
+
+            ${
+              data && data.error
+                ? escapeHtml(data.error)
+                : "不明なエラーです。"
+            }
 
           </div>
 
         `;
 
-      });
-
-
-    /* ==================================================
-       講座を選択
-       ================================================== */
-
-    function selectCourse(courseId) {
-
-
-      /* ==================================================
-         講座IDを統一
-         ================================================== */
-
-      courseId =
-        String(
-          courseId
-        )
-        .trim()
-        .toUpperCase();
-
-
-      /* ==================================================
-         講座データ検索
-         ================================================== */
-
-      const item =
-        (window.courseItems || [])
-        .find(
-          function(course) {
-
-            return String(
-              course.courseId
-            )
-            .trim()
-            .toUpperCase()
-            ===
-            courseId;
-
-          }
-        );
-
-
-      /* ==================================================
-         講座が見つからない
-         ================================================== */
-
-      if (!item) {
-
-        alert(
-          "選択した講座が見つかりません。"
-        );
-
         return;
 
       }
 
 
       /* ==================================================
-         選択講座を保存
-         ================================================== */
-
-      selectedCourse =
-        item;
-
-
-      /* ==================================================
-         すべてのカードの選択状態を解除
-         ================================================== */
-
-      document
-        .querySelectorAll(
-          ".course-card"
-        )
-        .forEach(
-          function(card) {
-
-            card.classList.remove(
-              "selected"
-            );
-
-          }
-        );
-
-
-      /* ==================================================
-         選択したカードを強調
-         ================================================== */
-
-      const selectedCard =
-        document.getElementById(
-          "course-card-" +
-          courseId
-        );
-
-
-      if (selectedCard) {
-
-        selectedCard.classList.add(
-          "selected"
-        );
-
-      }
-
-
-      /* ==================================================
-         選択した講座を表示
-         ================================================== */
-
-      document.getElementById(
-        "selectedCourseInfo"
-      ).innerHTML = `
-
-        講座ID：
-        <strong>
-          ${escapeHtml(
-            item.courseId
-          )}
-        </strong>
-
-        <br>
-
-        講座名：
-        <strong>
-          ${escapeHtml(
-            item.title
-          )}
-        </strong>
-
-      `;
-
-
-      document.getElementById(
-        "selectedCourseArea"
-      )
-      .classList.add(
-        "show"
-      );
-
-
-      /* ==================================================
-         教材選択エリアを表示
-         ================================================== */
-
-      document.getElementById(
-        "productArea"
-      )
-      .classList.add(
-        "show"
-      );
-
-
-      /* ==================================================
-         商品選択をリセット
-         ================================================== */
-
-      selectedProductId = null;
-
-      selectedPrice = 0;
-
-
-      document
-        .querySelectorAll(
-          'input[name="product"]'
-        )
-        .forEach(
-          function(radio) {
-
-            radio.checked = false;
-
-          }
-        );
-
-
-      document
-        .querySelectorAll(
-          ".product-option"
-        )
-        .forEach(
-          function(option) {
-
-            option.classList.remove(
-              "selected"
-            );
-
-          }
-        );
-
-
-      /* ==================================================
-         最終確認を隠す
-         ================================================== */
-
-      document.getElementById(
-        "confirmArea"
-      )
-      .classList.remove(
-        "show"
-      );
-
-
-      /* ==================================================
-         教材選択位置まで移動
-         ================================================== */
-
-      document.getElementById(
-        "productArea"
-      )
-      .scrollIntoView({
-
-        behavior: "smooth",
-
-        block: "start"
-
-      });
-
-    }
-
-
-    /* ==================================================
-       商品を選択
-       ================================================== */
-
-    function selectProduct(
-      productId
-    ) {
-
-
-      /* ==================================================
-         商品IDを統一
-         ================================================== */
-
-      productId =
-        String(
-          productId
-        )
-        .trim()
-        .toUpperCase();
-
-
-      /* ==================================================
-         商品ID確認
+         items確認
          ================================================== */
 
       if (
-        productId !== "KS" &&
-        productId !== "PS" &&
-        productId !== "KP"
+        !Array.isArray(data.items) ||
+        data.items.length === 0
       ) {
 
-        alert(
-          "販売商品IDが正しくありません。"
-        );
+        content.innerHTML = `
+
+          <div class="message">
+
+            「${escapeHtml(courseId)}」の
+            個別講座がありません。
+
+          </div>
+
+        `;
 
         return;
 
@@ -1983,378 +1278,715 @@
 
 
       /* ==================================================
-         商品価格
+         講座一覧
          ================================================== */
 
-      let price = 0;
+      let html = "";
 
 
-      if (productId === "KS") {
+      data.items.forEach(
+        function(item) {
 
-        price = 1200;
-
-      }
-
-      else if (
-        productId === "PS"
-      ) {
-
-        price = 2400;
-
-      }
-
-      else if (
-        productId === "KP"
-      ) {
-
-        price = 2400;
-
-      }
-
-
-      /* ==================================================
-         選択状態を保存
-         ================================================== */
-
-      selectedProductId =
-        productId;
-
-      selectedPrice =
-        price;
-
-
-      /* ==================================================
-         商品カードの選択状態を解除
-         ================================================== */
-
-      document
-        .querySelectorAll(
-          ".product-option"
-        )
-        .forEach(
-          function(option) {
-
-            option.classList.remove(
-              "selected"
+          const safeId =
+            escapeHtml(
+              item.courseId
             );
 
-          }
-        );
+
+          html += `
+
+            <div
+              class="course-card"
+              id="course-card-${safeId}"
+            >
+
+              <div class="title">
+
+                ［講座名］
+                ${escapeHtml(
+                  item.title
+                )}
+
+              </div>
+
+
+              <div class="desc">
+
+                ${
+                  escapeHtml(
+                    item.desc
+                  )
+                  .replace(
+                    /&lt;br&gt;/gi,
+                    "<br>"
+                  )
+                }
+
+              </div>
+
+
+              <div class="course-id">
+
+                ［講座ID］
+                ${safeId}
+
+              </div>
+
+
+              <button
+                type="button"
+                class="course-select-button"
+                onclick="
+                  selectCourse(
+                    '${escapeJs(
+                      item.courseId
+                    )}'
+                  )
+                "
+              >
+
+                この講座を選択
+
+              </button>
+
+            </div>
+
+          `;
+
+        }
+      );
 
 
       /* ==================================================
-         選択商品を強調
+         一覧表示
          ================================================== */
 
-      const selectedOption =
-        document.getElementById(
-          "productOption" +
-          productId
-        );
+      content.innerHTML =
+        html;
 
 
-      if (selectedOption) {
+      /* ==================================================
+         講座データ保存
+         ================================================== */
 
-        selectedOption.classList.add(
+      window.courseItems =
+        data.items;
+
+    }
+  )
+
+
+  /* ==================================================
+     通信エラー
+     ================================================== */
+
+  .catch(
+    function(error) {
+
+      console.error(
+        "CHECK_GAS通信エラー：",
+        error
+      );
+
+
+      content.innerHTML = `
+
+        <div class="message">
+
+          <strong>
+            CHECK_GASとの通信で
+            エラーが発生しました。
+          </strong>
+
+          <br><br>
+
+          ［グループID］
+          ${escapeHtml(courseId)}
+
+          <br><br>
+
+          エラー内容：
+          ${escapeHtml(
+            error.message ||
+            String(error)
+          )}
+
+          <br><br>
+
+          ブラウザを再読み込みしてください。
+
+        </div>
+
+      `;
+
+    }
+  );
+
+}
+
+
+/* ==================================================
+   講座選択
+   ================================================== */
+
+function selectCourse(courseId) {
+
+
+  courseId =
+    String(courseId)
+    .trim()
+    .toUpperCase();
+
+
+  const item =
+    (window.courseItems || [])
+    .find(
+      function(course) {
+
+        return String(
+          course.courseId
+        )
+        .trim()
+        .toUpperCase()
+        ===
+        courseId;
+
+      }
+    );
+
+
+  if (!item) {
+
+    alert(
+      "選択した講座が見つかりません。"
+    );
+
+    return;
+
+  }
+
+
+  selectedCourse =
+    item;
+
+
+  /* ==================================================
+     カード選択解除
+     ================================================== */
+
+  document
+    .querySelectorAll(
+      ".course-card"
+    )
+    .forEach(
+      function(card) {
+
+        card.classList.remove(
           "selected"
         );
 
       }
+    );
 
 
-      /* ==================================================
-         商品名
-         ================================================== */
+  /* ==================================================
+     選択カード強調
+     ================================================== */
 
-      let productName = "";
+  const selectedCard =
+    document.getElementById(
+      "course-card-" +
+      courseId
+    );
 
 
-      if (productId === "KS") {
+  if (selectedCard) {
 
-        productName =
-          "動画教材";
+    selectedCard.classList.add(
+      "selected"
+    );
+
+  }
+
+
+  /* ==================================================
+     選択講座表示
+     ================================================== */
+
+  document.getElementById(
+    "selectedCourseInfo"
+  ).innerHTML = `
+
+    講座ID：
+    <strong>
+      ${escapeHtml(
+        item.courseId
+      )}
+    </strong>
+
+    <br>
+
+    講座名：
+    <strong>
+      ${escapeHtml(
+        item.title
+      )}
+    </strong>
+
+  `;
+
+
+  document
+    .getElementById(
+      "selectedCourseArea"
+    )
+    .classList.add(
+      "show"
+    );
+
+
+  /* ==================================================
+     商品エリア表示
+     ================================================== */
+
+  document
+    .getElementById(
+      "productArea"
+    )
+    .classList.add(
+      "show"
+    );
+
+
+  /* ==================================================
+     商品選択リセット
+     ================================================== */
+
+  selectedProductId =
+    null;
+
+  selectedPrice =
+    0;
+
+
+  document
+    .querySelectorAll(
+      'input[name="product"]'
+    )
+    .forEach(
+      function(radio) {
+
+        radio.checked =
+          false;
 
       }
+    );
 
-      else if (
-        productId === "PS"
-      ) {
 
-        productName =
-          "PDF教材";
+  document
+    .querySelectorAll(
+      ".product-option"
+    )
+    .forEach(
+      function(option) {
 
-      }
-
-      else if (
-        productId === "KP"
-      ) {
-
-        productName =
-          "動画＋PDF";
+        option.classList.remove(
+          "selected"
+        );
 
       }
+    );
 
 
-      /* ==================================================
-         最終確認へ表示
-         ================================================== */
-
-      document.getElementById(
-        "confirmCourseId"
-      ).textContent =
-        selectedCourse.courseId;
-
-
-      document.getElementById(
-        "confirmCourseName"
-      ).textContent =
-        selectedCourse.title;
+  document
+    .getElementById(
+      "confirmArea"
+    )
+    .classList.remove(
+      "show"
+    );
 
 
-      document.getElementById(
-        "confirmProductId"
-      ).textContent =
-        productId;
+  document
+    .getElementById(
+      "productArea"
+    )
+    .scrollIntoView({
+
+      behavior: "smooth",
+
+      block: "start"
+
+    });
+
+}
 
 
-      document.getElementById(
-        "confirmProductName"
-      ).textContent =
-        productName;
+/* ==================================================
+   商品選択
+   ================================================== */
+
+function selectProduct(productId) {
 
 
-      document.getElementById(
-        "confirmPrice"
-      ).textContent =
-        price.toLocaleString() +
-        "円";
+  productId =
+    String(productId)
+    .trim()
+    .toUpperCase();
 
 
-      /* ==================================================
-         最終確認を表示
-         ================================================== */
+  if (
+    productId !== "KS" &&
+    productId !== "PS" &&
+    productId !== "KP"
+  ) {
 
-      document.getElementById(
-        "confirmArea"
+    alert(
+      "販売商品IDが正しくありません。"
+    );
+
+    return;
+
+  }
+
+
+  let price = 0;
+
+  let productName = "";
+
+
+  if (
+    productId === "KS"
+  ) {
+
+    price = 1200;
+
+    productName =
+      "動画教材";
+
+  }
+
+  else if (
+    productId === "PS"
+  ) {
+
+    price = 2400;
+
+    productName =
+      "PDF教材";
+
+  }
+
+  else if (
+    productId === "KP"
+  ) {
+
+    price = 2400;
+
+    productName =
+      "動画＋PDF";
+
+  }
+
+
+  selectedProductId =
+    productId;
+
+  selectedPrice =
+    price;
+
+
+  /* ==================================================
+     選択解除
+     ================================================== */
+
+  document
+    .querySelectorAll(
+      ".product-option"
+    )
+    .forEach(
+      function(option) {
+
+        option.classList.remove(
+          "selected"
+        );
+
+      }
+    );
+
+
+  /* ==================================================
+     選択商品強調
+     ================================================== */
+
+  const selectedOption =
+    document.getElementById(
+      "productOption" +
+      productId
+    );
+
+
+  if (selectedOption) {
+
+    selectedOption.classList.add(
+      "selected"
+    );
+
+  }
+
+
+  /* ==================================================
+     最終確認
+     ================================================== */
+
+  document.getElementById(
+    "confirmCourseId"
+  ).textContent =
+    selectedCourse.courseId;
+
+
+  document.getElementById(
+    "confirmCourseName"
+  ).textContent =
+    selectedCourse.title;
+
+
+  document.getElementById(
+    "confirmProductId"
+  ).textContent =
+    productId;
+
+
+  document.getElementById(
+    "confirmProductName"
+  ).textContent =
+    productName;
+
+
+  document.getElementById(
+    "confirmPrice"
+  ).textContent =
+    price.toLocaleString() +
+    "円";
+
+
+  /* ==================================================
+     確認表示
+     ================================================== */
+
+  document
+    .getElementById(
+      "confirmArea"
+    )
+    .classList.add(
+      "show"
+    );
+
+
+  document
+    .getElementById(
+      "confirmArea"
+    )
+    .scrollIntoView({
+
+      behavior: "smooth",
+
+      block: "start"
+
+    });
+
+}
+
+
+/* ==================================================
+   申し込み
+   ================================================== */
+
+function applyCourse() {
+
+
+  if (!selectedCourse) {
+
+    alert(
+      "先に講座を選択してください。"
+    );
+
+    return;
+
+  }
+
+
+  if (!selectedProductId) {
+
+    alert(
+      "教材を選択してください。"
+    );
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     STEP 4
+     tryit.htmlへ渡すデータ
+     ================================================== */
+
+  const cartData = {
+
+    courseId:
+      String(
+        selectedCourse.courseId
       )
-      .classList.add(
-        "show"
+      .trim()
+      .toUpperCase(),
+
+    productId:
+      String(
+        selectedProductId
+      )
+      .trim()
+      .toUpperCase(),
+
+    price:
+      selectedPrice
+
+  };
+
+
+  /* ==================================================
+     localStorage
+     ================================================== */
+
+  localStorage.setItem(
+
+    "cart",
+
+    JSON.stringify(
+      cartData
+    )
+
+  );
+
+
+  /* ==================================================
+     tryit.html
+     ================================================== */
+
+  const url =
+
+    "tryit.html"
+
+    + "?courseId="
+
+    + encodeURIComponent(
+        cartData.courseId
+      )
+
+    + "&productId="
+
+    + encodeURIComponent(
+        cartData.productId
+      )
+
+    + "&price="
+
+    + encodeURIComponent(
+        cartData.price
       );
 
 
-      /* ==================================================
-         最終確認位置へ移動
-         ================================================== */
+  console.log(
+    "tryit.htmlへ移動：",
+    url
+  );
 
-      document.getElementById(
-        "confirmArea"
-      )
-      .scrollIntoView({
 
-        behavior: "smooth",
+  window.location.href =
+    url;
 
-        block: "start"
+}
 
-      });
 
-    }
+/* ==================================================
+   HTMLエスケープ
+   ================================================== */
 
+function escapeHtml(value) {
 
-    /* ==================================================
-       申し込み
-       ================================================== */
+  return String(
+    value == null
+      ? ""
+      : value
+  )
 
-    function applyCourse() {
+  .replace(
+    /&/g,
+    "&amp;"
+  )
 
+  .replace(
+    /</g,
+    "&lt;"
+  )
 
-      /* ==================================================
-         講座確認
-         ================================================== */
+  .replace(
+    />/g,
+    "&gt;"
+  )
 
-      if (!selectedCourse) {
+  .replace(
+    /"/g,
+    "&quot;"
+  )
 
-        alert(
-          "先に講座を選択してください。"
-        );
+  .replace(
+    /'/g,
+    "&#039;"
+  );
 
-        return;
+}
 
-      }
 
+/* ==================================================
+   JavaScript文字列エスケープ
+   ================================================== */
 
-      /* ==================================================
-         商品確認
-         ================================================== */
+function escapeJs(value) {
 
-      if (!selectedProductId) {
+  return String(
+    value == null
+      ? ""
+      : value
+  )
 
-        alert(
-          "教材を選択してください。"
-        );
+  .replace(
+    /\\/g,
+    "\\\\"
+  )
 
-        return;
+  .replace(
+    /'/g,
+    "\\'"
+  )
 
-      }
+  .replace(
+    /"/g,
+    '\\"'
+  )
 
+  .replace(
+    /\r/g,
+    "\\r"
+  )
 
-      /* ==================================================
-         カート情報
-         
-         STEP 4 tryit.htmlへ
-         これまでと同じ3項目を渡す
-         ================================================== */
+  .replace(
+    /\n/g,
+    "\\n"
+  );
 
-      const cartData = {
+}
 
-        courseId:
-          String(
-            selectedCourse.courseId
-          )
-          .trim()
-          .toUpperCase(),
-
-        productId:
-          String(
-            selectedProductId
-          )
-          .trim()
-          .toUpperCase(),
-
-        price:
-          selectedPrice
-
-      };
-
-
-      /* ==================================================
-         localStorageへ保存
-         ================================================== */
-
-      localStorage.setItem(
-
-        "cart",
-
-        JSON.stringify(
-          cartData
-        )
-
-      );
-
-
-      /* ==================================================
-         tryit.html URL
-         
-         例：
-         
-         tryit.html
-         ?courseId=SC01
-         &productId=KS
-         &price=1200
-         ================================================== */
-
-      const url =
-
-        "tryit.html"
-
-        + "?courseId="
-
-        + encodeURIComponent(
-            cartData.courseId
-          )
-
-        + "&productId="
-
-        + encodeURIComponent(
-            cartData.productId
-          )
-
-        + "&price="
-
-        + encodeURIComponent(
-            cartData.price
-          );
-
-
-      /* ==================================================
-         tryit.htmlへ移動
-         ================================================== */
-
-      window.location.href =
-        url;
-
-    }
-
-
-    /* ==================================================
-       HTML特殊文字対策
-       ================================================== */
-
-    function escapeHtml(value) {
-
-      return String(value)
-
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-
-        .replace(
-          /</g,
-          "&lt;"
-        )
-
-        .replace(
-          />/g,
-          "&gt;"
-        )
-
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-
-        .replace(
-          /'/g,
-          "&#039;"
-        );
-
-    }
-
-
-    /* ==================================================
-       JavaScript文字列用エスケープ
-       ================================================== */
-
-    function escapeJs(value) {
-
-      return String(value)
-
-        .replace(
-          /\\/g,
-          "\\\\"
-        )
-
-        .replace(
-          /'/g,
-          "\\'"
-        )
-
-        .replace(
-          /"/g,
-          '\\"'
-        )
-
-        .replace(
-          /\r/g,
-          "\\r"
-        )
-
-        .replace(
-          /\n/g,
-          "\\n"
-        );
-
-    }
-  </script>
+</script>
 </body>
 </html>

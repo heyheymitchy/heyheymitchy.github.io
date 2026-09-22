@@ -1,41 +1,11 @@
 ﻿<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!-- わくわくプログラミング工房　平兵道　のホームページ -->
-<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- わくわくプログラミング工房　平兵道 -->
 <!-- course.html -->
-<!--
-============================================================
-CHECK_GAS の courseId と完全一致させた25講座
-101 SC  Scratch
-102 GM  ゲーム
-103 AT  アート
-104 MC  音楽
-105 EG  英語
-106 HP  ホームページ
-107 HT  HTML
-108 CS  CSS
-109 GS  GAS
-110 VS  Vscode
-111 GH  GitHub
-112 PG  プログラミング
-113 ST  STEAM
-114 SD  SDGs
-115 AI  AIプロンプト
-116 PY  Python
-117 YT  YouTube
-118 ZM  Zoom
-119 CP  コンピュータ
-120 DC  デジタルコンテンツ
-121 CL  コンサル
-122 NB  ネットビジネス
-123 SP  個人事業者
-124 SB  起業
-125 CG  コーチング
-
-重要：
-course.html → check.html は、上記 courseId をそのまま渡す。
-============================================================
--->
-
+<!-- ==================================================
+     ★講座データはCHECK_GASの「check」シートから取得
+     ★course.html内に25講座の固定データは持たない
+     ★SC固定は使用しない
+     ================================================== -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -43,648 +13,287 @@ course.html → check.html は、上記 courseId をそのまま渡す。
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Course List</title>
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    .course-list {
+      display: grid;
+      grid-template-columns: repeat(7, 130px);
+      gap: 0;
+      padding: 0;
+      margin: 0 auto;
+      justify-content: center;
+    }
+
+    .course-item {
+      width: 120px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .course-item img {
+      display: block;
+      width: 120px;
+      height: 120px;
+      border-radius: 12px;
+      transition: 0.2s;
+      margin: 0;
+      object-fit: contain;
+    }
+
+    .course-item:active img {
+      transform: scale(0.9);
+      filter: brightness(1.3) saturate(1.4);
+      border-radius: 20px;
+      box-shadow: 0 0 12px rgba(255, 105, 180, 0.6);
+    }
+
+    .course-item:hover img {
+      transform: scale(1.12);
+      filter: brightness(1.2) saturate(1.3);
+      border-radius: 20px;
+      box-shadow: 0 0 12px rgba(255, 105, 180, 0.6);
+      transition: 0.25s ease;
+    }
+
+    .course-item:hover .course-title {
+      color: #ff66cc;
+      transform: scale(1.05);
+      transition: 0.25s ease;
+    }
+
+    .course-id {
+      font-size: 12px;
+      color: #666666;
+      margin-top: 2px;
+    }
+
+    .message {
+      grid-column: 1 / -1;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      margin: 40px 20px;
+    }
+
+    .message-error {
+      color: #cc0000;
+    }
+
+    @media (max-width: 1000px) {
+      .course-list {
+        grid-template-columns: repeat(5, 130px);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .course-list {
+        grid-template-columns: repeat(3, 130px);
+      }
+    }
+
+    @media (max-width: 450px) {
+      .course-list {
+        grid-template-columns: repeat(2, 130px);
+      }
+    }
+  </style>
 </head>
 
 <body>
-<!-- ================================================== -->
-<!-- 共通ヘッダー -->
-<!-- ================================================== -->
+
 <div id="header"></div>
 
-<!-- ================================================== -->
-<!-- このページだけの内容 -->
-<!-- ================================================== -->
-<style>
-
-/* 横方向の隙間 → 0px */
-/* 縦方向の隙間 → 0px */
-/* 外側の余白 → 0px */
-/* 画像サイズ → 120px × 120px */
-/* 7個並ぶ → 130px × 130px */
-
-.course-list {
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(7, 130px);
-
-  gap: 0;
-
-  padding: 0;
-
-  margin: 0 auto;
-
-  justify-content: center;
-
-}
-
-
-.course-item {
-
-  width: 120px;
-
-  text-align: center;
-
-  cursor: pointer;
-
-  transition: 0.2s;
-
-}
-
-
-.course-item img {
-
-  display: block;
-
-  width: 120px;
-
-  height: 120px;
-
-  border-radius: 12px;
-
-  transition: 0.2s;
-
-  margin: 0;
-
-}
-
-
-/* ==================================================
-   クリックした瞬間のポップUI
-   ================================================== */
-
-.course-item:active img {
-
-  transform: scale(0.9);
-
-  filter:
-    brightness(1.3)
-    saturate(1.4);
-
-  border-radius: 20px;
-
-  box-shadow:
-    0 0 12px
-    rgba(255, 105, 180, 0.6);
-
-}
-
-
-/* ==================================================
-   マウスを乗せたときのポップUI
-   ================================================== */
-
-.course-item:hover img {
-
-  transform: scale(1.12);
-
-  filter:
-    brightness(1.2)
-    saturate(1.3);
-
-  border-radius: 20px;
-
-  box-shadow:
-    0 0 12px
-    rgba(255, 105, 180, 0.6);
-
-  transition:
-    0.25s ease;
-
-}
-
-
-/* ==================================================
-   タイトル
-   ================================================== */
-
-.course-item:hover div {
-
-  color: #ff66cc;
-
-  transform: scale(1.05);
-
-  transition:
-    0.25s ease;
-
-}
-
-</style>
-
-
-<!-- ================================================== -->
-<!-- タイトル -->
-<!-- ================================================== -->
-
-<h1 style="text-align: center;">
-
+<h1 style="text-align:center;">
   なにがあるの　
-
   <font color="#ff66cc">
-
     気になる講座アイコンをクリックしてみてね
-
   </font>
-
 </h1>
 
+<div id="courseList" class="course-list"></div>
 
-<!-- ================================================== -->
-<!-- 講座一覧 -->
-<!-- ================================================== -->
+<div id="footer"></div>
 
-<div
-  id="courseList"
-  class="course-list"
-></div>
-
+<script src="script.js"></script>
 
 <script>
+/* ============================================================
+   course.html
+   ============================================================
+   ★25講座のデータはHTMLに書かない
+   ★CHECK_GASのcheckシートから取得する
+   ★SC固定は使用しない
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   CHECK_GAS URL
+   ------------------------------------------------------------ */
+const CHECK_GAS_URL =
+  "https://script.google.com/macros/s/AKfycbzSHCJhOtUCb9YVt3FtPISXWC-2xPSaOHOYG0JmkhafCkz8Wf-4akq41jhmnrlx0778Ew/exec";
 
 
-/* ==================================================
-   日本語＋英語データ
-   ================================================== */
-
-const data_jaen = {
-
-
-  /* ==================================================
-     日本語
-     ================================================== */
-
-  101: {
-    title: "Scratch",
-    icon: "images/icon_001.png",
-    courseId: "SC"
-  },
-
-  102: {
-    title: "ゲーム",
-    icon: "images/icon_002.png",
-    courseId: "GM"
-  },
-
-  103: {
-    title: "アート",
-    icon: "images/icon_003.png",
-    courseId: "AT"
-  },
-
-  104: {
-    title: "音楽",
-    icon: "images/icon_004.png",
-    courseId: "MC"
-  },
-
-  105: {
-    title: "英語",
-    icon: "images/icon_005.png",
-    courseId: "EG"
-  },
-
-  106: {
-    title: "ホームページ",
-    icon: "images/icon_006.png",
-    courseId: "HP"
-  },
-
-  107: {
-    title: "HTML",
-    icon: "images/icon_007.png",
-    courseId: "HT"
-  },
-
-  108: {
-    title: "CSS",
-    icon: "images/icon_008.png",
-    courseId: "CS"
-  },
-
-  109: {
-    title: "GAS",
-    icon: "images/icon_009.png",
-    courseId: "GS"
-  },
-
-  110: {
-    title: "Vscode",
-    icon: "images/icon_010.png",
-    courseId: "VS"
-  },
-
-  111: {
-    title: "GitHub",
-    icon: "images/icon_011.png",
-    courseId: "GH"
-  },
-
-  112: {
-    title: "プログラミング",
-    icon: "images/icon_012.png",
-    courseId: "PG"
-  },
-
-  113: {
-    title: "STEAM",
-    icon: "images/icon_013.png",
-    courseId: "ST"
-  },
-
-  114: {
-    title: "SDGs",
-    icon: "images/icon_014.png",
-    courseId: "SD"
-  },
-
-  115: {
-    title: "AIプロンプト",
-    icon: "images/icon_015.png",
-    courseId: "AI"
-  },
-
-  116: {
-    title: "Python",
-    icon: "images/icon_016.png",
-    courseId: "PY"
-  },
-
-  117: {
-    title: "YouTube",
-    icon: "images/icon_017.png",
-    courseId: "YT"
-  },
-
-  118: {
-    title: "Zoom",
-    icon: "images/icon_018.png",
-    courseId: "ZM"
-  },
-
-  119: {
-    title: "コンピュータ",
-    icon: "images/icon_019.png",
-    courseId: "CP"
-  },
-
-  120: {
-    title: "デジコン",
-    icon: "images/icon_020.png",
-    courseId: "DC"
-  },
-
-  121: {
-    title: "コンサル",
-    icon: "images/icon_021.png",
-    courseId: "CL"
-  },
-
-  122: {
-    title: "ネットビジネス",
-    icon: "images/icon_022.png",
-    courseId: "NB"
-  },
-
-  123: {
-    title: "個人事業者",
-    icon: "images/icon_023.png",
-    courseId: "SP"
-  },
-
-  124: {
-    title: "起業",
-    icon: "images/icon_024.png",
-    courseId: "SB"
-  },
-
-  125: {
-    title: "コーチング",
-    icon: "images/icon_025.png",
-    courseId: "CT"
-  },
-
-
-  /* ==================================================
-     英語
-     
-     英語側も同じcourseIdを使用します。
-     ================================================== */
-
-  901: {
-    title: "Scratch",
-    icon: "images/en/icon_901.png",
-    courseId: "SC"
-  },
-
-  902: {
-    title: "Game",
-    icon: "images/en/icon_902.png",
-    courseId: "GM"
-  },
-
-  903: {
-    title: "Art",
-    icon: "images/en/icon_903.png",
-    courseId: "AT"
-  },
-
-  904: {
-    title: "Music",
-    icon: "images/en/icon_904.png",
-    courseId: "MC"
-  },
-
-  905: {
-    title: "English",
-    icon: "images/en/icon_905.png",
-    courseId: "EG"
-  },
-
-  906: {
-    title: "Homepage",
-    icon: "images/en/icon_906.png",
-    courseId: "HP"
-  },
-
-  907: {
-    title: "HTML",
-    icon: "images/en/icon_907.png",
-    courseId: "HT"
-  },
-
-  908: {
-    title: "CSS",
-    icon: "images/en/icon_908.png",
-    courseId: "CS"
-  },
-
-  909: {
-    title: "GAS",
-    icon: "images/en/icon_909.png",
-    courseId: "GS"
-  },
-
-  910: {
-    title: "Vscode",
-    icon: "images/en/icon_910.png",
-    courseId: "VS"
-  },
-
-  911: {
-    title: "GitHub",
-    icon: "images/en/icon_911.png",
-    courseId: "GH"
-  },
-
-  912: {
-    title: "Programming",
-    icon: "images/en/icon_912.png",
-    courseId: "PG"
-  },
-
-  913: {
-    title: "STEAM",
-    icon: "images/en/icon_913.png",
-    courseId: "ST"
-  },
-
-  914: {
-    title: "SDGs",
-    icon: "images/en/icon_914.png",
-    courseId: "SD"
-  },
-
-  915: {
-    title: "AI Prompt",
-    icon: "images/en/icon_915.png",
-    courseId: "AI"
-  },
-
-  916: {
-    title: "Python",
-    icon: "images/en/icon_916.png",
-    courseId: "PY"
-  },
-
-  917: {
-    title: "YouTube",
-    icon: "images/en/icon_917.png",
-    courseId: "YT"
-  },
-
-  918: {
-    title: "Zoom",
-    icon: "images/en/icon_918.png",
-    courseId: "ZM"
-  },
-
-  919: {
-    title: "Computer",
-    icon: "images/en/icon_919.png",
-    courseId: "CP"
-  },
-
-  920: {
-    title: "Digital Contents",
-    icon: "images/en/icon_920.png",
-    courseId: "DC"
-  },
-
-  921: {
-    title: "Consulting",
-    icon: "images/en/icon_921.png",
-    courseId: "CL"
-  },
-
-  922: {
-    title: "Online Business",
-    icon: "images/en/icon_922.png",
-    courseId: "NB"
-  },
-
-  923: {
-    title: "Sole Proprietor",
-    icon: "images/en/icon_923.png",
-    courseId: "SP"
-  },
-
-  924: {
-    title: "Startup",
-    icon: "images/en/icon_924.png",
-    courseId: "SB"
-  },
-
-  925: {
-    title: "Coaching",
-    icon: "images/en/icon_925.png",
-    courseId: "CT"
-  }
-
-};
-
-
-/* ==================================================
-   言語判定
-   ================================================== */
-
+/* ------------------------------------------------------------
+   言語
+   sessionStorageのlangを使用
+   ------------------------------------------------------------ */
 const lang =
-  sessionStorage.getItem("lang")
-  || "ja";
+  (
+    sessionStorage.getItem("lang") || "ja"
+  )
+  .trim()
+  .toLowerCase() === "en"
+    ? "en"
+    : "ja";
 
 
-const start =
-  lang === "ja"
-    ? 101
-    : 901;
-
-
-const end =
-  lang === "ja"
-    ? 125
-    : 925;
-
-
-/* ==================================================
-   アイコン生成
-   ================================================== */
-
+/* ------------------------------------------------------------
+   表示エリア
+   ------------------------------------------------------------ */
 const courseList =
-  document.getElementById(
-    "courseList"
-  );
+  document.getElementById("courseList");
 
 
-/* ==================================================
-   25講座を表示
-   ================================================== */
+/* ------------------------------------------------------------
+   HTMLエスケープ
+   ------------------------------------------------------------ */
+function escapeHtml(value) {
 
-for (
-  let pt = start;
-  pt <= end;
-  pt++
-) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 
-
-  const item =
-    data_jaen[pt];
-
-
-  if (!item) {
-
-    continue;
-
-  }
+}
 
 
-  /* ==================================================
-     講座アイテム作成
-     ================================================== */
+/* ------------------------------------------------------------
+   画面エラー表示
+   ------------------------------------------------------------ */
+function showMessage(message, isError) {
+
+  courseList.innerHTML = "";
 
   const div =
-    document.createElement(
-      "div"
-    );
+    document.createElement("div");
 
+  div.className =
+    "message" +
+    (isError ? " message-error" : "");
+
+  div.innerHTML =
+    escapeHtml(message);
+
+  courseList.appendChild(div);
+
+}
+
+
+/* ------------------------------------------------------------
+   講座1件を画面に追加
+   ------------------------------------------------------------ */
+function addCourseItem(item) {
+
+  const courseId =
+    String(item.courseId || "")
+      .trim()
+      .toUpperCase();
+
+  const title =
+    String(item.title || "").trim();
+
+  const icon =
+    String(item.icon || "").trim();
+
+  const pt =
+    String(item.pt || "").trim();
+
+
+  /* ----------------------------------------------------------
+     courseIdがないデータは表示しない
+     ---------------------------------------------------------- */
+  if (!courseId) {
+    return;
+  }
+
+
+  const div =
+    document.createElement("div");
 
   div.className =
     "course-item";
 
 
-  /* ==================================================
+  /* ----------------------------------------------------------
      アイコン＋タイトル
-     ================================================== */
-
+     ---------------------------------------------------------- */
   div.innerHTML = `
 
     <img
-      src="${item.icon}"
-      alt="${item.title}"
+      src="${escapeHtml(icon)}"
+      alt="${escapeHtml(title)}"
+      loading="lazy"
     >
 
-    <div>
-      ${item.title}
+    <div class="course-title">
+      ${escapeHtml(title)}
+    </div>
+
+    <div class="course-id">
+      ${escapeHtml(courseId)}
     </div>
 
   `;
 
 
-  /* ==================================================
-     クリック処理
-     
-     重要：
-     
-     以前：
-     check.html?pt=101
-     
-     今回：
-     check.html?courseId=SC
-     
-     25講座それぞれのcourseIdを
-     check.htmlへ渡します。
-     ================================================== */
-
+  /* ----------------------------------------------------------
+     check.htmlへ移動
+     ----------------------------------------------------------
+     ★courseIdはitem.courseId
+     ★SC固定値は使用しない
+     ---------------------------------------------------------- */
   div.addEventListener(
     "click",
     function() {
-
-
-      /* ==================================================
-         courseId確認
-         ================================================== */
-
-      if (!item.courseId) {
-
-        alert(
-          "講座IDが設定されていません。"
-        );
-
-        return;
-
-      }
-
-
-      /* ==================================================
-         check.htmlへ移動
-
-         重要：
-         25講座すべてで、クリックした講座の情報を
-         動的にcheck.htmlへ渡します。
-
-         固定値「SC」は使用しません。
-
-         渡す情報：
-           courseId = SC / GM / AR / MU / ... / CT
-           title    = 講座名
-           icon     = アイコン画像
-           pt       = 101～125
-
-         check.html側では、まずcourseIdを使って
-         その講座の子講座を取得します。
-         ================================================== */
 
       const params =
         new URLSearchParams();
 
       params.set(
         "courseId",
-        item.courseId
+        courseId
       );
 
       params.set(
+        "lang",
+        lang
+      );
+
+      /*
+       * 親講座の情報も渡す。
+       * check.html側で使用可能。
+       */
+      params.set(
         "title",
-        item.title
+        title
       );
 
       params.set(
         "icon",
-        item.icon
+        icon
       );
 
-      params.set(
-        "pt",
-        String(pt)
-      );
+      if (pt) {
+
+        params.set(
+          "pt",
+          pt
+        );
+
+      }
+
 
       window.location.href =
         "check.html?" +
@@ -694,30 +303,190 @@ for (
   );
 
 
-  /* ==================================================
-     講座一覧へ追加
-     ================================================== */
-
-  courseList.appendChild(
-    div
-  );
+  courseList.appendChild(div);
 
 }
 
+
+/* ------------------------------------------------------------
+   CHECK_GASから25講座を取得
+   ------------------------------------------------------------ */
+function loadCourses() {
+
+  showMessage(
+    "講座データを読み込んでいます……",
+    false
+  );
+
+
+  const url =
+    CHECK_GAS_URL +
+    "?mode=groups" +
+    "&lang=" +
+    encodeURIComponent(lang);
+
+
+  fetch(url)
+
+    .then(function(response) {
+
+      if (!response.ok) {
+
+        throw new Error(
+          "HTTPエラー：" +
+          response.status
+        );
+
+      }
+
+      return response.json();
+
+    })
+
+
+    .then(function(data) {
+
+      /* ------------------------------------------------------
+         GASがエラーを返した場合
+         ------------------------------------------------------ */
+      if (!data) {
+
+        throw new Error(
+          "CHECK_GASからデータが返されませんでした。"
+        );
+
+      }
+
+
+      /* ------------------------------------------------------
+         itemsを確認
+         ------------------------------------------------------ */
+      if (
+        !Array.isArray(data.items)
+      ) {
+
+        throw new Error(
+          data.error ||
+          "講座一覧データがありません。"
+        );
+
+      }
+
+
+      /* ------------------------------------------------------
+         いったん画面をクリア
+         ------------------------------------------------------ */
+      courseList.innerHTML = "";
+
+
+      /* ------------------------------------------------------
+         GASから返った講座を表示
+         ------------------------------------------------------ */
+      data.items.forEach(function(item) {
+
+        addCourseItem(item);
+
+      });
+
+
+      /* ------------------------------------------------------
+         0件の場合
+         ------------------------------------------------------ */
+      if (
+        data.items.length === 0
+      ) {
+
+        showMessage(
+          data.error ||
+          "講座データがありません。",
+          true
+        );
+
+        return;
+
+      }
+
+
+      /* ------------------------------------------------------
+         件数表示
+         ------------------------------------------------------ */
+      console.log(
+        "CHECK_GAS 講座数：",
+        data.items.length
+      );
+
+      console.log(
+        "CHECK_GAS courseId：",
+        data.items.map(function(item) {
+          return item.courseId;
+        })
+      );
+
+
+      /* ------------------------------------------------------
+         25件未満の場合は警告を表示
+         ------------------------------------------------------ */
+      if (
+        data.count !== undefined &&
+        Number(data.count) < 25
+      ) {
+
+        const warning =
+          document.createElement("div");
+
+        warning.style.gridColumn =
+          "1 / -1";
+
+        warning.style.textAlign =
+          "center";
+
+        warning.style.color =
+          "#cc6600";
+
+        warning.style.fontWeight =
+          "bold";
+
+        warning.style.margin =
+          "10px";
+
+        warning.textContent =
+          "CHECK_GASから取得できた講座は " +
+          data.count +
+          " 件です。checkシートの25講座データを確認してください。";
+
+        courseList.appendChild(
+          warning
+        );
+
+      }
+
+    })
+
+
+    .catch(function(error) {
+
+      console.error(
+        "course.html エラー：",
+        error
+      );
+
+
+      showMessage(
+        "講座データの取得に失敗しました。" +
+        "\n" +
+        String(error.message || error),
+        true
+      );
+
+    });
+
+}
+
+/* ------------------------------------------------------------
+   開始
+   ------------------------------------------------------------ */
+loadCourses();
+
 </script>
-
-
-<!-- ================================================== -->
-<!-- 共通フッター -->
-<!-- ================================================== -->
-
-<div id="footer"></div>
-
-
-<!-- ================================================== -->
-<!-- 共通JavaScript -->
-<!-- ================================================== -->
-<script src="script.js"></script>
-
 </body>
 </html>
