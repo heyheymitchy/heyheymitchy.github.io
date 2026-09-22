@@ -6,12 +6,9 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>講座一覧｜わくわくプログラミング工房</title>
-  <!-- ==================================================
-       共通CSS
-       ================================================== -->
+  <!-- 共通CSS -->
   <link rel="stylesheet" href="style.css">
 
   <style>
@@ -42,621 +39,324 @@
     }
 
     /* ==================================================
-       講座グループアイコン
-       個別カードには表示しない
+       講座グループアイコン 個別カードには表示しない
        ================================================== */
-
     .course-header-icon {
-
       width: 80px;
-
       height: 80px;
-
       object-fit: contain;
-
       flex-shrink: 0;
-
     }
-
 
     /* ==================================================
        講座グループタイトル
        ================================================== */
-
     .course-header-title {
-
       font-size: 32px;
-
       color: #0000FF;
-
       font-weight: bold;
-
       line-height: 1.3;
-
     }
-
 
     /* ==================================================
        講座グループ説明
        ================================================== */
-
     .course-header-desc {
-
       font-size: 20px;
-
       line-height: 1.6;
-
     }
-
 
     /* ==================================================
        選択状況表示
        ================================================== */
-
     .selected-course-area {
-
       display: none;
-
       margin: 20px;
-
       padding: 18px 22px;
-
       border-radius: 15px;
-
       background-color: #fffbe6;
-
       border: 2px solid #ffcc00;
-
     }
 
-
-    .selected-course-area.show {
-
-      display: block;
-
-    }
-
+    .selected-course-area.show { display: block; }
 
     .selected-course-title {
-
       font-size: 22px;
-
       font-weight: bold;
-
       color: #0000FF;
-
       margin-bottom: 10px;
-
     }
-
 
     .selected-course-info {
-
       font-size: 17px;
-
       line-height: 1.7;
-
     }
-
 
     /* ==================================================
        講座一覧
        ================================================== */
-
     #content {
-
       display: grid;
-
-      grid-template-columns:
-        repeat(5, minmax(0, 1fr));
-
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 18px;
-
       margin: 20px;
-
       align-items: stretch;
-
     }
-
 
     /* ==================================================
        講座カード
        ================================================== */
-
     .course-card {
-
       border: 2px solid #dddddd;
-
       border-radius: 12px;
-
       padding: 15px;
-
       background-color: #ffffff;
-
-      box-shadow:
-        0 3px 8px rgba(0, 0, 0, 0.10);
-
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.10);
       min-width: 0;
-
       display: flex;
-
       flex-direction: column;
-
     }
-
 
     /* ==================================================
        選択された講座カード
        ================================================== */
-
     .course-card.selected {
-
       border: 3px solid #ff9900;
-
       background-color: #fffbe6;
-
-      box-shadow:
-        0 4px 12px rgba(255, 153, 0, 0.25);
-
+      box-shadow: 0 4px 12px rgba(255, 153, 0, 0.25);
     }
-
 
     /* ==================================================
        講座名
        ================================================== */
-
     .title {
-
       font-size: 18px;
-
       color: #0000FF;
-
       font-weight: bold;
-
       line-height: 1.35;
-
       margin-bottom: 8px;
-
       word-break: break-word;
-
     }
-
 
     /* ==================================================
        説明文
        ================================================== */
-
     .desc {
-
       font-size: 13px;
-
       line-height: 1.5;
-
       margin-bottom: 8px;
-
       word-break: break-word;
-
       flex-grow: 1;
-
     }
-
 
     /* ==================================================
        講座ID
        ================================================== */
-
     .course-id {
-
       font-size: 14px;
-
       font-weight: bold;
-
       margin-top: 5px;
-
       margin-bottom: 10px;
-
     }
-
 
     /* ==================================================
        講座選択ボタン
        ================================================== */
-
     .course-select-button {
-
       width: 100%;
-
       font-size: 14px;
-
       font-weight: bold;
-
       padding: 9px 5px;
-
       border: none;
-
       border-radius: 8px;
-
       cursor: pointer;
-
       background-color: #ffcc00;
-
       color: #000000;
-
       margin-top: auto;
-
     }
 
-
-    .course-select-button:hover {
-
-      opacity: 0.8;
-
-    }
-
+    .course-select-button:hover { opacity: 0.8; }
 
     /* ==================================================
        選択済みボタン
        ================================================== */
-
     .course-card.selected
-    .course-select-button {
-
-      background-color: #66cc66;
-
-      color: #ffffff;
-
-    }
-
+    .course-select-button { background-color: #66cc66; color: #ffffff; }
 
     /* ==================================================
        教材選択エリア
        ================================================== */
-
     .product-area {
-
       display: none;
-
       margin: 20px;
-
       padding: 20px;
-
       border-radius: 15px;
-
       background-color: #ffffff;
-
       border: 2px solid #dddddd;
-
-      box-shadow:
-        0 3px 8px rgba(0, 0, 0, 0.10);
-
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.10);
     }
 
-
-    .product-area.show {
-
-      display: block;
-
-    }
-
+    .product-area.show { display: block; }
 
     /* ==================================================
        教材選択タイトル
        ================================================== */
-
     .product-title {
-
       font-size: 24px;
-
       font-weight: bold;
-
       color: #0000FF;
-
       margin-bottom: 15px;
-
     }
-
 
     /* ==================================================
        教材選択説明
        ================================================== */
-
     .product-description {
-
       font-size: 16px;
-
       margin-bottom: 15px;
-
       line-height: 1.6;
-
     }
-
 
     /* ==================================================
        商品選択
        ================================================== */
-
     .product-options {
-
       display: grid;
-
-      grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 15px;
-
     }
-
 
     /* ==================================================
        商品選択カード
        ================================================== */
-
     .product-option {
-
       display: block;
-
       border: 2px solid #dddddd;
-
       border-radius: 12px;
-
       padding: 15px;
-
       cursor: pointer;
-
       background-color: #ffffff;
-
       transition: 0.2s;
-
     }
 
-
-    .product-option:hover {
-
-      border-color: #ffcc00;
-
-      background-color: #fffbe6;
-
-    }
-
+    .product-option:hover { border-color: #ffcc00; background-color: #fffbe6; }
 
     /* ==================================================
        選択された商品
        ================================================== */
-
     .product-option.selected {
-
       border: 3px solid #ff9900;
-
       background-color: #fffbe6;
-
     }
-
 
     /* ==================================================
        商品上段
        ================================================== */
-
     .product-option-top {
-
       display: flex;
-
       align-items: center;
-
       gap: 8px;
-
       margin-bottom: 8px;
-
     }
 
-
-    .product-option input {
-
-      cursor: pointer;
-
-    }
-
+    .product-option input { cursor: pointer; }
 
     /* ==================================================
        商品ID
        ================================================== */
-
     .product-id {
-
       font-size: 20px;
-
       font-weight: bold;
-
       color: #0000FF;
-
     }
-
 
     /* ==================================================
        商品名
        ================================================== */
-
     .product-name {
-
       font-size: 17px;
-
       font-weight: bold;
-
       margin-bottom: 5px;
-
     }
-
 
     /* ==================================================
        商品価格
        ================================================== */
-
     .product-price {
-
       font-size: 18px;
-
       font-weight: bold;
-
       color: #cc0000;
-
     }
-
 
     /* ==================================================
        確認エリア
        ================================================== */
-
     .confirm-area {
-
       display: none;
-
       margin: 20px;
-
       padding: 20px;
-
       border-radius: 15px;
-
       background-color: #f5f9ff;
-
       border: 2px solid #6699cc;
-
     }
 
-
-    .confirm-area.show {
-
-      display: block;
-
-    }
-
+    .confirm-area.show { display: block; }
 
     .confirm-title {
-
       font-size: 24px;
-
       font-weight: bold;
-
       color: #0000FF;
-
       margin-bottom: 15px;
-
     }
-
 
     /* ==================================================
        確認内容
        ================================================== */
-
     .confirm-table {
-
       width: 100%;
-
       border-collapse: collapse;
-
       margin-bottom: 20px;
-
     }
-
 
     .confirm-table th,
-    .confirm-table td {
+    .confirm-table td { border: 1px solid #cccccc; padding: 10px; text-align: left; }
+    .confirm-table th { width: 160px; background-color: #eeeeee; font-weight: bold; }
 
-      border: 1px solid #cccccc;
-
-      padding: 10px;
-
-      text-align: left;
-
-    }
-
-
-    .confirm-table th {
-
-      width: 160px;
-
-      background-color: #eeeeee;
-
-      font-weight: bold;
-
-    }
-
-
-    .confirm-table td {
-
-      background-color: #ffffff;
-
-    }
-
-
-    .confirm-price {
-
-      font-size: 22px;
-
-      font-weight: bold;
-
-      color: #cc0000;
-
-    }
-
+    .confirm-table td { background-color: #ffffff; }
+    .confirm-price { font-size: 22px; font-weight: bold; color: #cc0000; }
 
     /* ==================================================
        申し込みボタン
        ================================================== */
-
     .apply-button {
-
       width: 100%;
-
       max-width: 500px;
-
       display: block;
-
       margin: 0 auto;
-
       padding: 14px;
-
       border: none;
-
       border-radius: 10px;
-
       cursor: pointer;
-
       background-color: #ff9900;
-
       color: #ffffff;
-
       font-size: 20px;
-
       font-weight: bold;
-
     }
 
-
-    .apply-button:hover {
-
-      opacity: 0.85;
-
-    }
-
+    .apply-button:hover { opacity: 0.85; }
 
     /* ==================================================
        データなし表示
        ================================================== */
-
     .message {
-
       font-size: 26px;
-
       font-weight: bold;
-
       margin: 40px;
-
     }
-
 
     /* ==================================================
        タブレット表示
        ================================================== */
-
     @media (max-width: 1100px) {
 
       #content {
@@ -666,7 +366,6 @@
 
       }
 
-
       .product-options {
 
         grid-template-columns:
@@ -676,227 +375,135 @@
 
     }
 
-
     /* ==================================================
        スマートフォン表示
        ================================================== */
-
     @media (max-width: 700px) {
-
       #content {
-
         grid-template-columns:
           repeat(2, minmax(0, 1fr));
-
         gap: 12px;
-
         margin: 12px;
-
       }
 
 
       .course-header {
-
         margin: 12px;
-
         padding: 15px 18px;
-
       }
 
 
       .course-header-title-area {
-
         gap: 10px;
-
       }
 
 
       .course-header-icon {
-
         width: 60px;
-
         height: 60px;
 
       }
 
-
       .course-header-title {
-
         font-size: 24px;
-
       }
-
 
       .course-header-desc {
-
         font-size: 16px;
-
       }
-
 
       .course-card {
-
         padding: 9px;
-
       }
 
-
       .title {
-
         font-size: 16px;
-
       }
 
 
       .desc {
-
         font-size: 12px;
-
       }
-
 
       .course-id {
-
         font-size: 12px;
-
       }
-
 
       .course-select-button {
-
         font-size: 12px;
-
         padding: 8px 4px;
-
       }
-
 
       .selected-course-area {
-
         margin: 12px;
-
         padding: 15px;
-
       }
-
 
       .selected-course-title {
-
         font-size: 20px;
-
       }
-
 
       .selected-course-info {
-
         font-size: 15px;
-
       }
-
 
       .product-area {
-
         margin: 12px;
-
         padding: 15px;
-
       }
-
 
       .product-title {
-
         font-size: 20px;
-
       }
-
 
       .product-options {
-
-        grid-template-columns:
-          1fr;
-
+        grid-template-columns: 1fr;
         gap: 10px;
-
       }
-
 
       .confirm-area {
-
         margin: 12px;
-
         padding: 15px;
-
       }
 
+      .confirm-title { font-size: 20px; }
 
-      .confirm-title {
-
-        font-size: 20px;
-
-      }
-
-
-      .confirm-table th {
-
-        width: 100px;
-
-      }
-
+      .confirm-table th { width: 100px; }
 
       .confirm-table th,
       .confirm-table td {
-
         padding: 8px;
-
         font-size: 14px;
-
       }
-
 
       .confirm-price {
-
         font-size: 20px;
-
       }
 
-
       .apply-button {
-
         font-size: 18px;
-
       }
 
     }
 
   </style>
-
 </head>
 
-
 <body>
-
-
   <!-- ==================================================
        共通ヘッダー
        ================================================== -->
 
   <div id="header"></div>
 
-
   <!-- ==================================================
        選択した講座グループの説明
        ================================================== -->
-
   <div class="course-header">
-
     <div class="course-header-title-area">
-
       <!--
-        CHECK_GASから取得した講座グループの
-        アイコンを表示します。
-
-        SC / GM / AT / MC / CG ... など、
-        25グループをSC固定にせず処理します。
+        CHECK_GASから取得した講座グループのアイコンを表示します。
+        SC / GM / AT / MC / CG ... など、25グループをSC固定にせず処理します。
       -->
 
       <img
@@ -915,304 +522,119 @@
 
     </div>
 
-
-    <div
-      id="courseHeaderDesc"
-      class="course-header-desc"
-    >
+    <div id="courseHeaderDesc" class="course-header-desc" >
       講座を選択してください。
     </div>
 
   </div>
 
-
   <!-- ==================================================
        選択した講座
        ================================================== -->
-
-  <div
-    id="selectedCourseArea"
-    class="selected-course-area"
-  >
-
-    <div class="selected-course-title">
-
-      ① 選択した講座
-
-    </div>
-
-
-    <div
-      id="selectedCourseInfo"
-      class="selected-course-info"
-    ></div>
-
+  <div id="selectedCourseArea" class="selected-course-area" >
+    <div class="selected-course-title">① 選択した講座</div>
+    <div id="selectedCourseInfo" class="selected-course-info" ></div>
   </div>
-
 
   <!-- ==================================================
        選択した講座グループの講座一覧
        ================================================== -->
-
   <div id="content"></div>
-
 
   <!-- ==================================================
        教材選択
        ================================================== -->
-
-  <div
-    id="productArea"
-    class="product-area"
-  >
-
-    <div class="product-title">
-
-      ② 教材を選択してください
-
-    </div>
-
+  <div id="productArea" class="product-area" >
+    <div class="product-title">② 教材を選択してください</div>
 
     <div class="product-description">
-
       選択した講座で利用する教材を
       1つ選択してください。
-
     </div>
-
 
     <div class="product-options">
 
-
       <!-- ==================================================
-           KS
+           KS(動画教材のみ)
            ================================================== -->
-
-      <label
-        id="productOptionKS"
-        class="product-option"
-      >
-
+      <label id="productOptionKS" class="product-option" >
         <div class="product-option-top">
-
-          <input
-            type="radio"
-            name="product"
-            value="KS"
-            onchange="selectProduct('KS')"
-          >
-
-          <span class="product-id">
-
-            KS
-
-          </span>
-
+          <input type="radio" name="product" value="KS" onchange="selectProduct('KS')" >
+          <span class="product-id">KS</span>
         </div>
-
-
-        <div class="product-name">
-
-          動画教材
-
-        </div>
-
-
-        <div class="product-price">
-
-          1,200円
-
-        </div>
-
+        <div class="product-name">動画教材</div>
+        <div class="product-price">1,200円</div>
       </label>
 
 
       <!-- ==================================================
-           PS
+           PS(PDF教材のみ)
            ================================================== -->
-
-      <label
-        id="productOptionPS"
-        class="product-option"
-      >
-
+      <label id="productOptionPS" class="product-option" >
         <div class="product-option-top">
-
-          <input
-            type="radio"
-            name="product"
-            value="PS"
-            onchange="selectProduct('PS')"
-          >
-
-          <span class="product-id">
-
-            PS
-
-          </span>
-
+          <input type="radio" name="product" value="PS" onchange="selectProduct('PS')" >
+          <span class="product-id">PS</span>
         </div>
-
-
-        <div class="product-name">
-
-          PDF教材
-
-        </div>
-
-
-        <div class="product-price">
-
-          2,400円
-
-        </div>
-
+        <div class="product-name">PDF教材</div>
+        <div class="product-price">2,400円</div>
       </label>
-
 
       <!-- ==================================================
-           KP
+           KP(動画＋PDF購入)
            ================================================== -->
-
-      <label
-        id="productOptionKP"
-        class="product-option"
-      >
-
+      <label id="productOptionKP" class="product-option" >
         <div class="product-option-top">
-
-          <input
-            type="radio"
-            name="product"
-            value="KP"
-            onchange="selectProduct('KP')"
-          >
-
-          <span class="product-id">
-
-            KP
-
-          </span>
-
+          <input type="radio" name="product" value="KP" onchange="selectProduct('KP')" >
+          <span class="product-id">KP</span>
         </div>
-
-
-        <div class="product-name">
-
-          動画＋PDF
-
-        </div>
-
-
-        <div class="product-price">
-
-          2,400円
-
-        </div>
-
+        <div class="product-name">動画＋PDF</div>
+        <div class="product-price">2,400円</div>
       </label>
-
 
     </div>
 
   </div>
-
 
   <!-- ==================================================
        最終確認
        ================================================== -->
-
-  <div
-    id="confirmArea"
-    class="confirm-area"
-  >
-
-    <div class="confirm-title">
-
-      ③ お申し込み内容の確認
-
-    </div>
-
-
+  <div id="confirmArea" class="confirm-area" >
+    <div class="confirm-title">③ お申し込み内容の確認</div>
     <table class="confirm-table">
-
       <tr>
-
-        <th>
-          講座ID
-        </th>
-
-        <td id="confirmCourseId">
-        </td>
-
+        <th>講座ID</th>
+        <td id="confirmCourseId"></td>
       </tr>
 
-
       <tr>
-
-        <th>
-          講座名
-        </th>
-
+        <th>講座名</th>
         <td id="confirmCourseName">
         </td>
-
       </tr>
 
-
       <tr>
-
-        <th>
-          販売商品ID
-        </th>
-
+        <th>販売商品ID</th>
         <td id="confirmProductId">
         </td>
-
       </tr>
 
-
       <tr>
-
-        <th>
-          教材
-        </th>
-
+        <th>教材</th>
         <td id="confirmProductName">
         </td>
-
       </tr>
-
 
       <tr>
-
-        <th>
-          料金
-        </th>
-
-        <td
-          id="confirmPrice"
-          class="confirm-price"
-        >
+        <th>料金</th>
+        <td id="confirmPrice" class="confirm-price" >
         </td>
-
       </tr>
-
     </table>
 
-
-    <button
-      id="applyButton"
-      class="apply-button"
-      onclick="applyCourse()"
-    >
-
-      ④ この内容で申し込む
-
+    <button id="applyButton" class="apply-button" onclick="applyCourse()" >
+    ④ この内容で申し込む
     </button>
-
   </div>
-
 
   <!-- ==================================================
        共通フッター
