@@ -112,6 +112,13 @@
   </button>
 
   <div
+    id="videoExpiredMessage"
+    class="error"
+    style="display:none;margin-top:20px;">
+    動画再生できません（視聴期限切れ）
+  </div>
+
+  <div
     id="videoUrl"
     style="margin-top:20px;">
   </div>
@@ -126,6 +133,13 @@
     id="viewPdfBtn">
     PDFを表示する
   </button>
+
+  <div
+    id="pdfExpiredMessage"
+    class="error"
+    style="display:none;margin-top:20px;">
+    PDFを表示できません（表示期限切れ）
+  </div>
 
   <div
     id="pdfUrl"
@@ -161,8 +175,8 @@
 // ==================================================
 
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbzoVx7xtMgeWNJKXX8G3UnO22xuL1XkkegIc_A5fh2-z3cXcuoEj0_0qs-KyCVTXCg2/exec";
-  
+  "https://script.google.com/macros/s/AKfycbwFwU_HJBkvf_6bHJXDljKqMJqknIkKJHdhfoKTkLUDnKDMprohAtEK2WJLTJj3R_RR/exec";
+    
 // ==================================================
 // 認証キー取得
 //
@@ -232,6 +246,10 @@ let currentResources = {
   videoUrl: "",
   pdfUrl: ""
 };
+
+// 視聴期限切れ状態
+// true になった場合は動画・PDFを表示しない。
+let accessExpired = false;
 
 
 // ==================================================
@@ -487,69 +505,131 @@ function loadMemberInfo() {
       // ------------------------------------------
       // 視聴期限
       // ------------------------------------------
+      //
+      // 例：
+      // expire_days = 7
+      // 決済日      = 9月23日
+      // 視聴期限    = 9月30日
+      // 9月23日～9月29日は閲覧可能
+      // 9月30日になった時点で閲覧不可
+      //
+      // 「決済日の8日後から閲覧不可」という考え方。
+      // ------------------------------------------
+
+      let expireDate = null;
 
       if (json.expireDate) {
 
-        const expireDate =
+        expireDate =
           new Date(
             json.expireDate
           );
 
+      }
+      // MAIN_GASがexpireDateを返さない場合の予備処理
+      // expire_days / expireDays と createdAt から計算する。
+      else if (
+        json.createdAt &&
+        (
+          json.expire_days !== undefined ||
+          json.expireDays !== undefined
+        )
+      ) {
+
+        const expireDays =
+          Number(
+            json.expire_days !== undefined
+              ? json.expire_days
+              : json.expireDays
+          );
+
+        const createdDate =
+          new Date(
+            json.createdAt
+          );
+
         if (
-          !isNaN(
-            expireDate.getTime()
-          )
+          !isNaN(createdDate.getTime()) &&
+          Number.isFinite(expireDays)
         ) {
 
-          document.getElementById(
-            "expireDate"
-          ).textContent =
-            formatDate(expireDate);
+          expireDate =
+            addDays(
+              createdDate,
+              expireDays
+            );
+
+        }
+
+      }
 
 
-          // MAIN_GASから返された値を優先
-          if (
-            typeof json.remainDays ===
-            "number"
-          ) {
+      if (
+        expireDate &&
+        !isNaN(
+          expireDate.getTime()
+        )
+      ) {
 
-            document.getElementById(
-              "remainDays"
-            ).textContent =
-              json.remainDays;
+        document.getElementById(
+          "expireDate"
+        ).textContent =
+          formatDate(expireDate);
 
-          } else {
 
-            const today =
-              new Date();
+        // ------------------------------------------------
+        // 日付単位で残り日数を計算
+        // ------------------------------------------------
+        // 「7日」の場合：
+        // 決済日 9/23 → 期限 9/30
+        // 9/29までは残り1日
+        // 9/30になったら期限切れ
+        // ------------------------------------------------
 
-            const remainDays =
-              Math.ceil(
-                (
-                  expireDate -
-                  today
-                ) /
-                (1000 * 60 * 60 * 24)
-              );
+        const today =
+          startOfDay(
+            new Date()
+          );
 
-            document.getElementById(
-              "remainDays"
-            ).textContent =
-              remainDays;
+        const expireDay =
+          startOfDay(
+            expireDate
+          );
 
-          }
+        const remainDays =
+          Math.ceil(
+            (
+              expireDay -
+              today
+            ) /
+            (1000 * 60 * 60 * 24)
+          );
+
+        document.getElementById(
+          "remainDays"
+        ).textContent =
+          Math.max(
+            0,
+            remainDays
+          );
+
+
+        // ------------------------------------------------
+        // 視聴期限切れ判定
+        // ------------------------------------------------
+        // 期限日当日 00:00 から閲覧不可
+        // ------------------------------------------------
+
+        accessExpired =
+          today >= expireDay;
+
+        if (accessExpired) {
+
+          setExpiredResourceUI();
 
         } else {
 
-          document.getElementById(
-            "expireDate"
-          ).textContent =
-            "日付エラー";
-
-          document.getElementById(
-            "remainDays"
-          ).textContent =
-            "-";
+          setActiveResourceUI();
 
         }
 
@@ -558,12 +638,18 @@ function loadMemberInfo() {
         document.getElementById(
           "expireDate"
         ).textContent =
-          "登録情報なし";
+          "日付エラー";
 
         document.getElementById(
           "remainDays"
         ).textContent =
           "-";
+
+        // 期限を確認できない場合は、
+        // 誤って閲覧させないため閲覧不可にする。
+        accessExpired = true;
+
+        setExpiredResourceUI();
 
       }
 
@@ -652,15 +738,31 @@ function loadResources() {
 
     .then(json => {
 
-      currentResources = {
+      // 視聴期限切れならURLは保持しない
+      if (accessExpired) {
 
-        videoUrl:
-          json.videoUrl || "",
+        currentResources = {
+          videoUrl: "",
+          pdfUrl: ""
+        };
 
-        pdfUrl:
-          json.pdfUrl || ""
+        setExpiredResourceUI();
 
-      };
+      } else {
+
+        currentResources = {
+
+          videoUrl:
+            json.videoUrl || "",
+
+          pdfUrl:
+            json.pdfUrl || ""
+
+        };
+
+        setActiveResourceUI();
+
+      }
 
 
       document.getElementById(
@@ -910,6 +1012,16 @@ document
       }
 
 
+      // クライアント側でも期限を再確認
+      if (isAccessExpired()) {
+
+        setExpiredResourceUI();
+
+        return;
+
+      }
+
+
       const button =
         document.getElementById(
           "playVideoBtn"
@@ -957,9 +1069,9 @@ document
           "expired"
         ) {
 
-          alert(
-            "視聴期限が終了しています。"
-          );
+          accessExpired = true;
+
+          setExpiredResourceUI();
 
           return;
 
@@ -985,6 +1097,10 @@ document
             json.videoUrl
           );
 
+
+        document.getElementById(
+          "videoUrl"
+        ).style.display = "block";
 
         document.getElementById(
           "videoUrl"
@@ -1157,6 +1273,16 @@ document
       }
 
 
+      // クライアント側でも期限を再確認
+      if (isAccessExpired()) {
+
+        setExpiredResourceUI();
+
+        return;
+
+      }
+
+
       const button =
         document.getElementById(
           "viewPdfBtn"
@@ -1204,9 +1330,9 @@ document
           "expired"
         ) {
 
-          alert(
-            "視聴期限が終了しています。"
-          );
+          accessExpired = true;
+
+          setExpiredResourceUI();
 
           return;
 
@@ -1226,6 +1352,10 @@ document
 
         }
 
+
+        document.getElementById(
+          "pdfUrl"
+        ).style.display = "block";
 
         document.getElementById(
           "pdfUrl"
@@ -1274,6 +1404,247 @@ document
 
     }
   );
+
+
+// ==================================================
+// 視聴期限・教材表示制御
+// ==================================================
+
+function startOfDay(date) {
+
+  const d =
+    new Date(date);
+
+  d.setHours(
+    0,
+    0,
+    0,
+    0
+  );
+
+  return d;
+
+}
+
+
+// --------------------------------------------------
+// 決済日 + expire_days 日
+// --------------------------------------------------
+
+function addDays(
+  date,
+  days
+) {
+
+  const d =
+    new Date(date);
+
+  d.setHours(
+    0,
+    0,
+    0,
+    0
+  );
+
+  d.setDate(
+    d.getDate() +
+    Number(days)
+  );
+
+  return d;
+
+}
+
+
+// --------------------------------------------------
+// 現在が視聴期限切れか再確認
+// --------------------------------------------------
+
+function isAccessExpired() {
+
+  return accessExpired;
+
+}
+
+
+// --------------------------------------------------
+// 視聴可能状態
+// --------------------------------------------------
+
+function setActiveResourceUI() {
+
+  const videoArea =
+    document.getElementById(
+      "videoUrl"
+    );
+
+  const pdfArea =
+    document.getElementById(
+      "pdfUrl"
+    );
+
+  if (videoArea) {
+    videoArea.style.display = "block";
+  }
+
+  if (pdfArea) {
+    pdfArea.style.display = "block";
+  }
+
+
+  const videoButton =
+    document.getElementById(
+      "playVideoBtn"
+    );
+
+  const pdfButton =
+    document.getElementById(
+      "viewPdfBtn"
+    );
+
+  const videoMessage =
+    document.getElementById(
+      "videoExpiredMessage"
+    );
+
+  const pdfMessage =
+    document.getElementById(
+      "pdfExpiredMessage"
+    );
+
+
+  if (videoButton) {
+
+    videoButton.style.display =
+      "inline-block";
+
+    videoButton.disabled =
+      false;
+
+  }
+
+
+  if (pdfButton) {
+
+    pdfButton.style.display =
+      "inline-block";
+
+    pdfButton.disabled =
+      false;
+
+  }
+
+
+  if (videoMessage) {
+
+    videoMessage.style.display =
+      "none";
+
+  }
+
+
+  if (pdfMessage) {
+
+    pdfMessage.style.display =
+      "none";
+
+  }
+
+}
+
+
+// --------------------------------------------------
+// 視聴期限切れ状態
+// --------------------------------------------------
+
+function setExpiredResourceUI() {
+
+  accessExpired = true;
+
+
+  const videoButton =
+    document.getElementById(
+      "playVideoBtn"
+    );
+
+  const pdfButton =
+    document.getElementById(
+      "viewPdfBtn"
+    );
+
+  const videoMessage =
+    document.getElementById(
+      "videoExpiredMessage"
+    );
+
+  const pdfMessage =
+    document.getElementById(
+      "pdfExpiredMessage"
+    );
+
+  const videoArea =
+    document.getElementById(
+      "videoUrl"
+    );
+
+  const pdfArea =
+    document.getElementById(
+      "pdfUrl"
+    );
+
+
+  // 動画
+  if (videoButton) {
+
+    videoButton.style.display =
+      "none";
+
+  }
+
+  if (videoMessage) {
+
+    videoMessage.style.display =
+      "block";
+
+  }
+
+  if (videoArea) {
+
+    videoArea.innerHTML =
+      "";
+
+    videoArea.style.display =
+      "none";
+
+  }
+
+
+  // PDF
+  if (pdfButton) {
+
+    pdfButton.style.display =
+      "none";
+
+  }
+
+  if (pdfMessage) {
+
+    pdfMessage.style.display =
+      "block";
+
+  }
+
+  if (pdfArea) {
+
+    pdfArea.innerHTML =
+      "";
+
+    pdfArea.style.display =
+      "none";
+
+  }
+
+}
 
 
 // ==================================================
