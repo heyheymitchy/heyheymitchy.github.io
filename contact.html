@@ -1,72 +1,704 @@
-﻿<!DOCTYPE html>
+﻿<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- わくわくプログラミング工房　平兵道　のホームページ -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- contact.html -->
+
+<!DOCTYPE html>
 <html lang="ja">
+
+
+<!-- ================================================== -->
+<!-- head -->
+<!-- ================================================== -->
+
 <head>
-  <meta charset="UTF-8">
-  <title>無料体験講座お申込みのページ</title>
-  <link rel="stylesheet" href="style2.css">
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>お問い合わせ</title>
+
+<link
+  rel="stylesheet"
+  href="style.css"
+>
+
+
+<style>
+
+/* ==================================================
+   お問い合わせページ専用CSS
+   ================================================== */
+
+.contact-container {
+
+  max-width: 700px;
+
+  margin: 40px auto;
+
+  padding: 30px;
+
+  background-color: #ffffff;
+
+  border-radius: 15px;
+
+  box-shadow:
+    0 4px 15px
+    rgba(0, 0, 0, 0.15);
+
+}
+
+
+/* タイトル */
+
+.contact-title {
+
+  text-align: center;
+
+  font-size: 28px;
+
+  color: #228b22;
+
+  margin-bottom: 15px;
+
+}
+
+
+/* 説明 */
+
+.contact-description {
+
+  text-align: center;
+
+  line-height: 1.8;
+
+  margin-bottom: 30px;
+
+}
+
+
+/* 入力グループ */
+
+.form-group {
+
+  margin-bottom: 22px;
+
+}
+
+
+/* ラベル */
+
+.form-group label {
+
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-weight: bold;
+
+  font-size: 16px;
+
+}
+
+
+/* 必須 */
+
+.required {
+
+  color: red;
+
+  margin-left: 5px;
+
+  font-size: 13px;
+
+}
+
+
+/* 入力欄 */
+
+.form-group input,
+.form-group textarea {
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 12px;
+
+  font-size: 16px;
+
+  border: 2px solid #cccccc;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+
+}
+
+
+/* フォーカス */
+
+.form-group input:focus,
+.form-group textarea:focus {
+
+  outline: none;
+
+  border-color: #228b22;
+
+}
+
+
+/* 問い合わせ内容 */
+
+.form-group textarea {
+
+  min-height: 180px;
+
+  resize: vertical;
+
+  line-height: 1.7;
+
+}
+
+
+/* ==================================================
+   送信ボタン
+   ================================================== */
+
+.contact-button-area {
+
+  text-align: center;
+
+  margin-top: 30px;
+
+}
+
+
+.contact-button {
+
+  padding: 14px 50px;
+
+  border: none;
+
+  border-radius: 30px;
+
+  background-color: #f5b400;
+
+  color: #ffffff;
+
+  font-size: 18px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+}
+
+
+.contact-button:hover {
+
+  background-color: #e0a400;
+
+}
+
+
+/* 送信中 */
+
+.contact-button:disabled {
+
+  background-color: #aaaaaa;
+
+  cursor: not-allowed;
+
+}
+
+
+/* ==================================================
+   結果表示
+   ================================================== */
+
+#result {
+
+  margin-top: 25px;
+
+  text-align: center;
+
+  font-size: 17px;
+
+  font-weight: bold;
+
+  min-height: 30px;
+
+}
+
+
+/* スマートフォン */
+
+@media (max-width: 600px) {
+
+  .contact-container {
+
+    margin: 20px 10px;
+
+    padding: 20px;
+
+  }
+
+
+  .contact-title {
+
+    font-size: 24px;
+
+  }
+
+
+  .contact-button {
+
+    width: 100%;
+
+  }
+
+}
+
+</style>
+
 </head>
-<body class="bg-gradient">
-  <div class="container">
-    <h1>無料体験講座　お申込みのページ</h1>
-　　　<p>今回、［無料体験講座］を申込される皆様には<span style="color:red; font-size:18px; font-weight:bold;">［わくわく無料キャンペーン］特典</span>として<br>
-　　　<span style="color:red; background: yellow; font-size:18px; font-weight:bold; padding:0px;">［入会費用］［年会費］が無料となる［特別会員］</span>と、させていただきます<br><br>
-　　　なお、趣旨にご賛同頂けない場合には<br>お手数をお掛けしますが［前の画面に戻る］（右下ボタン）よりお戻りください<br></p>
-    <div class="center-box">
-      <a href="campaign.html" class="btn-campaign">特別会員わくわくキャンペーンの内容確認へ</a>
+
+
+
+<body>
+
+
+<!-- ここからは全html共用の記述にする -->
+
+
+<!-- ================================================== -->
+<!-- 共通ヘッダー -->
+<!-- ================================================== -->
+
+<div id="header"></div>
+
+
+<!-- ここまで -->
+
+
+
+<!-- ここからはこのページだけの内容 -->
+
+
+<!-- ================================================== -->
+<!-- お問い合わせ -->
+<!-- ================================================== -->
+
+<div class="contact-container">
+
+
+  <h1 class="contact-title">
+
+    お問い合わせ
+
+  </h1>
+
+
+  <p class="contact-description">
+
+    わくわくプログラミング工房 平兵道への<br>
+
+    お問い合わせはこちらからお願いします。
+
+  </p>
+
+
+
+  <!-- ==================================================
+       お問い合わせフォーム
+       ================================================== -->
+
+  <form id="contactForm">
+
+
+    <!-- GAS処理判定 -->
+
+    <input
+      type="hidden"
+      name="type"
+      value="contact"
+    >
+
+
+
+    <!-- ==================================================
+         会員番号
+         ================================================== -->
+
+    <div class="form-group">
+
+      <label for="memberId">
+
+        会員番号
+
+        <span class="required">
+          必須
+        </span>
+
+      </label>
+
+
+      <input
+        type="text"
+        id="memberId"
+        name="memberId"
+        placeholder="例：WKS1234"
+        required
+      >
+
     </div>
-<br>
- <form id="entryForm" class="card">
-      <label>お名前</label>
-      <input type="text" name="name" required>
 
-      <label>メールアドレス</label>
-      <input type="email" name="email" required>
 
-      <label>郵便番号</label>
-      <input type="post" name="post">
 
-      <label>電話番号</label>
-      <input type="tel" name="tel">
+    <!-- ==================================================
+         氏名
+         ================================================== -->
 
-      <label>アンケート（興味のある講座）</label>
-      <select name="course">
-        <option value="scratch">Scratch入門</option>
-        <option value="web">Web制作入門</option>
-        <option value="python">Python入門</option>
-      </select>
+    <div class="form-group">
 
-      <label>パスワード（任意）</label>
-      <input type="password" name="password">
-<BR>
-      <button type="submit" class="btn-primary">
-        <b>無料体験講座</b>に申し込みます（兼特別会員登録）
+      <label for="name">
+
+        氏名
+
+        <span class="required">
+          必須
+        </span>
+
+      </label>
+
+
+      <input
+        type="text"
+        id="name"
+        name="name"
+        placeholder="例：日本 太郎"
+        required
+      >
+
+    </div>
+
+
+
+    <!-- ==================================================
+         メールアドレス
+         ================================================== -->
+
+    <div class="form-group">
+
+      <label for="email">
+
+        メールアドレス
+
+        <span class="required">
+          必須
+        </span>
+
+      </label>
+
+
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="例：sample@gmail.com"
+        required
+      >
+
+    </div>
+
+
+
+    <!-- ==================================================
+         問い合わせ内容
+         ================================================== -->
+
+    <div class="form-group">
+
+      <label for="message">
+
+        問い合わせ内容
+
+        <span class="required">
+          必須
+        </span>
+
+      </label>
+
+
+      <textarea
+        id="message"
+        name="message"
+        placeholder="お問い合わせ内容を入力してください。"
+        required
+      ></textarea>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         送信ボタン
+         ================================================== -->
+
+    <div class="contact-button-area">
+
+      <button
+        type="submit"
+        id="sendButton"
+        class="contact-button"
+      >
+
+        お問い合わせを送信する
+
       </button>
-　　　<button class="btn-back" onclick="history.back()">前の画面に戻る</button>
-    </form>
 
-    <p id="result" class="message"></p>
-  </div>
+    </div>
 
-  <script>
-    document.getElementById('entryForm').addEventListener('submit', function(e) {
+
+  </form>
+
+
+
+  <!-- ==================================================
+       送信結果
+       ================================================== -->
+
+  <div id="result"></div>
+
+
+</div>
+
+
+<!-- ここまで このページだけの内容 -->
+
+
+
+<!-- ==================================================
+     共通JavaScript
+     ================================================== -->
+
+<script src="script.js"></script>
+
+
+
+<!-- ==================================================
+     お問い合わせ専用JavaScript
+     ================================================== -->
+
+<script>
+
+
+// ==================================================
+// FAQ_GAS URL
+// ==================================================
+
+const CONTACT_GAS_URL =
+  "https://script.google.com/macros/s/AKfycbzqAP_j1ebvg8ufstag-EGPY2W71reTW6fqpUu-9jSMlCLZqxqeaj0A6bVLRin3e1_IPA/exec";
+
+
+
+// ==================================================
+// お問い合わせフォーム送信
+// ==================================================
+
+document
+  .getElementById("contactForm")
+  .addEventListener(
+    "submit",
+    async function(e) {
+
+
+      // --------------------------------------------
+      // 通常のフォーム送信を停止
+      // --------------------------------------------
+
       e.preventDefault();
-      const form = e.target;
-      const data = new FormData(form);
 
-      fetch('YOUR_WEB_APP_URL', {
-        method: 'POST',
-        body: data
-      })
-      .then(res => res.text())
-      .then(text => {
-        document.getElementById('result').textContent = text;
-        form.reset();
-      })
-      .catch(() => {
-        document.getElementById('result').textContent =
-          '送信に失敗しました。時間をおいて再度お試しください。';
-      });
-    });
-  </script>
+
+
+      // --------------------------------------------
+      // ボタン
+      // --------------------------------------------
+
+      const button =
+        document.getElementById(
+          "sendButton"
+        );
+
+
+      // --------------------------------------------
+      // 結果表示
+      // --------------------------------------------
+
+      const result =
+        document.getElementById(
+          "result"
+        );
+
+
+
+      // --------------------------------------------
+      // 二重送信防止
+      // --------------------------------------------
+
+      button.disabled = true;
+
+      button.textContent =
+        "送信中・・・";
+
+
+      result.style.color =
+        "#333333";
+
+
+      result.textContent =
+        "お問い合わせを送信しています・・・";
+
+
+
+      try {
+
+
+        // ------------------------------------------
+        // フォームデータ
+        // ------------------------------------------
+
+        const formData =
+          new FormData(e.target);
+
+
+
+        // ------------------------------------------
+        // GASへPOST
+        // ------------------------------------------
+
+        const response =
+          await fetch(
+            CONTACT_GAS_URL,
+            {
+
+              method: "POST",
+
+              body: formData
+
+            }
+          );
+
+
+
+        // ------------------------------------------
+        // GASからJSON取得
+        // ------------------------------------------
+
+        const data =
+          await response.json();
+
+
+
+        // ------------------------------------------
+        // 正常終了
+        // ------------------------------------------
+
+        if (data.success) {
+
+
+          result.style.color =
+            "#008000";
+
+
+          result.textContent =
+            "お問い合わせを送信しました。ありがとうございました。";
+
+
+          // 入力内容をクリア
+
+          e.target.reset();
+
+
+        } else {
+
+
+          // ----------------------------------------
+          // GAS側エラー
+          // ----------------------------------------
+
+          result.style.color =
+            "#ff0000";
+
+
+          result.textContent =
+            "送信できませんでした：" +
+            data.message;
+
+        }
+
+
+      } catch (error) {
+
+
+        // ------------------------------------------
+        // 通信エラー
+        // ------------------------------------------
+
+        console.error(
+          "お問い合わせ送信エラー:",
+          error
+        );
+
+
+        result.style.color =
+          "#ff0000";
+
+
+        result.textContent =
+          "送信中にエラーが発生しました。";
+
+
+      } finally {
+
+
+        // ------------------------------------------
+        // ボタンを元に戻す
+        // ------------------------------------------
+
+        button.disabled = false;
+
+
+        button.textContent =
+          "お問い合わせを送信する";
+
+      }
+
+
+    }
+  );
+
+
+</script>
+
+
+
+<!-- ここからは全html共用の記述にする -->
+
+
+<!-- ================================================== -->
+<!-- 共通フッター -->
+<!-- ================================================== -->
+
+<div id="footer"></div>
+
+
+<!-- ここまで -->
+
 </body>
 </html>
