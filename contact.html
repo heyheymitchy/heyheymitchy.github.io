@@ -499,13 +499,11 @@
 
 
 // ==================================================
-// FAQ_GAS URL
+// FAQ_GAS_URL
 // ==================================================
 
-const CONTACT_GAS_URL =
-  "https://script.google.com/macros/s/AKfycbzqAP_j1ebvg8ufstag-EGPY2W71reTW6fqpUu-9jSMlCLZqxqeaj0A6bVLRin3e1_IPA/exec";
-
-
+const FAQ_GAS_URL =
+  "https://script.google.com/macros/s/AKfycbxRD2X6Hb6eWMuptCOZ3FGT0q9GQIu9BZw_P0kly3NcNE0PoYu-r7VA3zHAUy7v7JGRVQ/exec";
 
 // ==================================================
 // お問い合わせフォーム送信
@@ -584,7 +582,7 @@ document
 
         const response =
           await fetch(
-            CONTACT_GAS_URL,
+            FAQ_GAS_URL,
             {
 
               method: "POST",

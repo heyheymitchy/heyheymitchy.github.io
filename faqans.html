@@ -65,7 +65,8 @@ document.getElementById("faqForm").onsubmit = async (e) => {
   const fd = new FormData(e.target);
 
 // FAQ_GASをデプロイしたらURL更新すること
-  const res = await fetch("https://script.google.com/macros/s/AKfycbxRD2X6Hb6eWMuptCOZ3FGT0q9GQIu9BZw_P0kly3NcNE0PoYu-r7VA3zHAUy7v7JGRVQ/exec",
+  
+const res = await fetch("https://script.google.com/macros/s/AKfycbxRD2X6Hb6eWMuptCOZ3FGT0q9GQIu9BZw_P0kly3NcNE0PoYu-r7VA3zHAUy7v7JGRVQ/exec",
  {
     method: "POST",
     body: fd
