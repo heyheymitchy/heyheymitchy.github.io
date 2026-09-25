@@ -90,11 +90,12 @@
   <section class="form-section card">
     <div class="container">
       <h1>無料体験講座　お申込みのページ</h1>
-      <p><span style="color:red; font-size:18px; font-weight:bold;">［特別会員わくわくキャンペーン］特典</span>として<span style="color:red; background: yellow; font-size:18px; font-weight:bold; padding:0px;">［入会費用］［年会費］が無料となります</span><br>
-　　趣旨にご賛同頂けない場合には［前の画面に戻る］（左下ボタン）よりお戻りください</p>
-    </div>
-    <div class="center-box">
-      <a href="campaign.html" class="btn-campaign">特別会員わくわくキャンペーンの内容確認へ</a>
+      <p>無料体験講座のお申込みには［会員登録］が必要となります<br>
+　　　<span style="color:red; font-size:18px; font-weight:bold;">今なら［特別会員わくわくキャンペーン］実施中</span>です<br>
+　　　<span style="color:red; background: yellow; font-size:18px; font-weight:bold; padding:0px;">特典として［入会費用］［年会費］が無料となります</span><br>
+　　　<span style="color:blue;font-size:18px; font-weight:bold;">趣旨にご賛同頂けない場合には［前の画面に戻る］（左下ボタン）よりお戻りください</p>
+    
+      <a href="campaign.html" class="btn-campaign">特別会員わくわくキャンペーンの内容確認は、こちらです</a>
     </div>
     <h2>特別会員様登録フォーム　兼　無料体験講座お申込みフォーム</h2>
 
@@ -141,9 +142,11 @@ const MAIN_GAS_URL = "https://script.google.com/macros/s/AKfycbwFwU_HJBkvf_6bHJX
 // ===============================
 // 無料体験フォーム送信（no-cors）
 // ===============================
+// HTMLの中から id="form" とついている要素を探して取得します
 document.getElementById("form").addEventListener("submit", function(event) {
   event.preventDefault();
 
+// 定義宣言（data変数に各値を保存）
   const data = {
     name: document.getElementById("name").value,
     kana: document.getElementById("kana").value,
@@ -153,6 +156,7 @@ document.getElementById("form").addEventListener("submit", function(event) {
     courseId: document.getElementById("trialCourse").value
   };
 
+// Google Apps Script（GAS）の[MAIN_GAS]へデータを送信する処理
 fetch(MAIN_GAS_URL, {
     method: "POST",
     mode: "no-cors",
