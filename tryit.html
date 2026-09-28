@@ -105,6 +105,44 @@ button {
 }
 
 /* ============================================================
+   購入前注意メッセージ
+   ============================================================ */
+.purchaseWarning {
+  display: none;
+  margin-top: 16px;
+  padding: 14px;
+  border: 2px solid #e05a00;
+  border-radius: 8px;
+  background: #fff4e8;
+  color: #7a2f00;
+  line-height: 1.7;
+}
+
+.purchaseWarningTitle {
+  font-size: 17px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.purchaseWarningText {
+  white-space: pre-wrap;
+}
+
+.purchaseConfirm {
+  margin-top: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-weight: bold;
+}
+
+.purchaseConfirm input {
+  width: auto;
+  margin-top: 3px;
+  transform: scale(1.2);
+}
+
+/* ============================================================
    講座情報
    ============================================================ */
 .courseInfo {
@@ -240,6 +278,32 @@ button {
            料金
            ---------------------------------------------- -->
       <div id="price" class="price"></div>
+
+    </div>
+
+    <!-- ======================================================
+         購入前注意メッセージ
+         現在の講座が視聴期限内の場合だけ表示する。
+         ====================================================== -->
+    <div id="purchaseWarning" class="purchaseWarning">
+
+      <div class="purchaseWarningTitle">
+        $26A0 購入前の注意
+      </div>
+
+      <div id="purchaseWarningText" class="purchaseWarningText">
+      </div>
+
+      <label class="purchaseConfirm">
+        <input
+          type="checkbox"
+          id="purchaseConfirm"
+        >
+        <span>
+          上記の内容を確認しました。
+          新しい講座を購入すると、現在の講座は新しい講座へ切り替わることを了承します。
+        </span>
+      </label>
 
     </div>
 
@@ -408,6 +472,21 @@ const checkoutBtn =
     "checkoutBtn"
   );
 
+const purchaseWarning =
+  document.getElementById(
+    "purchaseWarning"
+  );
+
+const purchaseWarningText =
+  document.getElementById(
+    "purchaseWarningText"
+  );
+
+const purchaseConfirm =
+  document.getElementById(
+    "purchaseConfirm"
+  );
+
 const statusElement =
   document.getElementById(
     "status"
@@ -427,6 +506,16 @@ let selectedProduct = null;
 // 会員確認済み
 // ------------------------------------------------------------
 let memberChecked = false;
+
+// ------------------------------------------------------------
+// 現在の受講状況
+// ------------------------------------------------------------
+let currentPurchaseStatus = null;
+
+// ------------------------------------------------------------
+// 購入前注意の確認済み
+// ------------------------------------------------------------
+let warningAcknowledged = false;
 
 // ============================================================
 // 初期処理
@@ -988,6 +1077,22 @@ function displayCourse() {
 }
 
 // ============================================================
+// 購入前注意の確認チェック
+// ============================================================
+purchaseConfirm.addEventListener(
+  "change",
+  function() {
+
+    warningAcknowledged =
+      purchaseConfirm.checked;
+
+    updateCheckoutButton();
+
+  }
+);
+
+
+// ============================================================
 // 会員情報確認ボタン
 // ============================================================
 checkBtn.addEventListener(
@@ -1192,55 +1297,26 @@ function checkMember() {
         true;
 
       // ------------------------------------------------------
-      // Stripe決済ボタンを有効化
+      // 購入前の現在講座を確認
       // ------------------------------------------------------
-      checkoutBtn.disabled =
-        !(
-          memberChecked &&
-          selectedProduct
-        );
+      warningAcknowledged =
+        false;
 
-      // ------------------------------------------------------
-      // 確認結果表示
-      // ------------------------------------------------------
+      purchaseConfirm.checked =
+        false;
+
+      purchaseWarning.style.display =
+        "none";
+
       setStatus(
-
         "会員情報を確認しました。\n" +
+        "現在の受講状況を確認しています..."
+      );
 
-        "お名前：" +
-        (json.name || "") +
-
-        "\n" +
-
-        "メール：" +
-        (json.email || "") +
-
-        "\n\n" +
-
-        "講座ID：" +
-        courseId +
-
-        "\n" +
-
-        "販売商品ID：" +
-        productId +
-
-        "\n" +
-
-        "料金：" +
-        formatPrice(
-          selectedProduct.price
-        ) +
-        "円" +
-
-        "\n\n" +
-
-        "内容を確認して「Stripeで決済へ進む」を押してください。",
-
-        false,
-
-        true
-
+      checkCurrentPurchaseStatus(
+        memberID,
+        json.name || name,
+        json.email || email
       );
 
     }
@@ -1273,6 +1349,297 @@ function checkMember() {
   );
 
 }
+
+// ============================================================
+// 購入前：現在の受講状況確認
+//
+// 現在の講座が視聴期限内なら、
+// 新しい講座購入による「現在講座の切替」を
+// 購入前に明示する。
+// ============================================================
+function checkCurrentPurchaseStatus(
+  memberID,
+  name,
+  email
+) {
+
+  fetch(
+    STRIPE_GAS_URL +
+    "?getCurrentPurchase=1" +
+    "&memberID=" +
+    encodeURIComponent(memberID) +
+    "&name=" +
+    encodeURIComponent(name) +
+    "&email=" +
+    encodeURIComponent(email)
+  )
+
+  .then(
+    async response => {
+
+      const text =
+        await response.text();
+
+      console.log(
+        "CURRENT PURCHASE RAW:",
+        text
+      );
+
+      let json;
+
+      try {
+
+        json =
+          JSON.parse(text);
+
+      } catch (error) {
+
+        throw new Error(
+          "現在の受講状況APIがJSONを返していません。"
+        );
+
+      }
+
+      if (!response.ok) {
+
+        throw new Error(
+          "HTTPエラー：" +
+          response.status
+        );
+
+      }
+
+      return json;
+
+    }
+  )
+
+  .then(
+    json => {
+
+      console.log(
+        "CURRENT PURCHASE:",
+        json
+      );
+
+      if (
+        !json.success ||
+        json.authenticated === false ||
+        json.valid === false
+      ) {
+
+        throw new Error(
+          json.error ||
+          "現在の受講状況を確認できませんでした。"
+        );
+
+      }
+
+      currentPurchaseStatus =
+        json;
+
+      // ----------------------------------------------------
+      // 現在の講座が視聴期限内
+      // ----------------------------------------------------
+      if (
+        json.hasCurrentCourse === true &&
+        json.active === true
+      ) {
+
+        const expireText =
+          json.expireDate
+            ? formatDateTime(
+                new Date(
+                  json.expireDate
+                )
+              )
+            : "確認できません";
+
+        purchaseWarningText.textContent =
+          "現在、次の講座を受講中です。\n\n" +
+
+          "現在の講座：" +
+          (json.courseName || json.courseId || "講座情報なし") +
+
+          "\n講座ID：" +
+          (json.courseId || "") +
+
+          "\n視聴期限：" +
+          expireText +
+
+          "\n残り日数：" +
+          String(
+            json.remainDays !== undefined
+              ? json.remainDays
+              : "-"
+          ) +
+          "日\n\n" +
+
+          "現在の視聴期限が残っている状態で新しい講座を購入すると、" +
+          "決済完了後に現在の講座は新しい講座へ切り替わります。\n" +
+
+          "現在の講座は受講履歴として保存されますが、" +
+          "mypageの「現在の受講講座」には新しい講座が表示されます。";
+
+        purchaseWarning.style.display =
+          "block";
+
+        purchaseConfirm.checked =
+          false;
+
+        warningAcknowledged =
+          false;
+
+        updateCheckoutButton();
+
+        setStatus(
+          "会員情報を確認しました。\n" +
+          "購入前の注意事項を確認してください。",
+          false,
+          true
+        );
+
+        return;
+
+      }
+
+      // ----------------------------------------------------
+      // 現在受講中の講座がない／期限切れ
+      // ----------------------------------------------------
+      purchaseWarning.style.display =
+        "none";
+
+      purchaseConfirm.checked =
+        false;
+
+      warningAcknowledged =
+        true;
+
+      updateCheckoutButton();
+
+      setStatus(
+        "会員情報を確認しました。\n" +
+        "お名前：" +
+        (json.name || name) +
+        "\n" +
+        "メール：" +
+        (json.email || email) +
+        "\n\n" +
+        "講座ID：" +
+        courseId +
+        "\n" +
+        "販売商品ID：" +
+        productId +
+        "\n" +
+        "料金：" +
+        formatPrice(
+          selectedProduct.price
+        ) +
+        "円\n\n" +
+        "内容を確認して「Stripeで決済へ進む」を押してください。",
+        false,
+        true
+      );
+
+    }
+  )
+
+  .catch(
+    error => {
+
+      console.error(
+        "現在の受講状況確認エラー：",
+        error
+      );
+
+      currentPurchaseStatus =
+        null;
+
+      warningAcknowledged =
+        false;
+
+      checkoutBtn.disabled =
+        true;
+
+      setStatus(
+        "現在の受講状況を確認できませんでした。\n" +
+        error.message +
+        "\n\n安全のため、決済へ進めない状態にしています。",
+        true
+      );
+
+    }
+  );
+
+}
+
+
+// ============================================================
+// 決済ボタンの有効／無効
+// ============================================================
+function updateCheckoutButton() {
+
+  if (
+    !memberChecked ||
+    !selectedProduct ||
+    !currentPurchaseStatus
+  ) {
+
+    checkoutBtn.disabled =
+      true;
+
+    return;
+
+  }
+
+  const hasActiveCourse =
+    currentPurchaseStatus.hasCurrentCourse === true &&
+    currentPurchaseStatus.active === true;
+
+  if (hasActiveCourse) {
+
+    checkoutBtn.disabled =
+      !warningAcknowledged;
+
+  } else {
+
+    checkoutBtn.disabled =
+      false;
+
+  }
+
+}
+
+
+// ============================================================
+// 日時表示
+// ============================================================
+function formatDateTime(date) {
+
+  if (
+    !date ||
+    isNaN(date.getTime())
+  ) {
+
+    return "日付不明";
+
+  }
+
+  return (
+    date.getFullYear() +
+    "年" +
+    String(
+      date.getMonth() + 1
+    ).padStart(2,"0") +
+    "月" +
+    String(
+      date.getDate()
+    ).padStart(2,"0") +
+    "日"
+  );
+
+}
+
 
 // ============================================================
 // Stripe Checkoutボタン
@@ -1309,6 +1676,38 @@ function startCheckout() {
     alert(
       "講座情報が取得できていません。"
     );
+
+    return;
+
+  }
+
+  // ----------------------------------------------------------
+  // 購入前注意の最終確認
+  // ----------------------------------------------------------
+  if (
+    !currentPurchaseStatus
+  ) {
+
+    alert(
+      "現在の受講状況を確認してください。"
+    );
+
+    return;
+
+  }
+
+  if (
+    currentPurchaseStatus.hasCurrentCourse === true &&
+    currentPurchaseStatus.active === true &&
+    !warningAcknowledged
+  ) {
+
+    alert(
+      "購入前の注意事項を確認し、" +
+      "チェックを入れてください。"
+    );
+
+    purchaseConfirm.focus();
 
     return;
 
