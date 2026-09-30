@@ -9,17 +9,10 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1"
->
-
-<title>
-有料講座お申込みフォーム｜わくわくプログラミング工房
-</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>有料講座お申込みフォーム｜わくわくプログラミング工房</title>
 
 <style>
-
 /* ============================================================
    全体
    ============================================================ */
@@ -47,6 +40,7 @@ body {
     );
 
   color: #222;
+
 }
 
 
@@ -642,6 +636,7 @@ const MAIN_GAS_URL =
 const STRIPE_GAS_URL =
 "https://script.google.com/macros/s/AKfycbw_9bn5qeOtAvLQmQuMJzwCz9kR2IgaJJlv8JG4SW_ccTQyDBjIdeur7YBuj-z8ci33BA/exec";
 
+
 // ============================================================
 // URLパラメータ
 // ============================================================
@@ -910,7 +905,7 @@ async function loadProducts() {
       await fetch(
 
         STRIPE_GAS_URL +
-        "?getProducts=1&_=" + Date.now()
+        "?getProducts=1"
 
       );
 
@@ -1579,25 +1574,63 @@ async function checkCurrentPurchaseStatus(
 
   try {
 
+    // ========================================================
+    // 現在の受講状況API URLを安全に作成
+    // ※ Products API / Checkout API は変更しない
+    // ※ STRIPE_GAS_URL は現在正常動作確認済みのURLを使用
+    // ========================================================
+
+    const currentPurchaseUrl =
+      new URL(
+        STRIPE_GAS_URL
+      );
+
+
+    currentPurchaseUrl.searchParams.set(
+      "getCurrentPurchase",
+      "1"
+    );
+
+
+    currentPurchaseUrl.searchParams.set(
+      "memberID",
+      memberID || ""
+    );
+
+
+    currentPurchaseUrl.searchParams.set(
+      "name",
+      name || ""
+    );
+
+
+    currentPurchaseUrl.searchParams.set(
+      "email",
+      email || ""
+    );
+
+
+    // ブラウザ・GitHub Pages側の古いレスポンスを使用しない
+    currentPurchaseUrl.searchParams.set(
+      "_",
+      String(Date.now())
+    );
+
+
+    console.log(
+      "CURRENT PURCHASE URL:",
+      currentPurchaseUrl.toString()
+    );
+
 
     const response =
       await fetch(
-
-        STRIPE_GAS_URL +
-        "?getCurrentPurchase=1&_=" + Date.now() +
-        "&memberID=" +
-        encodeURIComponent(
-          memberID
-        ) +
-        "&name=" +
-        encodeURIComponent(
-          name
-        ) +
-        "&email=" +
-        encodeURIComponent(
-          email
-        )
-
+        currentPurchaseUrl.toString(),
+        {
+          method: "GET",
+          cache: "no-store",
+          redirect: "follow"
+        }
       );
 
 
