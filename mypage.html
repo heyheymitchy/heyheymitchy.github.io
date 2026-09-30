@@ -108,36 +108,131 @@
 const API_URL = "https://script.google.com/macros/s/AKfycbzMvrlP__tgv8HqjkX_nYFPq5v2skuTd45flf-ltGa1vF2L4P-pljXHlaxbLpUEXlGg/exec";
 
 
+
+
 // ==================================================
 // 認証キー取得
-// メールからのリンクは mypage.html#key=xxxxxxxx
-// 【重要】URLの # 部分はサーバーへ送信されない。
+// 正式方式：mypage.html#key=xxxxxxxx
+// 互換方式：mypage.html?key=xxxxxxxx
+// mypage.html?authKey=xxxxxxxx
 // ==================================================
-const searchParams = new URLSearchParams(window.location.search);
 
-const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+const searchParams =
+  new URLSearchParams(
+    window.location.search
+  );
+
+const hashText =
+  window.location.hash
+    .replace(/^#/, "")
+    .trim();
+
+const hashParams =
+  new URLSearchParams(
+    hashText
+  );
 
 // 新方式：#key=互換：?key= ※ ?member= は認証には使用しない。
-const authKey =
- hashParams.get("key") || searchParams.get("key") ||searchParams.get("authKey") ||"";
+let authKey =
+  hashParams.get("key") ||
+  hashParams.get("authKey") ||
+  searchParams.get("key") ||
+  searchParams.get("authKey") ||
+  "";
+
+authKey =
+  String(authKey || "").trim();
+// ==================================================
+// デバッグ
+// ==================================================
+
+console.log(
+  "mypage 認証キー取得結果：",
+  authKey
+    ? "取得成功"
+    : "取得失敗"
+);
+
+/ ==================================================
+// 認証キーが取得できた場合
+// sessionStorageにも一時保存
+//
+// ※ localStorageではなくsessionStorageを使用
+// ==================================================
+
+if (authKey) {
+
+  try {
+
+    sessionStorage.setItem(
+      "mypage_authKey",
+      authKey
+    );
+
+  } catch (e) {
+
+    console.warn(
+      "sessionStorage保存に失敗しました。",
+      e
+    );
+
+  }
+
+}
 
 // ==================================================
-// 認証キーを取得した直後にURLを通常表示へ戻す
-// 【重要】これは「見た目」の処理。
-// 実際の認証はMAIN_GAS側でauthKeyを検証する。
+// URLにキーが無い場合は
+// sessionStorageから復元
 // ==================================================
-// エラー確認処理 ==
-if (authKey) {
+
+if (!authKey) {
+
   try {
+
+    authKey =
+      sessionStorage.getItem(
+        "mypage_authKey"
+      ) || "";
+
+  } catch (e) {
+
+    console.warn(
+      "sessionStorage取得に失敗しました。",
+      e
+    );
+  }
+
+}
+
+authKey =
+  String(authKey || "").trim();
+
+
+// ==================================================
+// 認証キー取得後はURLの#keyを非表示にする
+// ==================================================
+
+if (authKey) {
+
+  try {
+
     window.history.replaceState(
       {},
       document.title,
       window.location.pathname
     );
+
   } catch (e) {
-    console.warn("URL表示の変更に失敗しました。",e);
+
+    console.warn(
+      "URL表示の変更に失敗しました。",
+      e
+    );
+
   }
+
 }
+
 
 // ==================================================
 // 受講講座の動画/PDF情報を保持
