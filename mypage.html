@@ -3,7 +3,6 @@
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!--  mypage.html -->
 <!-- 会員様の個人専用ページ -->
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -109,15 +108,12 @@
 const API_URL =
   "https://script.google.com/macros/s/AKfycbwMtxPxFSsIZHIvcO32sckIGnCuJP9vVeSJ6Op3LzmSlK-FeV7HvknE644VvC3TVDkV/exec";
 
-
 // ==================================================
 // 認証キー取得
-//
 // 正式方式：mypage.html#key=xxxxxxxx
 // 互換方式：mypage.html?key=xxxxxxxx
 // mypage.html?authKey=xxxxxxxx
 // ==================================================
-
 const searchParams =
   new URLSearchParams(
     window.location.search
@@ -557,4 +553,1603 @@ function loadMemberInfo() {
         )
       ) {
 
-        const expire
+        const expireDays =
+          Number(
+            json.expire_days !== undefined
+              ? json.expire_days
+              : json.expireDays
+          );
+
+        const createdDate =
+          new Date(
+            json.createdAt
+          );
+
+
+        if (
+          !isNaN(
+            createdDate.getTime()
+          ) &&
+          Number.isFinite(
+            expireDays
+          )
+        ) {
+
+          expireDate =
+            addDays(
+              createdDate,
+              expireDays
+            );
+
+        }
+
+      }
+
+
+      if (
+        expireDate &&
+        !isNaN(
+          expireDate.getTime()
+        )
+      ) {
+
+        document.getElementById(
+          "expireDate"
+        ).textContent =
+          formatDate(
+            expireDate
+          );
+
+
+        // ------------------------------------------------
+        // 日付単位で残り日数を計算
+        // ------------------------------------------------
+
+        const today =
+          startOfDay(
+            new Date()
+          );
+
+        const expireDay =
+          startOfDay(
+            expireDate
+          );
+
+        const remainDays =
+          Math.ceil(
+            (
+              expireDay -
+              today
+            ) /
+            (1000 * 60 * 60 * 24)
+          );
+
+
+        document.getElementById(
+          "remainDays"
+        ).textContent =
+          Math.max(
+            0,
+            remainDays
+          );
+
+
+        // ------------------------------------------------
+        // 視聴期限切れ判定
+        // ------------------------------------------------
+
+        accessExpired =
+          today >= expireDay;
+
+
+        if (accessExpired) {
+
+          setExpiredResourceUI();
+
+        } else {
+
+          setActiveResourceUI();
+
+        }
+
+      } else {
+
+        document.getElementById(
+          "expireDate"
+        ).textContent =
+          "日付エラー";
+
+        document.getElementById(
+          "remainDays"
+        ).textContent =
+          "-";
+
+
+        // 期限を確認できない場合は、
+        // 誤って閲覧させないため閲覧不可にする。
+
+        accessExpired = true;
+
+        setExpiredResourceUI();
+
+      }
+
+    })
+
+    .catch(error => {
+
+      console.error(
+        "会員情報取得エラー:",
+        error
+      );
+
+
+      document.getElementById(
+        "name"
+      ).textContent =
+        "認証エラー";
+
+      document.getElementById(
+        "name"
+      ).className =
+        "error";
+
+
+      document.getElementById(
+        "courseName"
+      ).textContent =
+        "マイページを開く権限を確認できません。";
+
+      document.getElementById(
+        "courseName"
+      ).className =
+        "error";
+
+    });
+
+}
+
+
+// ==================================================
+// ② 受講講座取得
+// ==================================================
+
+function loadResources() {
+
+  const url =
+    buildApiUrl({
+      getResources: "1"
+    });
+
+
+  fetch(url)
+
+    .then(async res => {
+
+      const text =
+        await res.text();
+
+      let json;
+
+      try {
+
+        json =
+          JSON.parse(text);
+
+      } catch (e) {
+
+        throw new Error(
+          "MAIN_GASからJSONではないデータが返りました。"
+        );
+
+      }
+
+
+      if (
+        !res.ok ||
+        json.success === false
+      ) {
+
+        throw new Error(
+          json.error ||
+          "受講講座取得エラー"
+        );
+
+      }
+
+      return json;
+
+    })
+
+    .then(json => {
+
+      // ------------------------------------------------
+      // 視聴期限切れならURLは保持しない
+      // ------------------------------------------------
+
+      if (accessExpired) {
+
+        currentResources = {
+          videoUrl: "",
+          pdfUrl: ""
+        };
+
+        setExpiredResourceUI();
+
+      } else {
+
+        currentResources = {
+
+          videoUrl:
+            json.videoUrl ||
+            "",
+
+          pdfUrl:
+            json.pdfUrl ||
+            ""
+
+        };
+
+        setActiveResourceUI();
+
+      }
+
+
+      // ==================================================
+      // ★重要修正
+      //
+      // 受講講座の表示はここで確定する。
+      //
+      // MAIN_GASのgetResources結果が
+      // 最新認証行に対応しているため、
+      // ここではこの値を現在の受講講座として表示する。
+      //
+      // courseIdがある場合は
+      //
+      //   SC01 Scratch動画教材
+      //
+      // の形式にする。
+      //
+      // courseIdがない場合はcourseNameのみ。
+      // ==================================================
+
+      const courseId =
+        String(
+          json.courseId ||
+          ""
+        ).trim();
+
+      const courseName =
+        String(
+          json.courseName ||
+          ""
+        ).trim();
+
+
+      let displayCourseName = "受講講座なし";
+
+
+      if (
+        courseId &&
+        courseName
+      ) {
+
+        displayCourseName =
+          courseId +
+          " " +
+          courseName;
+
+      } else if (courseName) {
+
+        displayCourseName =
+          courseName;
+
+      } else if (courseId) {
+
+        displayCourseName =
+          courseId;
+
+      }
+
+
+      document.getElementById(
+        "courseName"
+      ).textContent =
+        displayCourseName;
+
+    })
+
+    .catch(error => {
+
+      console.error(
+        "受講講座取得エラー:",
+        error
+      );
+
+
+      currentResources = {
+        videoUrl: "",
+        pdfUrl: ""
+      };
+
+
+      // ------------------------------------------------
+      // ★重要
+      //
+      // ここで「取得エラー」として
+      // 正常に表示されている講座名を
+      // 上書きしない。
+      //
+      // loadMemberInfo()で取得できた情報があれば
+      // そのまま残す。
+      // ------------------------------------------------
+
+      const courseElement =
+        document.getElementById(
+          "courseName"
+        );
+
+      if (
+        !courseElement.textContent ||
+        courseElement.textContent ===
+          "読み込み中..."
+      ) {
+
+        courseElement.textContent =
+          "取得エラー";
+
+        courseElement.className =
+          "error";
+
+      }
+
+    });
+
+}
+
+
+// ==================================================
+// ③ 受講履歴
+//
+// MAIN_GASへ authKey を送信
+// 同じ会員番号の member 行をすべて取得
+//
+// MAIN_GASの返却形式が
+//
+// ① 配列
+// [
+//   {
+//     createdAt:"2026-09-30",
+//     courseId:"SC01",
+//     courseName:"Scratch動画教材",
+//     memberType:"paid"
+//   }
+// ]
+//
+// ② オブジェクト
+// {
+//   success:true,
+//   history:[...]
+// }
+//
+// のどちらでも処理できるようにする。
+// ==================================================
+
+function loadHistory() {
+
+  const url =
+    buildApiUrl({
+      getHistory: "1"
+    });
+
+
+  fetch(url)
+
+    .then(async res => {
+
+      const text =
+        await res.text();
+
+
+      console.log(
+        "MAIN_GAS getHistory response:",
+        text
+      );
+
+
+      let json;
+
+      try {
+
+        json =
+          JSON.parse(text);
+
+      } catch (e) {
+
+        throw new Error(
+          "MAIN_GASから履歴のJSONを取得できませんでした。\n" +
+          text.substring(
+            0,
+            300
+          )
+        );
+
+      }
+
+
+      if (!res.ok) {
+
+        throw new Error(
+          json.error ||
+          "HTTPエラー: " +
+          res.status
+        );
+
+      }
+
+
+      if (
+        json.success === false
+      ) {
+
+        throw new Error(
+          json.error ||
+          "受講履歴を取得できませんでした。"
+        );
+
+      }
+
+
+      return json;
+
+    })
+
+
+    .then(json => {
+
+      const ul =
+        document.getElementById(
+          "historyList"
+        );
+
+
+      ul.innerHTML = "";
+
+
+      // ------------------------------------------------
+      // MAIN_GASの返却形式に対応
+      // ------------------------------------------------
+
+      let list = [];
+
+
+      // ① 配列そのもの
+
+      if (
+        Array.isArray(json)
+      ) {
+
+        list = json;
+
+      }
+
+
+      // ② { history:[...] }
+
+      else if (
+        json &&
+        Array.isArray(
+          json.history
+        )
+      ) {
+
+        list =
+          json.history;
+
+      }
+
+
+      // ③ { data:[...] }
+
+      else if (
+        json &&
+        Array.isArray(
+          json.data
+        )
+      ) {
+
+        list =
+          json.data;
+
+      }
+
+
+      // ------------------------------------------------
+      // 履歴なし
+      // ------------------------------------------------
+
+      if (
+        list.length === 0
+      ) {
+
+        const li =
+          document.createElement(
+            "li"
+          );
+
+        li.textContent =
+          "受講履歴はありません";
+
+        ul.appendChild(
+          li
+        );
+
+        return;
+
+      }
+
+
+      // ------------------------------------------------
+      // 履歴表示
+      // ------------------------------------------------
+
+      list.forEach(item => {
+
+        const li =
+          document.createElement(
+            "li"
+          );
+
+
+        // ------------------------------------------------
+        // 日付
+        // ------------------------------------------------
+
+        let dateStr = "";
+
+
+        if (
+          item.createdAt
+        ) {
+
+          const d =
+            new Date(
+              item.createdAt
+            );
+
+
+          if (
+            !isNaN(
+              d.getTime()
+            )
+          ) {
+
+            dateStr =
+              formatDate(d);
+
+          } else {
+
+            dateStr =
+              item.createdAt;
+
+          }
+
+        }
+
+
+        // ==================================================
+        // ★修正
+        //
+        // courseId + courseName を表示する。
+        //
+        // 例：
+        // SC01 Scratch動画教材
+        //
+        // courseNameだけの場合：
+        // Scratch動画教材
+        //
+        // courseIdだけの場合：
+        // SC01
+        // ==================================================
+
+        const courseId =
+          String(
+            item.courseId ||
+            ""
+          ).trim();
+
+
+        const courseName =
+          String(
+            item.courseName ||
+            ""
+          ).trim();
+
+
+        let displayCourseName =
+          "講座情報なし";
+
+
+        if (
+          courseId &&
+          courseName
+        ) {
+
+          displayCourseName =
+            courseId +
+            " " +
+            courseName;
+
+        } else if (
+          courseName
+        ) {
+
+          displayCourseName =
+            courseName;
+
+        } else if (
+          courseId
+        ) {
+
+          displayCourseName =
+            courseId;
+
+        }
+
+
+        // ------------------------------------------------
+        // 会員種別
+        // ------------------------------------------------
+
+        let typeText = "";
+
+
+        if (
+          item.memberType
+        ) {
+
+          if (
+            item.memberType ===
+            "paid"
+          ) {
+
+            typeText =
+              "（受講）";
+
+          } else if (
+            item.memberType ===
+            "trial"
+          ) {
+
+            typeText =
+              "（無料体験）";
+
+          }
+
+        }
+
+
+        // ------------------------------------------------
+        // 表示
+        // ------------------------------------------------
+
+        li.textContent =
+          dateStr +
+          "：" +
+          displayCourseName +
+          typeText;
+
+
+        ul.appendChild(
+          li
+        );
+
+      });
+
+    })
+
+
+    .catch(error => {
+
+      console.error(
+        "受講履歴取得エラー:",
+        error
+      );
+
+
+      const ul =
+        document.getElementById(
+          "historyList"
+        );
+
+
+      // 今回は原因確認ができるようにする
+
+      ul.innerHTML =
+        "<li class='error'>" +
+        "受講履歴を取得できませんでした" +
+        "<br>" +
+        "<small>" +
+        escapeHtml(
+          error.message
+        ) +
+        "</small>" +
+        "</li>";
+
+    });
+
+}
+
+
+// ==================================================
+// ④ 次のおすすめ講座
+// ==================================================
+
+function loadNextCourse() {
+
+  const url =
+    buildApiUrl({
+      getNextCourse: "1"
+    });
+
+
+  fetch(url)
+
+    .then(async res => {
+
+      const text =
+        await res.text();
+
+
+      console.log(
+        "MAIN_GAS getNextCourse response:",
+        text
+      );
+
+
+      let json;
+
+      try {
+
+        json =
+          JSON.parse(text);
+
+      } catch (e) {
+
+        throw new Error(
+          "MAIN_GASからおすすめ講座のJSONを取得できませんでした。"
+        );
+
+      }
+
+
+      if (!res.ok) {
+
+        throw new Error(
+          json.error ||
+          "HTTPエラー: " +
+          res.status
+        );
+
+      }
+
+
+      if (
+        json.success === false
+      ) {
+
+        throw new Error(
+          json.error ||
+          "おすすめ講座を取得できませんでした。"
+        );
+
+      }
+
+
+      return json;
+
+    })
+
+
+    .then(next => {
+
+      const element =
+        document.getElementById(
+          "nextCourseName"
+        );
+
+
+      const nextCourseName =
+        next.nextCourseName ||
+        next.courseName ||
+        next.nextCourse ||
+        "";
+
+
+      if (
+        nextCourseName
+      ) {
+
+        element.textContent =
+          "次におすすめの講座：「" +
+          nextCourseName +
+          "」";
+
+      } else {
+
+        element.textContent =
+          "現在おすすめの講座はありません";
+
+      }
+
+    })
+
+
+    .catch(error => {
+
+      console.error(
+        "次講座取得エラー:",
+        error
+      );
+
+
+      document.getElementById(
+        "nextCourseName"
+      ).textContent =
+        "おすすめ講座を取得できませんでした";
+
+    });
+
+}
+
+
+// ==================================================
+// ⑤ 動画再生
+//
+// MAIN_GASからvideoUrlを取得し、
+// YouTubeの場合はwatch?v=... → /embed/...
+// に変換してiframe表示。
+// ==================================================
+
+document
+  .getElementById(
+    "playVideoBtn"
+  )
+  .addEventListener(
+    "click",
+    async () => {
+
+      if (!authKey) {
+
+        alert(
+          "認証情報を取得できません。"
+        );
+
+        return;
+
+      }
+
+
+      // クライアント側でも期限を再確認
+
+      if (
+        isAccessExpired()
+      ) {
+
+        setExpiredResourceUI();
+
+        return;
+
+      }
+
+
+      const button =
+        document.getElementById(
+          "playVideoBtn"
+        );
+
+
+      button.disabled = true;
+
+      button.textContent =
+        "動画を読み込み中...";
+
+
+      try {
+
+        const url =
+          buildApiUrl({
+            downloadVideo: "1"
+          });
+
+
+        const res =
+          await fetch(url);
+
+
+        const text =
+          await res.text();
+
+
+        let json;
+
+        try {
+
+          json =
+            JSON.parse(text);
+
+        } catch (e) {
+
+          throw new Error(
+            "MAIN_GASから動画URLのJSONを取得できませんでした。"
+          );
+
+        }
+
+
+        if (
+          json.error ===
+          "expired"
+        ) {
+
+          accessExpired = true;
+
+          setExpiredResourceUI();
+
+          return;
+
+        }
+
+
+        if (
+          !res.ok ||
+          json.success === false ||
+          !json.videoUrl
+        ) {
+
+          throw new Error(
+            json.error ||
+            "動画URLを取得できませんでした。"
+          );
+
+        }
+
+
+        const embedUrl =
+          toYouTubeEmbedUrl(
+            json.videoUrl
+          );
+
+
+        document.getElementById(
+          "videoUrl"
+        ).style.display =
+          "block";
+
+
+        document.getElementById(
+          "videoUrl"
+        ).innerHTML = `
+
+          <iframe
+            src="${escapeHtmlAttribute(embedUrl)}"
+            width="100%"
+            height="450"
+            style="border:none;border-radius:12px;"
+            title="受講動画"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+
+        `;
+
+
+        document.getElementById(
+          "videoUrl"
+        ).scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+
+
+      } catch (error) {
+
+        console.error(
+          "動画取得エラー:",
+          error
+        );
+
+
+        alert(
+          "動画の再生に失敗しました。\n" +
+          error.message
+        );
+
+
+      } finally {
+
+        button.disabled = false;
+
+        button.textContent =
+          "動画を再生する";
+
+      }
+
+    }
+  );
+
+
+// ==================================================
+// YouTube URLをiframe用URLへ変換
+// ==================================================
+
+function toYouTubeEmbedUrl(url) {
+
+  const value =
+    String(
+      url || ""
+    ).trim();
+
+
+  // すでにembed URL
+
+  if (
+    value.includes(
+      "youtube.com/embed/"
+    )
+  ) {
+
+    return value;
+
+  }
+
+
+  // watch?v=VIDEO_ID
+
+  const match =
+    value.match(
+      /[?&]v=([^&]+)/
+    );
+
+
+  if (match) {
+
+    return (
+      "https://www.youtube.com/embed/" +
+      encodeURIComponent(
+        match[1]
+      )
+    );
+
+  }
+
+
+  // youtu.be/VIDEO_ID
+
+  const shortMatch =
+    value.match(
+      /youtu\.be\/([^?&]+)/
+    );
+
+
+  if (shortMatch) {
+
+    return (
+      "https://www.youtube.com/embed/" +
+      encodeURIComponent(
+        shortMatch[1]
+      )
+    );
+
+  }
+
+
+  // YouTube以外
+
+  return value;
+
+}
+
+
+// ==================================================
+// HTML属性エスケープ
+// ==================================================
+
+function escapeHtmlAttribute(value) {
+
+  return String(
+    value || ""
+  )
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    );
+
+}
+
+
+// ==================================================
+// HTML表示用エスケープ
+// ==================================================
+
+function escapeHtml(value) {
+
+  return String(
+    value || ""
+  )
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+// ==================================================
+// ⑥ PDFビューア
+//
+// MAIN_GASからpdfUrlを取得してiframe表示。
+// ==================================================
+
+document
+  .getElementById(
+    "viewPdfBtn"
+  )
+  .addEventListener(
+    "click",
+    async () => {
+
+      if (!authKey) {
+
+        alert(
+          "認証情報を取得できません。"
+        );
+
+        return;
+
+      }
+
+
+      // クライアント側でも期限を再確認
+
+      if (
+        isAccessExpired()
+      ) {
+
+        setExpiredResourceUI();
+
+        return;
+
+      }
+
+
+      const button =
+        document.getElementById(
+          "viewPdfBtn"
+        );
+
+
+      button.disabled = true;
+
+      button.textContent =
+        "PDFを読み込み中...";
+
+
+      try {
+
+        const url =
+          buildApiUrl({
+            downloadPdf: "1"
+          });
+
+
+        const res =
+          await fetch(url);
+
+
+        const text =
+          await res.text();
+
+
+        let json;
+
+        try {
+
+          json =
+            JSON.parse(text);
+
+        } catch (e) {
+
+          throw new Error(
+            "MAIN_GASからPDF URLのJSONを取得できませんでした。"
+          );
+
+        }
+
+
+        if (
+          json.error ===
+          "expired"
+        ) {
+
+          accessExpired = true;
+
+          setExpiredResourceUI();
+
+          return;
+
+        }
+
+
+        if (
+          !res.ok ||
+          json.success === false ||
+          !json.pdfUrl
+        ) {
+
+          throw new Error(
+            json.error ||
+            "PDF URLを取得できませんでした。"
+          );
+
+        }
+
+
+        document.getElementById(
+          "pdfUrl"
+        ).style.display =
+          "block";
+
+
+        document.getElementById(
+          "pdfUrl"
+        ).innerHTML = `
+
+          <iframe
+            src="${escapeHtmlAttribute(json.pdfUrl)}"
+            width="100%"
+            height="700px"
+            style="border:none;border-radius:12px;background:#fff;"
+            title="教材PDF">
+          </iframe>
+
+        `;
+
+
+        document.getElementById(
+          "pdfUrl"
+        ).scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+
+
+      } catch (error) {
+
+        console.error(
+          "PDF取得エラー:",
+          error
+        );
+
+
+        alert(
+          "PDFの表示に失敗しました。\n" +
+          error.message
+        );
+
+
+      } finally {
+
+        button.disabled = false;
+
+        button.textContent =
+          "PDFを表示する";
+
+      }
+
+    }
+  );
+
+
+// ==================================================
+// 視聴期限・教材表示制御
+// ==================================================
+
+function startOfDay(date) {
+
+  const d =
+    new Date(date);
+
+  d.setHours(
+    0,
+    0,
+    0,
+    0
+  );
+
+  return d;
+
+}
+
+
+// --------------------------------------------------
+// 決済日 + expire_days 日
+// --------------------------------------------------
+
+function addDays(
+  date,
+  days
+) {
+
+  const d =
+    new Date(date);
+
+  d.setHours(
+    0,
+    0,
+    0,
+    0
+  );
+
+  d.setDate(
+    d.getDate() +
+    Number(days)
+  );
+
+  return d;
+
+}
+
+
+// --------------------------------------------------
+// 現在が視聴期限切れか再確認
+// --------------------------------------------------
+
+function isAccessExpired() {
+
+  return accessExpired;
+
+}
+
+
+// --------------------------------------------------
+// 視聴可能状態
+// --------------------------------------------------
+
+function setActiveResourceUI() {
+
+  const videoArea =
+    document.getElementById(
+      "videoUrl"
+    );
+
+  const pdfArea =
+    document.getElementById(
+      "pdfUrl"
+    );
+
+
+  if (videoArea) {
+
+    videoArea.style.display =
+      "block";
+
+  }
+
+
+  if (pdfArea) {
+
+    pdfArea.style.display =
+      "block";
+
+  }
+
+
+  const videoButton =
+    document.getElementById(
+      "playVideoBtn"
+    );
+
+  const pdfButton =
+    document.getElementById(
+      "viewPdfBtn"
+    );
+
+  const videoMessage =
+    document.getElementById(
+      "videoExpiredMessage"
+    );
+
+  const pdfMessage =
+    document.getElementById(
+      "pdfExpiredMessage"
+    );
+
+
+  if (videoButton) {
+
+    videoButton.style.display =
+      "inline-block";
+
+    videoButton.disabled =
+      false;
+
+  }
+
+
+  if (pdfButton) {
+
+    pdfButton.style.display =
+      "inline-block";
+
+    pdfButton.disabled =
+      false;
+
+  }
+
+
+  if (videoMessage) {
+
+    videoMessage.style.display =
+      "none";
+
+  }
+
+
+  if (pdfMessage) {
+
+    pdfMessage.style.display =
+      "none";
+
+  }
+
+}
+
+
+// --------------------------------------------------
+// 視聴期限切れ状態
+// --------------------------------------------------
+
+function setExpiredResourceUI() {
+
+  accessExpired = true;
+
+
+  const videoButton =
+    document.getElementById(
+      "playVideoBtn"
+    );
+
+  const pdfButton =
+    document.getElementById(
+      "viewPdfBtn"
+    );
+
+  const videoMessage =
+    document.getElementById(
+      "videoExpiredMessage"
+    );
+
+  const pdfMessage =
+    document.getElementById(
+      "pdfExpiredMessage"
+    );
+
+  const videoArea =
+    document.getElementById(
+      "videoUrl"
+    );
+
+  const pdfArea =
+    document.getElementById(
+      "pdfUrl"
+    );
+
+
+  // 動画
+
+  if (videoButton) {
+
+    videoButton.style.display =
+      "none";
+
+  }
+
+
+  if (videoMessage) {
+
+    videoMessage.style.display =
+      "block";
+
+  }
+
+
+  if (videoArea) {
+
+    videoArea.innerHTML = "";
+
+    videoArea.style.display =
+      "none";
+
+  }
+
+
+  // PDF
+
+  if (pdfButton) {
+
+    pdfButton.style.display =
+      "none";
+
+  }
+
+
+  if (pdfMessage) {
+
+    pdfMessage.style.display =
+      "block";
+
+  }
+
+
+  if (pdfArea) {
+
+    pdfArea.innerHTML = "";
+
+    pdfArea.style.display =
+      "none";
+
+  }
+
+}
+
+
+// ==================================================
+// 日付表示
+// ==================================================
+
+function formatDate(date) {
+
+  return (
+    date.getFullYear() +
+    "年" +
+    (date.getMonth() + 1) +
+    "月" +
+    date.getDate() +
+    "日"
+  );
+
+}
+
+</script>
+
+</body>
+</html>
