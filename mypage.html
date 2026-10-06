@@ -3,17 +3,32 @@
 <!-- mypage.html -->
 <!-- 会員様の個人専用ページ -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>マイページ｜わくわくプログラミング工房</title>
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+  マイページ｜わくわくプログラミング工房
+</title>
+
+
 <style>
+
 /* ==========================================================
    全体
    ========================================================== */
+
 body {
+
   font-family:
     "Rounded Mplus 1c",
     "Hiragino Kaku Gothic ProN",
@@ -40,6 +55,7 @@ body {
 /* ==========================================================
    メイン
    ========================================================== */
+
 .container {
 
   max-width: 900px;
@@ -437,9 +453,10 @@ body {
 
   <button
     class="btn"
-    id="playVideoBtn">
+    id="playVideoBtn"
+    disabled>
 
-    動画を再生する
+    視聴期限を確認中...
 
   </button>
 
@@ -480,9 +497,10 @@ body {
 
   <button
     class="btn"
-    id="viewPdfBtn">
+    id="viewPdfBtn"
+    disabled>
 
-    PDFを表示する
+    視聴期限を確認中...
 
   </button>
 
@@ -584,7 +602,7 @@ body {
 // ============================================================
 
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbwMtxPxFSsIZHIvcO32sckIGnCuJP9vVeSJ6Op3LzmSlK-FeV7HvknE644VvC3TVDV/exec";
+  "https://script.google.com/macros/s/AKfycbwMtxPxFSsIZHIvcO32sckIGnCuJP9vVeSJ6Op3LzmSlK-FeV7HvknE644VvC3TVDkV/exec";
 
 
 // ============================================================
@@ -593,16 +611,30 @@ const API_URL =
 // 対応方式
 //
 // ① mypage.html#key=xxxxxxxx
-// ② mypage.html?key=xxxxxxxx
-// ③ mypage.html?authKey=xxxxxxxx
+// ② mypage.html#authKey=xxxxxxxx
+// ③ mypage.html?key=xxxxxxxx
+// ④ mypage.html?authKey=xxxxxxxx
+// ⑤ sessionStorage
 //
 // ============================================================
+
+
+// ------------------------------------------------------------
+// URL Query
+// ------------------------------------------------------------
 
 const searchParams =
   new URLSearchParams(
     window.location.search
   );
 
+
+// ------------------------------------------------------------
+// URL Hash
+//
+// #key=xxxx
+// #authKey=xxxx
+// ------------------------------------------------------------
 
 const hashText =
   window.location.hash
@@ -615,6 +647,10 @@ const hashParams =
     hashText
   );
 
+
+// ============================================================
+// URLから認証キー取得
+// ============================================================
 
 let authKey =
 
@@ -640,19 +676,72 @@ authKey =
 
 
 // ============================================================
-// Console確認
+// Console
+//
+// 認証キーそのものは表示しない。
 // ============================================================
 
 console.log(
   "mypage 認証キー取得：",
   authKey
-    ? "取得成功"
-    : "取得失敗"
+    ? "URLから取得成功"
+    : "URLには認証キーなし"
 );
 
 
 // ============================================================
-// sessionStorageへ保存
+// sessionStorageから復元
+//
+// 旧バージョン
+//   mypage_authKey
+//
+// 新バージョン
+//   authKey
+//
+// 両方に対応
+// ============================================================
+
+if (!authKey) {
+
+  try {
+
+    authKey =
+      sessionStorage.getItem(
+        "mypage_authKey"
+      ) ||
+
+      sessionStorage.getItem(
+        "authKey"
+      ) ||
+
+      "";
+
+  } catch (e) {
+
+    console.warn(
+      "sessionStorage取得失敗：",
+      e
+    );
+
+  }
+
+}
+
+
+// ============================================================
+// 文字列化
+// ============================================================
+
+authKey =
+  String(
+    authKey || ""
+  ).trim();
+
+
+// ============================================================
+// 認証キーが取得できた場合
+//
+// 今後のために両方の保存名へ保存
 // ============================================================
 
 if (authKey) {
@@ -661,6 +750,12 @@ if (authKey) {
 
     sessionStorage.setItem(
       "mypage_authKey",
+      authKey
+    );
+
+
+    sessionStorage.setItem(
+      "authKey",
       authKey
     );
 
@@ -677,39 +772,22 @@ if (authKey) {
 
 
 // ============================================================
-// URLにキーがない場合
-// sessionStorageから復元
+// 最終確認
 // ============================================================
 
-if (!authKey) {
-
-  try {
-
-    authKey =
-      sessionStorage.getItem(
-        "mypage_authKey"
-      ) || "";
-
-  } catch (e) {
-
-    console.warn(
-      "sessionStorage取得失敗：",
-      e
-    );
-
-  }
-
-}
-
-
-authKey =
-  String(
-    authKey || ""
-  ).trim();
+console.log(
+  "mypage 認証キー最終確認：",
+  authKey
+    ? "認証キーあり"
+    : "認証キーなし"
+);
 
 
 // ============================================================
 // URLから認証キーを消す
+//
+// 重要：
+// 認証キー取得・sessionStorage保存が完了してから実行する。
 // ============================================================
 
 if (authKey) {
@@ -764,7 +842,36 @@ let accessExpired =
 
 
 // ============================================================
+// 認証・期限確認完了
+//
+// falseの間は動画/PDFを実行しない。
+// ============================================================
+
+let accessStateReady =
+  false;
+
+
+// ============================================================
 // API URL作成
+//
+// ★重要
+//
+// MAIN_GAS側が
+//
+// key
+//
+// を読む場合に対応。
+//
+// さらに
+//
+// authKey
+//
+// も送信する。
+//
+// これにより認証パラメータ名の違いによる
+// 認証エラーを防止する。
+//
+// _ts はキャッシュ防止用。
 // ============================================================
 
 function buildApiUrl(
@@ -775,11 +882,41 @@ function buildApiUrl(
     new URLSearchParams();
 
 
+  // ----------------------------------------------------------
+  // MAIN_GAS 認証用
+  // ----------------------------------------------------------
+
   query.set(
     "key",
     authKey
   );
 
+
+  // ----------------------------------------------------------
+  // MAIN_GASがauthKeyを読む場合にも対応
+  // ----------------------------------------------------------
+
+  query.set(
+    "authKey",
+    authKey
+  );
+
+
+  // ----------------------------------------------------------
+  // キャッシュ防止
+  // ----------------------------------------------------------
+
+  query.set(
+    "_ts",
+    String(
+      Date.now()
+    )
+  );
+
+
+  // ----------------------------------------------------------
+  // その他パラメータ
+  // ----------------------------------------------------------
 
   Object.keys(params).forEach(
     function(key) {
@@ -811,6 +948,12 @@ if (!authKey) {
   showAuthenticationError();
 
 } else {
+
+
+  console.log(
+    "mypage API通信開始"
+  );
+
 
   // ----------------------------------------------------------
   // ① 会員情報
@@ -897,6 +1040,22 @@ function showAuthenticationError() {
   ).textContent =
     "認証情報がありません";
 
+
+  // ----------------------------------------------------------
+  // 認証できない場合は教材ボタンを停止
+  // ----------------------------------------------------------
+
+  document.getElementById(
+    "playVideoBtn"
+  ).disabled =
+    true;
+
+
+  document.getElementById(
+    "viewPdfBtn"
+  ).disabled =
+    true;
+
 }
 
 
@@ -910,7 +1069,19 @@ function loadMemberInfo() {
     buildApiUrl();
 
 
-  fetch(url)
+  console.log(
+    "MAIN_GAS 会員情報URL：",
+    "認証キー送信済み"
+  );
+
+
+  fetch(
+    url,
+    {
+      cache:
+        "no-store"
+    }
+  )
 
     .then(
       async function(res) {
@@ -931,7 +1102,9 @@ function loadMemberInfo() {
         try {
 
           json =
-            JSON.parse(text);
+            JSON.parse(
+              text
+            );
 
         } catch (e) {
 
@@ -966,8 +1139,19 @@ function loadMemberInfo() {
       function(json) {
 
 
+        console.log(
+          "MAIN_GAS 認証結果：",
+          json.authenticated
+        );
+
+
+        // ====================================================
+        // 認証失敗
+        // ====================================================
+
         if (
           json.authenticated === false ||
+          json.valid === false ||
           json.success === false
         ) {
 
@@ -994,6 +1178,12 @@ function loadMemberInfo() {
           "登録情報なし";
 
 
+        document.getElementById(
+          "memberID"
+        ).className =
+          "";
+
+
         // ====================================================
         // 氏名
         // ====================================================
@@ -1005,6 +1195,12 @@ function loadMemberInfo() {
           json.name ||
 
           "登録情報なし";
+
+
+        document.getElementById(
+          "name"
+        ).className =
+          "";
 
 
         // ====================================================
@@ -1035,6 +1231,12 @@ function loadMemberInfo() {
           "courseName"
         ).textContent =
           currentCourseText;
+
+
+        document.getElementById(
+          "courseName"
+        ).className =
+          "";
 
 
         // ====================================================
@@ -1086,8 +1288,7 @@ function loadMemberInfo() {
         // ====================================================
         // 視聴期限
         //
-        // MAIN_GASが正しくexpireDateを返すので、
-        // 基本的にここでは再計算しない。
+        // MAIN_GASのexpireDateを最優先。
         // ====================================================
 
         let expireDate =
@@ -1213,7 +1414,8 @@ function loadMemberInfo() {
             )
           ) {
 
-            remainDays = 0;
+            remainDays =
+              0;
 
           }
 
@@ -1250,6 +1452,14 @@ function loadMemberInfo() {
           accessExpired =
             today >=
             expireDay;
+
+
+          // --------------------------------------------------
+          // 認証・期限確認完了
+          // --------------------------------------------------
+
+          accessStateReady =
+            true;
 
 
           // --------------------------------------------------
@@ -1296,6 +1506,10 @@ function loadMemberInfo() {
             true;
 
 
+          accessStateReady =
+            true;
+
+
           setExpiredResourceUI();
 
         }
@@ -1311,6 +1525,20 @@ function loadMemberInfo() {
           "会員情報取得エラー:",
           error
         );
+
+
+        // ------------------------------------------------------
+        // 認証失敗時は教材アクセス停止
+        // ------------------------------------------------------
+
+        accessStateReady =
+          true;
+
+        accessExpired =
+          true;
+
+
+        setExpiredResourceUI();
 
 
         document.getElementById(
@@ -1357,7 +1585,13 @@ function loadResources() {
     });
 
 
-  fetch(url)
+  fetch(
+    url,
+    {
+      cache:
+        "no-store"
+    }
+  )
 
     .then(
       async function(res) {
@@ -1393,7 +1627,9 @@ function loadResources() {
 
         if (
           !res.ok ||
-          json.success === false
+          json.success === false ||
+          json.authenticated === false ||
+          json.valid === false
         ) {
 
           throw new Error(
@@ -1450,41 +1686,52 @@ function loadResources() {
 
 
         // ====================================================
-        // 講座名表示
+        // 講座名
         //
-        // MAIN_GASから
+        // ★ここではMAIN_GASの正しいcourseNameを使用。
         //
-        // SC08
-        // KP
+        // SC08 + KP
+        // ↓
         // Scratch動画＋PDF
-        //
-        // が返る。
         // ====================================================
 
-        const resourceCourseText =
-
-          json.courseId &&
+        if (
+          json.courseId ||
           json.courseName
+        ) {
 
-            ? json.courseId +
-              " " +
-              json.courseName
+          const resourceCourseText =
 
-            : (
+            json.courseId &&
+            json.courseName
 
-                json.courseName ||
+              ? json.courseId +
+                " " +
+                json.courseName
 
-                json.courseId ||
+              : (
 
-                "受講講座なし"
+                  json.courseName ||
 
-              );
+                  json.courseId ||
+
+                  "受講講座なし"
+
+                );
 
 
-        document.getElementById(
-          "courseName"
-        ).textContent =
-          resourceCourseText;
+          document.getElementById(
+            "courseName"
+          ).textContent =
+            resourceCourseText;
+
+
+          document.getElementById(
+            "courseName"
+          ).className =
+            "";
+
+        }
 
 
         // ====================================================
@@ -1516,7 +1763,8 @@ function loadResources() {
 
 
             if (
-              json.remainDays !== undefined
+              json.remainDays !== undefined &&
+              json.remainDays !== null
             ) {
 
               const remainDays =
@@ -1551,6 +1799,10 @@ function loadResources() {
                 expireDay;
 
 
+              accessStateReady =
+                true;
+
+
               updateExpireStatus(
                 remainDays,
                 accessExpired
@@ -1579,7 +1831,11 @@ function loadResources() {
 
           setExpiredResourceUI();
 
-        } else {
+        }
+
+        else if (
+          accessStateReady
+        ) {
 
           setActiveResourceUI();
 
@@ -1656,7 +1912,13 @@ function loadHistory() {
     });
 
 
-  fetch(url)
+  fetch(
+    url,
+    {
+      cache:
+        "no-store"
+    }
+  )
 
     .then(
       async function(res) {
@@ -1706,7 +1968,9 @@ function loadHistory() {
 
 
         if (
-          json.success === false
+          json.success === false ||
+          json.authenticated === false ||
+          json.valid === false
         ) {
 
           throw new Error(
@@ -1756,6 +2020,7 @@ function loadHistory() {
 
         }
 
+
         // ====================================================
         // {history:[...]}
         // ====================================================
@@ -1771,6 +2036,7 @@ function loadHistory() {
             json.history;
 
         }
+
 
         // ====================================================
         // {data:[...]}
@@ -1873,13 +2139,13 @@ function loadHistory() {
             // ------------------------------------------------
             // 講座名
             //
-            // MAIN_GAS側ですでに
-            //
+            // MAIN_GAS
+            // ↓
             // courseId + productId
-            //        ↓
+            // ↓
             // master
-            //
-            // で正しいcourseNameを返している。
+            // ↓
+            // 正しいcourseName
             // ------------------------------------------------
 
             const courseText =
@@ -2004,7 +2270,13 @@ function loadNextCourse() {
     });
 
 
-  fetch(url)
+  fetch(
+    url,
+    {
+      cache:
+        "no-store"
+    }
+  )
 
     .then(
       async function(res) {
@@ -2054,7 +2326,9 @@ function loadNextCourse() {
 
 
         if (
-          json.success === false
+          json.success === false ||
+          json.authenticated === false ||
+          json.valid === false
         ) {
 
           throw new Error(
@@ -2106,23 +2380,68 @@ function loadNextCourse() {
 
 
         // ====================================================
-        // MAIN_GAS
-        //
-        // nextCourseId
-        // nextCourseName
+        // nextCourseオブジェクトにも対応
+        // ====================================================
+
+        let objectCourseId =
+          "";
+
+
+        let objectCourseName =
+          "";
+
+
+        if (
+          json.nextCourse &&
+          typeof json.nextCourse ===
+            "object"
+        ) {
+
+          objectCourseId =
+            String(
+              json.nextCourse.courseId ||
+              ""
+            ).trim();
+
+
+          objectCourseName =
+            String(
+              json.nextCourse.courseName ||
+              ""
+            ).trim();
+
+        }
+
+
+        // ====================================================
+        // 次講座ID
         // ====================================================
 
         const nextCourseId =
           String(
+
             json.nextCourseId ||
+
+            objectCourseId ||
+
             ""
+
           ).trim();
 
 
+        // ====================================================
+        // 次講座名
+        // ====================================================
+
         const nextCourseName =
           String(
+
             json.nextCourseName ||
+
+            objectCourseName ||
+
             ""
+
           ).trim();
 
 
@@ -2166,6 +2485,10 @@ function loadNextCourse() {
 
         nextNone.style.display =
           "block";
+
+
+        nextNone.className =
+          "loading";
 
 
         nextNone.textContent =
@@ -2238,7 +2561,22 @@ document
 
 
       // ------------------------------------------------------
-      // クライアント側期限確認
+      // 認証・期限確認前
+      // ------------------------------------------------------
+
+      if (!accessStateReady) {
+
+        alert(
+          "視聴期限を確認中です。\n少し待ってから再度お試しください。"
+        );
+
+        return;
+
+      }
+
+
+      // ------------------------------------------------------
+      // 期限確認
       // ------------------------------------------------------
 
       if (
@@ -2279,7 +2617,11 @@ document
 
         const res =
           await fetch(
-            url
+            url,
+            {
+              cache:
+                "no-store"
+            }
           );
 
 
@@ -2421,12 +2763,18 @@ document
 
       finally {
 
-        button.disabled =
-          false;
+        if (
+          !accessExpired
+        ) {
+
+          button.disabled =
+            false;
 
 
-        button.textContent =
-          "動画を再生する";
+          button.textContent =
+            "動画を再生する";
+
+        }
 
       }
 
@@ -2537,6 +2885,21 @@ document
 
 
       // ------------------------------------------------------
+      // 認証・期限確認前
+      // ------------------------------------------------------
+
+      if (!accessStateReady) {
+
+        alert(
+          "視聴期限を確認中です。\n少し待ってから再度お試しください。"
+        );
+
+        return;
+
+      }
+
+
+      // ------------------------------------------------------
       // 期限確認
       // ------------------------------------------------------
 
@@ -2578,7 +2941,11 @@ document
 
         const res =
           await fetch(
-            url
+            url,
+            {
+              cache:
+                "no-store"
+            }
           );
 
 
@@ -2710,12 +3077,18 @@ document
 
       finally {
 
-        button.disabled =
-          false;
+        if (
+          !accessExpired
+        ) {
+
+          button.disabled =
+            false;
 
 
-        button.textContent =
-          "PDFを表示する";
+          button.textContent =
+            "PDFを表示する";
+
+        }
 
       }
 
@@ -2762,6 +3135,9 @@ function setActiveResourceUI() {
     videoButton.disabled =
       false;
 
+    videoButton.textContent =
+      "動画を再生する";
+
   }
 
 
@@ -2772,6 +3148,9 @@ function setActiveResourceUI() {
 
     pdfButton.disabled =
       false;
+
+    pdfButton.textContent =
+      "PDFを表示する";
 
   }
 
@@ -3090,6 +3469,19 @@ function calculateRemainDays(
 
 function isAccessExpired() {
 
+  // ----------------------------------------------------------
+  // 認証・期限確認前は安全側に倒す
+  // ----------------------------------------------------------
+
+  if (
+    !accessStateReady
+  ) {
+
+    return true;
+
+  }
+
+
   return accessExpired;
 
 }
@@ -3195,7 +3587,6 @@ function escapeHtmlAttribute(
     );
 
 }
-
 
 // ============================================================
 // END
