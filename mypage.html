@@ -841,34 +841,18 @@ let accessStateReady =
 
 // ============================================================
 // API URL作成
-//
 // ★重要
-//
-// MAIN_GAS側が
-//
-// key
-//
-// を読む場合に対応。
-//
-// さらに
-//
-// authKey
-//
-// も送信する。
-//
-// これにより認証パラメータ名の違いによる
-// 認証エラーを防止する。
-//
+// MAIN_GAS側が key を読む場合に対応。
+// さらに authKey も送信する。
+// これにより認証パラメータ名の違いによる認証エラーを防止する。
 // _ts はキャッシュ防止用。
 // ============================================================
-
 function buildApiUrl(
   params = {}
 ) {
 
   const query =
     new URLSearchParams();
-
 
   // ----------------------------------------------------------
   // MAIN_GAS 認証用
@@ -879,11 +863,9 @@ function buildApiUrl(
     authKey
   );
 
-
   // ----------------------------------------------------------
   // MAIN_GASがauthKeyを読む場合にも対応
   // ----------------------------------------------------------
-
   query.set(
     "authKey",
     authKey
@@ -893,7 +875,6 @@ function buildApiUrl(
   // ----------------------------------------------------------
   // キャッシュ防止
   // ----------------------------------------------------------
-
   query.set(
     "_ts",
     String(
@@ -1675,14 +1656,11 @@ function loadResources() {
 
         // ====================================================
         // 講座名
-        //
         // ★ここではMAIN_GASの正しいcourseNameを使用。
-        //
         // SC08 + KP
         // ↓
         // Scratch動画＋PDF
         // ====================================================
-
         if (
           json.courseId ||
           json.courseName
@@ -1725,7 +1703,6 @@ function loadResources() {
         // ====================================================
         // MAIN_GASからexpireDateが返った場合
         // ====================================================
-
         if (
           json.expireDate
         ) {
@@ -1763,39 +1740,16 @@ function loadResources() {
                   )
                 );
 
-
               document.getElementById(
                 "remainDays"
               ).textContent =
                 remainDays;
 
-
-              const today =
-                startOfDay(
-                  new Date()
-                );
-
-
-              const expireDay =
-                startOfDay(
-                  expireDate
-                );
-
-
-              accessExpired =
-                today >=
-                expireDay;
-
-
-              accessStateReady =
-                true;
-
-
-              updateExpireStatus(
-                remainDays,
-                accessExpired
-              );
-
+              const today = startOfDay( new Date() );
+              const expireDay = startOfDay( expireDate );
+              accessExpired = today >= expireDay;
+              accessStateReady = true;
+              updateExpireStatus( remainDays, accessExpired );
             }
 
           }
@@ -2126,16 +2080,11 @@ function loadHistory() {
 
             // ------------------------------------------------
             // 講座名
-            //
-            // MAIN_GAS
-            // ↓
-            // courseId + productId
-            // ↓
-            // master
-            // ↓
+            // MAIN_GAS  ↓
+            // courseId + productId ↓
+            // master ↓
             // 正しいcourseName
             // ------------------------------------------------
-
             const courseText =
 
               item.courseId &&
@@ -2148,13 +2097,9 @@ function loadHistory() {
                 : (
 
                     item.courseName ||
-
                     item.courseId ||
-
                     "講座情報なし"
-
                   );
-
 
             // ------------------------------------------------
             // 会員種別
