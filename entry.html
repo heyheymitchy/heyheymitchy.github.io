@@ -1,0 +1,262 @@
+﻿
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>入り口選択 | わくわくプログラミング工房</title>
+
+  <meta
+    name="description"
+    content="わくわくプログラミング工房。初めての方と会員の方はこちらからお進みください。"
+  >
+
+  <style>
+    /* ==================================================
+       わくわくプログラミング工房
+       entry.html 入り口選択画面
+       ================================================== */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        "Yu Gothic",
+        "Meiryo",
+        sans-serif;
+      color: #333333;
+      background: #f4fbfb;
+      line-height: 1.7;
+    }
+
+    header {
+      background: #5CE1E6;
+      padding: 22px 16px;
+      text-align: center;
+      border-bottom: 5px solid #FDE12F;
+    }
+
+    .site-name {
+      margin: 0;
+      font-size: clamp(21px, 4vw, 30px);
+      font-weight: bold;
+      color: #174b4d;
+    }
+
+    .teacher-name {
+      margin: 5px 0 0;
+      font-size: 14px;
+      color: #174b4d;
+    }
+
+    main {
+      width: min(920px, 92%);
+      margin: 38px auto;
+    }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .intro h1 {
+      margin: 0 0 12px;
+      font-size: clamp(25px, 5vw, 36px);
+      color: #245b42;
+    }
+
+    .intro p {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .choice-container {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .choice-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 30px 22px;
+      background: #ffffff;
+      border: 2px solid #d9eeee;
+      border-radius: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+    }
+
+    .choice-icon {
+      font-size: 52px;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .choice-card h2 {
+      margin: 0 0 12px;
+      font-size: 24px;
+    }
+
+    .choice-card p {
+      margin: 0 0 24px;
+      font-size: 15px;
+    }
+
+    .new-user h2 {
+      color: #147c80;
+    }
+
+    .member h2 {
+      color: #8a6500;
+    }
+
+    .choice-button {
+      display: inline-block;
+      width: 100%;
+      max-width: 310px;
+      margin-top: auto;
+      padding: 15px 18px;
+      border-radius: 12px;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 17px;
+      font-weight: bold;
+      transition:
+        opacity 0.2s,
+        transform 0.2s;
+    }
+
+    .choice-button:hover {
+      opacity: 0.85;
+      transform: translateY(-2px);
+    }
+
+    .choice-button:focus-visible {
+      outline: 3px solid #333333;
+      outline-offset: 4px;
+    }
+
+    .new-button {
+      background: #168b91;
+    }
+
+    .member-button {
+      background: #d48a00;
+    }
+
+    .note {
+      margin-top: 28px;
+      padding: 18px;
+      background: #ffffff;
+      border-left: 5px solid #5CE1E6;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    footer {
+      margin-top: 45px;
+      padding: 22px 12px;
+      text-align: center;
+      background: #e2f4e9;
+      color: #42634e;
+      font-size: 13px;
+    }
+
+    @media (max-width: 640px) {
+      main {
+        margin-top: 25px;
+      }
+
+      .choice-container {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .choice-card {
+        padding: 25px 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <p class="site-name">わくわくプログラミング工房</p>
+    <p class="teacher-name">講師・平兵道（へいへいどう）</p>
+  </header>
+
+  <main>
+
+    <section class="intro">
+      <h1>ようこそ！</h1>
+      <p>
+        ご利用状況に合わせて、入り口を選んでください。
+      </p>
+    </section>
+
+    <section class="choice-container">
+
+      <!-- 初めての方 -->
+      <div class="choice-card new-user">
+        <div class="choice-icon" aria-hidden="true">??</div>
+
+        <h2>初めての方</h2>
+
+        <p>
+          初めてご利用になる方はこちらです。<br>
+          会員登録の手続きへ進みます。
+        </p>
+
+        <a
+          class="choice-button new-button"
+          href="register.html"
+        >
+          新規会員登録へ進む
+        </a>
+      </div>
+
+      <!-- 会員の方 -->
+      <div class="choice-card member">
+        <div class="choice-icon" aria-hidden="true">??</div>
+
+        <h2>会員の方</h2>
+
+        <p>
+          すでに会員登録がお済みの方はこちらです。<br>
+          講座の選択・確認へ進みます。
+        </p>
+
+        <a
+          class="choice-button member-button"
+          href="course.html"
+        >
+          会員専用ページへ進む
+        </a>
+      </div>
+
+    </section>
+
+    <section class="note">
+      <strong>会員の方へ</strong><br>
+      マイページへのログインには、登録メールアドレスに届く
+      専用リンクをご利用ください。<br>
+      専用リンクは、メール認証のための大切な情報です。
+      他の方と共有しないでください。
+    </section>
+
+  </main>
+
+  <footer>
+    <p>わくわくプログラミング工房</p>
+    <p>ゲーム・絵・音楽で、プログラミングをもっと楽しく！</p>
+  </footer>
+
+</body>
+</html>
