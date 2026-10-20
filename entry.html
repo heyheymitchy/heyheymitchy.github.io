@@ -1,22 +1,20 @@
-﻿
+﻿<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- わくわくプログラミング工房　平兵道　のホームページ -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- entry.html -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>入り口選択 | わくわくプログラミング工房</title>
-
-  <meta
-    name="description"
-    content="わくわくプログラミング工房。初めての方と会員の方はこちらからお進みください。"
-  >
-
+  <title>わくわくプログラミング工房 平兵道</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="わくわくプログラミング工房。初めての方と会員の方はこちらからお進みください。" >
+ 
   <style>
     /* ==================================================
-       わくわくプログラミング工房
-       entry.html 入り口選択画面
-       ================================================== */
+       わくわくプログラミング工房  entry.html 入り口選択画面
+       =============================================== */
 
     * {
       box-sizing: border-box;
@@ -186,77 +184,51 @@
 </head>
 
 <body>
+  <!-- 共通ヘッダー -->
+  <div id="header"></div>
 
-  <header>
-    <p class="site-name">わくわくプログラミング工房</p>
-    <p class="teacher-name">講師・平兵道（へいへいどう）</p>
-  </header>
-
+  <!-- メインエリア -->
   <main>
 
     <section class="intro">
       <h1>ようこそ！</h1>
-      <p>
-        ご利用状況に合わせて、入り口を選んでください。
-      </p>
+      <p>お客様のご利用状況に合わせて入り口を選んでください！</p>
     </section>
 
     <section class="choice-container">
-
       <!-- 初めての方 -->
       <div class="choice-card new-user">
-        <div class="choice-icon" aria-hidden="true">??</div>
-
+        <div class="choice-icon" aria-hidden="true">
+          <img src="images/non_logo.png" alt="わくわくプログラミング工房">
+        </div>
         <h2>初めての方</h2>
-
-        <p>
-          初めてご利用になる方はこちらです。<br>
-          会員登録の手続きへ進みます。
-        </p>
-
-        <a
-          class="choice-button new-button"
-          href="register.html"
-        >
-          新規会員登録へ進む
-        </a>
+        <p>初めてご利用になる方はこちらです。<br>［お試し無料講座申込＆会員登録］の手続きへ進みます</p>
+        <a class="choice-button new-button" href="register.html" >お試し無料講座＆会員登録へ進む</a>
       </div>
 
       <!-- 会員の方 -->
       <div class="choice-card member">
-        <div class="choice-icon" aria-hidden="true">??</div>
-
+        <div class="choice-icon" aria-hidden="true">
+          <img src="images/logo.png" alt="わくわくプログラミング工房">
+        </div>
         <h2>会員の方</h2>
-
-        <p>
-          すでに会員登録がお済みの方はこちらです。<br>
-          講座の選択・確認へ進みます。
-        </p>
-
-        <a
-          class="choice-button member-button"
-          href="course.html"
-        >
-          会員専用ページへ進む
-        </a>
+        <p>すでに会員登録がお済みの方はこちらです。<br>各種有料講座の選択・確認へ進みます</p>
+        <a class="choice-button member-button" href="course.html" >会員専用ページへ進む</a>
       </div>
-
     </section>
 
     <section class="note">
       <strong>会員の方へ</strong><br>
-      マイページへのログインには、登録メールアドレスに届く
-      専用リンクをご利用ください。<br>
-      専用リンクは、メール認証のための大切な情報です。
-      他の方と共有しないでください。
+      マイページへのログインには、登録メールアドレスに届く専用リンクをご利用ください。<br>
+      専用リンクは、メール認証のための大切な情報です。他の方と共有しないでください
     </section>
-
   </main>
 
-  <footer>
-    <p>わくわくプログラミング工房</p>
-    <p>ゲーム・絵・音楽で、プログラミングをもっと楽しく！</p>
-  </footer>
+ <!-- 共通フッター -->
+  <div id="footer"></div>
+
+  <!-- 共通JavaScript -->
+  <script src="script.js"></script>
 
 </body>
 </html>
