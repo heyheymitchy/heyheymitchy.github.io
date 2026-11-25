@@ -139,12 +139,40 @@ align-items: center;
 justify-content: center;
 }
 
+.logo-box-wrap {
+display: flex;
+gap: 40px;
+align-items: flex-start;
+}
+
 .logo-box img {
 display: block;
 width: 150px;
 height: auto;
 }
 
+/* =========================================================
+LOGO画像ホバー
+========================================================= */
+/* LOGO画像を重ねる親要素 */
+.logo-wrap { position: relative; display: inline-block; }
+
+/* LOGO通常画像・マウスオーバー画像 共通 */
+.logo-wrap img { display: block; }
+
+/* LOGOマウスオーバー画像 */
+.logo-wrap .hover-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+/* LOGOマウスを乗せたとき */
+.logo-wrap:hover .hover-img {  opacity: 1; }
+/* LOGOマウスを乗せたとき通常画像を消す */
+.logo-wrap:hover .normal-img { opacity: 0; }
 /* =========================================================
 言語切り替え
 ========================================================= */
