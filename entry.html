@@ -16,9 +16,7 @@
        わくわくプログラミング工房  entry.html 入り口選択画面
        =============================================== */
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -27,7 +25,9 @@
         "Meiryo",
         sans-serif;
       color: #333333;
-      background: #f4fbfb;
+      background: #5CE1E6; /* 背景色：水色 */
+      /* background: #f4fbfb; */
+
       line-height: 1.7;
     }
 
@@ -84,8 +84,8 @@
       align-items: center;
       text-align: center;
       padding: 30px 22px;
-      background: #ffffff;
-      border: 2px solid #d9eeee;
+      background:#d9eeee;
+      border: 2px solid: #5CE1E6;
       border-radius: 20px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
     }
@@ -96,23 +96,11 @@
       margin-bottom: 12px;
     }
 
-    .choice-card h2 {
-      margin: 0 0 12px;
-      font-size: 24px;
-    }
+    .choice-card h2 { margin: 0 0 12px; font-size: 24px; }
 
-    .choice-card p {
-      margin: 0 0 24px;
-      font-size: 15px;
-    }
-
-    .new-user h2 {
-      color: #147c80;
-    }
-
-    .member h2 {
-      color: #8a6500;
-    }
+    .choice-card p { margin: 0 0 24px; font-size: 15px; }
+    .new-user h2 { color: #147c80; }
+    .member h2 { color: #8a6500; }
 
     .choice-button {
       display: inline-block;
@@ -121,7 +109,7 @@
       margin-top: auto;
       padding: 15px 18px;
       border-radius: 12px;
-      color: #ffffff;
+      color: #d9eeee;
       text-decoration: none;
       font-size: 17px;
       font-weight: bold;
@@ -140,18 +128,14 @@
       outline-offset: 4px;
     }
 
-    .new-button {
-      background: #168b91;
-    }
+    .new-button { background: #168b91; }
 
-    .member-button {
-      background: #d48a00;
-    }
+    .member-button { background: #d48a00; }
 
     .note {
       margin-top: 28px;
       padding: 18px;
-      background: #ffffff;
+      background:#d9eeee;
       border-left: 5px solid #5CE1E6;
       border-radius: 8px;
       font-size: 14px;
@@ -167,18 +151,10 @@
     }
 
     @media (max-width: 640px) {
-      main {
-        margin-top: 25px;
-      }
+      main { margin-top: 25px; }
+      .choice-container { grid-template-columns: 1fr; gap: 18px; }
 
-      .choice-container {
-        grid-template-columns: 1fr;
-        gap: 18px;
-      }
-
-      .choice-card {
-        padding: 25px 18px;
-      }
+      .choice-card { padding: 25px 18px; }
     }
   </style>
 </head>
@@ -189,10 +165,9 @@
 
   <!-- メインエリア -->
   <main>
-
     <section class="intro">
-      <h1>ようこそ！</h1>
-      <p>お客様のご利用状況に合わせて入り口を選んでください！</p>
+      <h1>こちらは、ご利用状況確認のページです</h1>
+      <p><b>お客様のご利用状況に合わせて入り口を選んでください！</b></p>
     </section>
 
     <section class="choice-container">
@@ -202,25 +177,25 @@
           <img src="images/non_logo.png" alt="わくわくプログラミング工房">
         </div>
         <h2>初めての方</h2>
-        <p>初めてご利用になる方はこちらです。<br>［お試し無料講座申込＆会員登録］の手続きへ進みます</p>
+        <p><b>初めてご利用になる方はこちらです。<br>［お試し無料講座申込＆会員登録］の手続きへ進みます</b></p>
         <a class="choice-button new-button" href="register.html" >お試し無料講座＆会員登録へ進む</a>
       </div>
 
       <!-- 会員の方 -->
       <div class="choice-card member">
         <div class="choice-icon" aria-hidden="true">
-          <img src="images/logo.png" alt="わくわくプログラミング工房">
+          <img src="images/logo78.png" alt="わくわくプログラミング工房">
         </div>
         <h2>会員の方</h2>
-        <p>すでに会員登録がお済みの方はこちらです。<br>各種有料講座の選択・確認へ進みます</p>
+        <p><b>すでに会員登録がお済みの方はこちらです。<br>各種有料講座の選択・確認へ進みます</b></p>
         <a class="choice-button member-button" href="course.html" >会員専用ページへ進む</a>
       </div>
     </section>
 
     <section class="note">
       <strong>会員の方へ</strong><br>
-      マイページへのログインには、登録メールアドレスに届く専用リンクをご利用ください。<br>
-      専用リンクは、メール認証のための大切な情報です。他の方と共有しないでください
+      <b>マイページへのログインには、登録メールアドレスに届く専用リンクをご利用ください。<br>
+      専用リンクは、メール認証のための大切な情報です。他の方と共有しないでください</b>
     </section>
   </main>
 
